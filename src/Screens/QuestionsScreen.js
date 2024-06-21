@@ -1,10 +1,17 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
+import { questions } from "../config/question";
 
 const QuestionsScreen = () => {
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   return (
     <View>
-      <Text>QuestionsScreen</Text>
+      <Text>{questions[currentQuestionIndex].question}</Text>
+      {/* {questions.map((item) => (
+        <View>
+          <Text>{item.question}</Text>
+        </View>
+      ))} */}
     </View>
   );
 };
