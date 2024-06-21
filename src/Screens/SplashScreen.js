@@ -30,7 +30,7 @@ const SplashScreen = ({ navigation }) => {
         onPress={() => navigation.navigate("Questions")}
         style={tw`bg-green-500 mt-10 pl-4 pr-5 py-1 rounded-xl `}
       >
-        <Text style={tw`text-white text-lg`}> Start</Text>
+        <Text style={tw`text-white text-lg`}>Start</Text>
       </Pressable>
     </View>
   );

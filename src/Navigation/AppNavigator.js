@@ -7,6 +7,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import QuestionsScreen from "../Screens/QuestionsScreen";
 import SplashScreen from "../Screens/SplashScreen";
 import tw from "twrnc";
+import EndScreen from "../Screens/EndScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +22,7 @@ function AppNavigator() {
       >
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="Questions" component={QuestionsScreen} />
+        <Stack.Screen name="End" component={EndScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
