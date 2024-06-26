@@ -4,6 +4,8 @@ import tw from "twrnc";
 import { useState } from "react";
 import * as DocumentPicker from "expo-document-picker";
 import { PDFDocument } from "pdf-lib";
+import { fetchQuiiz } from "../../api/fetchQuiz";
+import { documentHandler } from "../../api/documentHandler";
 
 const SplashScreen = ({ navigation }) => {
   const [notes, setNotes] = useState("");
@@ -54,8 +56,8 @@ const SplashScreen = ({ navigation }) => {
         style={tw.style(tw`h-3/6`, { aspectRatio: 1 })}
       />
 
-      <Button title="Upload Notes" onPress={pickDocument} />
-      <Button title="Generate Quiz" onPress={generateQuiz} />
+      <Button title="Upload Notes" onPress={documentHandler} />
+      <Button title="Generate Quiz" onPress={fetchQuiiz} />
       {/*Quiz Heading */}
       <Text style={tw`text-3xl text-center font-semibold`}>
         {" "}

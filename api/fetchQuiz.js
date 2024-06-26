@@ -1,4 +1,4 @@
-const generateQuiz = async () => {
+const generateQuiz = async (notes, setQuiz) => {
   const response = await fetch("/generate-quiz", {
     method: "POST",
     headers: {
@@ -7,5 +7,10 @@ const generateQuiz = async () => {
     body: JSON.stringify({ notes }),
   });
   const quiz = await response.json();
+  setQuiz(quiz);
   console.log(quiz);
+};
+
+module.exports = {
+  generateQuiz,
 };
