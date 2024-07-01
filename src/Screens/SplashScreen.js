@@ -64,18 +64,44 @@ const SplashScreen = ({ navigation }) => {
     }
   };
 
-  const generateQuiz = async () => {
+  // const generateQuiz = async () => {
+  //   console.log("Generating quiz with notes:", notes);
+
+  //   const response = await fetch("http://192.168.68.108:3000/generate-quiz", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({ notes: notes }),
+  //   });
+  //   const data = await response.json();
+  //   setQuiz(data.questions);
+  //   console.log("Received quiz questions:", data.questions);
+  // };
+
+  // axios way
+  const generateQuiz = async (notes) => {
     console.log("Generating quiz with notes:", notes);
-    const response = await fetch("http://192.168.68.108:3000/generate-quiz", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ notes }),
-    });
-    const data = await response.json();
-    setQuiz(data.questions);
-    console.log("Received quiz questions:", data.questions);
+
+    try {
+      const response = await axios.post(
+        "http://192.168.68.108:3000/generate-quiz",
+        {
+          notes: notes,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const data = response.data;
+      setQuiz(data.questions);
+      console.log("Received quiz questions:", data.questions);
+    } catch (error) {
+      console.error("Error generating quiz:", error);
+    }
   };
 
   return (
