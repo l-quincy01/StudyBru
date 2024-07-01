@@ -5,10 +5,25 @@ import * as FileSystem from "expo-file-system";
 import tw from "twrnc";
 import axios from "axios";
 
+//parse the quiz into an array of objects
+function parseQuiz(input) {
+  let cleanedInput = input.replace(/questions:\s*{/, "{").trim();
+
+  cleanedInput = "[" + cleanedInput + "]";
+
+  cleanedInput = cleanedInput.replace(/},\s*\n\s*{/g, "},{");
+
+  const quizObj = eval(cleanedInput);
+
+  return quizObj;
+}
+
 const SplashScreen = ({ navigation }) => {
   const [notes, setNotes] = useState("");
   const [quiz, setQuiz] = useState([]);
+  const [quizObj, setQuizObj] = useState([]);
 
+  //upload document fuction. Send the document to parse api endpoint to parse the file into text
   const uploadDocument = async (file) => {
     const formData = new FormData();
     formData.append("file", {
@@ -40,10 +55,7 @@ const SplashScreen = ({ navigation }) => {
     return text.replace(/\s+/g, " ");
   };
 
-  useEffect(() => {
-    console.log("Notes updated:", notes);
-  }, [notes]);
-
+  //calls the upload document function once a file has been chosen
   const pickDocument = async () => {
     console.log("Document picker opened");
     let result = await DocumentPicker.getDocumentAsync({});
@@ -64,23 +76,7 @@ const SplashScreen = ({ navigation }) => {
     }
   };
 
-  /* USING FETCH */
-  // const generateQuiz = async () => {
-  //   console.log("Generating quiz with notes:", notes);
-
-  //   const response = await fetch("http://192.168.68.108:3000/generate-quiz", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({ notes: notes }),
-  //   });
-  //   const data = await response.json();
-  //   setQuiz(data.questions);
-  //   console.log("Received quiz questions:", data.questions);
-  // };
-
-  // axios way
+  // axios way, send NOTES TO OPEN  AI API TO GENERATE A QUIZ
   const generateQuiz = async (notes) => {
     console.log("Generating quiz with notes:", notes);
 
@@ -96,30 +92,14 @@ const SplashScreen = ({ navigation }) => {
           },
         }
       );
-
+      //set quiz from the response
       const data = response.data;
-      setQuiz(data.questions);
       console.log("Received quiz questions:", data.questions);
+      setQuiz(data.questions);
     } catch (error) {
       console.error("Error generating quiz:", error);
     }
   };
-
-  function parseQuestions(input) {
-    // Removing the 'questions:' part and any leading/trailing whitespace
-    let cleanedInput = input.replace(/questions:\s*{/, "{").trim();
-
-    // Wrapping the cleaned input in array brackets
-    cleanedInput = "[" + cleanedInput + "]";
-
-    // Replacing newlines and indentation for correct JSON formatting
-    cleanedInput = cleanedInput.replace(/},\s*\n\s*{/g, "},{");
-
-    // Parsing the string into an array of objects
-    const questions = eval(cleanedInput);
-
-    return questions;
-  }
 
   return (
     <View style={tw`flex-1 items-center`}>
@@ -158,7 +138,7 @@ const SplashScreen = ({ navigation }) => {
 };
 
 // Parsing the questions
-export const generatedQuestions = parseQuestions(notes);
+export const generatedQuestions = parseQuestions(quiz);
 
 export default SplashScreen;
 

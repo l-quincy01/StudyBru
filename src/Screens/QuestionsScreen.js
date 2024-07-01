@@ -5,13 +5,12 @@ import tw from "twrnc";
 import * as Progress from "react-native-progress";
 import { generatedQuestions } from "./SplashScreen";
 
-generatedQuestions;
 const QuestionsScreen = ({ navigation }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [isCorrect, setIsCorrect] = useState(null);
-  const [quizProgress, setQuizProgress] = useState(questions.length);
+  const [quizProgress, setQuizProgress] = useState(generatedQuestions.length);
 
   const progress = (currentQuestionIndex + 1) / quizProgress;
 
@@ -22,7 +21,7 @@ const QuestionsScreen = ({ navigation }) => {
     // Alert.alert(clickedOption);
     setSelectedOption(clickedOption);
     const isAnswerRight =
-      clickedOption === questions[currentQuestionIndex].correctAnswer;
+      clickedOption === generatedQuestions[currentQuestionIndex].correctAnswer;
     setIsCorrect(isAnswerRight);
     if (isAnswerRight) {
       setScore((prevScore) => prevScore + 10);
@@ -30,7 +29,7 @@ const QuestionsScreen = ({ navigation }) => {
   };
 
   const handleNext = () => {
-    if (currentQuestionIndex === questions.length - 1) {
+    if (currentQuestionIndex === generatedQuestions.length - 1) {
       navigation.navigate("End", { userScore: score });
     } else {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -60,9 +59,9 @@ const QuestionsScreen = ({ navigation }) => {
           </View>
         </View>
         <Text style={tw`text-2xl`}>
-          {questions[currentQuestionIndex].question} ?
+          {generatedQuestions[currentQuestionIndex].question} ?
         </Text>
-        {questions[currentQuestionIndex].options.map((option) => (
+        {generatedQuestions[currentQuestionIndex].options.map((option) => (
           <Pressable
             onPress={() => handleOptionPress(option)}
             disabled={selectedOption}
@@ -96,7 +95,9 @@ const QuestionsScreen = ({ navigation }) => {
           <Text
             style={tw`  text-white text-center text-lg font-semibold flex-grow `}
           >
-            {currentQuestionIndex === questions.length - 1 ? "Finish" : "Next"}
+            {currentQuestionIndex === generatedQuestions.length - 1
+              ? "Finish"
+              : "Next"}
           </Text>
         </Pressable>
       </View>
