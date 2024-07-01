@@ -40,9 +40,9 @@ const SplashScreen = ({ navigation }) => {
     return text.replace(/\s+/g, " ");
   };
 
-  // useEffect(() => {
-  //   console.log("Notes updated:", notes);
-  // }, [notes]);
+  useEffect(() => {
+    console.log("Notes updated:", notes);
+  }, [notes]);
 
   const pickDocument = async () => {
     console.log("Document picker opened");
@@ -64,6 +64,7 @@ const SplashScreen = ({ navigation }) => {
     }
   };
 
+  /* USING FETCH */
   // const generateQuiz = async () => {
   //   console.log("Generating quiz with notes:", notes);
 
@@ -120,9 +121,6 @@ const SplashScreen = ({ navigation }) => {
     return questions;
   }
 
-  // Parsing the questions
-  const questions = parseQuestions(inputString);
-
   return (
     <View style={tw`flex-1 items-center`}>
       <Image
@@ -158,6 +156,9 @@ const SplashScreen = ({ navigation }) => {
     </View>
   );
 };
+
+// Parsing the questions
+export const generatedQuestions = parseQuestions(notes);
 
 export default SplashScreen;
 

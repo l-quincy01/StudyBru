@@ -3,7 +3,9 @@ import React, { useState } from "react";
 import { questions } from "../config/question";
 import tw from "twrnc";
 import * as Progress from "react-native-progress";
+import { generatedQuestions } from "./SplashScreen";
 
+generatedQuestions;
 const QuestionsScreen = ({ navigation }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
