@@ -104,6 +104,25 @@ const SplashScreen = ({ navigation }) => {
     }
   };
 
+  function parseQuestions(input) {
+    // Removing the 'questions:' part and any leading/trailing whitespace
+    let cleanedInput = input.replace(/questions:\s*{/, "{").trim();
+
+    // Wrapping the cleaned input in array brackets
+    cleanedInput = "[" + cleanedInput + "]";
+
+    // Replacing newlines and indentation for correct JSON formatting
+    cleanedInput = cleanedInput.replace(/},\s*\n\s*{/g, "},{");
+
+    // Parsing the string into an array of objects
+    const questions = eval(cleanedInput);
+
+    return questions;
+  }
+
+  // Parsing the questions
+  const questions = parseQuestions(inputString);
+
   return (
     <View style={tw`flex-1 items-center`}>
       <Image
