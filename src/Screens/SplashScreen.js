@@ -1,52 +1,81 @@
-import { Image, Pressable, StyleSheet, Text, View, Button } from "react-native";
-import React from "react";
-import tw from "twrnc";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { View, Text, Button, Pressable, StyleSheet, Image } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
-import { PDFDocument } from "pdf-lib";
-import { fetchQuiiz } from "../../api/fetchQuiz";
-import { documentHandler } from "../../api/documentHandler";
+import * as FileSystem from "expo-file-system";
+import tw from "twrnc";
+import axios from "axios";
 
 const SplashScreen = ({ navigation }) => {
   const [notes, setNotes] = useState("");
   const [quiz, setQuiz] = useState([]);
 
-  const pickDocument = async () => {
-    let result = await DocumentPicker.getDocumentAsync({});
-    if (result.type === "success") {
-      const response = await fetch(result.uri);
-      const blob = await response.blob();
-      const arrayBuffer = await blob.arrayBuffer();
+  const uploadDocument = async (file) => {
+    const formData = new FormData();
+    formData.append("file", {
+      uri: file.assets[0].uri,
+      type: file.assets[0].mimeType,
+      name: file.assets[0].name,
+    });
 
-      if (result.name.endsWith(".pdf")) {
-        const pdfDoc = await PDFDocument.load(arrayBuffer);
-        const pages = pdfDoc.getPages();
-        let text = "";
-        for (const page of pages) {
-          text += page
-            .getTextContent()
-            .items.map((item) => item.str)
-            .join(" ");
+    try {
+      const response = await axios.post(
+        "http://192.168.68.108:3001/parse-pdf",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
-        setNotes(text);
-      } else {
-        const text = await response.text();
-        setNotes(text);
+      );
+
+      console.log("File uploaded successfully", cleanText(response.data.text));
+      setNotes(cleanText(response.data.text));
+    } catch (err) {
+      console.error("Error uploading file:", err);
+    }
+  };
+
+  const cleanText = (text) => {
+    // Replace multiple line breaks and spaces with a single space
+    return text.replace(/\s+/g, " ");
+  };
+
+  // useEffect(() => {
+  //   console.log("Notes updated:", notes);
+  // }, [notes]);
+
+  const pickDocument = async () => {
+    console.log("Document picker opened");
+    let result = await DocumentPicker.getDocumentAsync({});
+    console.log("Document picker result:", result);
+
+    if (result.assets[0].uri) {
+      console.log(
+        "Document has successfully been picked from devices storage with a valid uri"
+      );
+
+      try {
+        uploadDocument(result);
+      } catch (error) {
+        console.error("Error extracting text from document:", error);
       }
+    } else {
+      console.log("Document picker cancelled or failed");
     }
   };
 
   const generateQuiz = async () => {
-    const response = await fetch("/generate-quiz", {
+    console.log("Generating quiz with notes:", notes);
+    const response = await fetch("http://192.168.68.108:3000/generate-quiz", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ notes }),
     });
-    const quiz = await response.json();
-    setQuiz(quiz);
-    console.log(quiz);
+    const data = await response.json();
+    setQuiz(data.questions);
+    console.log("Received quiz questions:", data.questions);
   };
 
   return (
@@ -56,11 +85,10 @@ const SplashScreen = ({ navigation }) => {
         style={tw.style(tw`h-3/6`, { aspectRatio: 1 })}
       />
 
-      <Button title="Upload Notes" onPress={documentHandler} />
-      <Button title="Generate Quiz" onPress={fetchQuiiz} />
-      {/*Quiz Heading */}
+      <Button title="Upload Notes" onPress={pickDocument} />
+      <Button title="Generate Quiz" onPress={generateQuiz} />
+
       <Text style={tw`text-3xl text-center font-semibold`}>
-        {" "}
         Quiz Instructions
       </Text>
 

@@ -15,3 +15,17 @@ Simple quiz game mobile App
 <img src="/screenshots/7.PNG" width="20%" >
 
 </div>
+
+const generateQuiz = async () => {
+console.log("Generating quiz with notes:", notes);
+const response = await fetch("http://localhost:3000/generate-quiz", {
+method: "POST",
+headers: {
+"Content-Type": "application/json",
+},
+body: JSON.stringify({ notes }),
+});
+const data = await response.json();
+setQuiz(data.questions);
+console.log("Received quiz questions:", data.questions);
+};
