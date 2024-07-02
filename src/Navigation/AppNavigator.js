@@ -8,6 +8,7 @@ import QuestionsScreen from "../Screens/QuestionsScreen";
 import SplashScreen from "../Screens/SplashScreen";
 import tw from "twrnc";
 import EndScreen from "../Screens/EndScreen";
+import { QuizContext } from "../config/QuizContext";
 
 const Stack = createNativeStackNavigator();
 

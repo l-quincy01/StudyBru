@@ -1,27 +1,39 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, Text, Button, Pressable, StyleSheet, Image } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
 import * as FileSystem from "expo-file-system";
 import tw from "twrnc";
 import axios from "axios";
+import { QuizContext } from "../config/QuizContext";
 
 //parse the quiz into an array of objects
-function parseQuiz(input) {
-  let cleanedInput = input.replace(/questions:\s*{/, "{").trim();
+function parseQuiz(inputString) {
+  // Remove line breaks and extra spaces
+  inputString = inputString.replace(/\n/g, "").replace(/\s+/g, " ");
 
-  cleanedInput = "[" + cleanedInput + "]";
+  // Split the string into individual question blocks
+  const questionBlocks = inputString.match(/\{[^}]+\}/g);
 
-  cleanedInput = cleanedInput.replace(/},\s*\n\s*{/g, "},{");
+  // Array to hold the result objects
+  const result = [];
 
-  const quizObj = eval(cleanedInput);
+  questionBlocks.forEach((block) => {
+    const question = block.match(/question: "(.*?)"/)[1];
+    const options = block
+      .match(/options: \[(.*?)\]/)[1]
+      .split('", "')
+      .map((option) => option.replace(/^"|"$/g, ""));
+    const correctAnswer = block.match(/correctAnswer: "(.*?)"/)[1];
 
-  return quizObj;
+    result.push({ question, options, correctAnswer });
+  });
+
+  return result;
 }
 
 const SplashScreen = ({ navigation }) => {
   const [notes, setNotes] = useState("");
-  const [quiz, setQuiz] = useState([]);
-  const [quizObj, setQuizObj] = useState([]);
+  const { quiz, setQuiz } = useContext(QuizContext);
 
   //upload document fuction. Send the document to parse api endpoint to parse the file into text
   const uploadDocument = async (file) => {
@@ -54,6 +66,12 @@ const SplashScreen = ({ navigation }) => {
     // Replace multiple line breaks and spaces with a single space
     return text.replace(/\s+/g, " ");
   };
+  useEffect(() => {
+    console.log("Notes updated:", notes);
+  }, [notes]);
+  useEffect(() => {
+    console.log("QUIZ OBJECT HERE :", quiz);
+  }, [quiz]);
 
   //calls the upload document function once a file has been chosen
   const pickDocument = async () => {
@@ -94,8 +112,8 @@ const SplashScreen = ({ navigation }) => {
       );
       //set quiz from the response
       const data = response.data;
-      console.log("Received quiz questions:", data.questions);
-      setQuiz(data.questions);
+      console.log("Received RAW DATA DATA quiz questions:", data.questions);
+      setQuiz(parseQuiz(data.questions));
     } catch (error) {
       console.error("Error generating quiz:", error);
     }
@@ -109,7 +127,7 @@ const SplashScreen = ({ navigation }) => {
       />
 
       <Button title="Upload Notes" onPress={pickDocument} />
-      <Button title="Generate Quiz" onPress={generateQuiz} />
+      <Button title="Generate Quiz" onPress={() => generateQuiz(notes)} />
 
       <Text style={tw`text-3xl text-center font-semibold`}>
         Quiz Instructions
@@ -136,9 +154,6 @@ const SplashScreen = ({ navigation }) => {
     </View>
   );
 };
-
-// Parsing the questions
-export const generatedQuestions = parseQuestions(quiz);
 
 export default SplashScreen;
 
