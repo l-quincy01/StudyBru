@@ -12,7 +12,7 @@
 
 <img src="/assets/screenshots/1.PNG" width="20%" >
 <img src="/assets/screenshots/2.PNG" width="20%" >
-<img src="/assets/screenshots/3.PNG" width="20%" >
+<img src="/assets/screenshots/3.jpg" width="20%" >
 <img src="/assets/screenshots/4.PNG" width="20%" >
 <img src="/assets/screenshots/5.PNG" width="20%" >
 <img src="/assets/screenshots/6.PNG" width="20%" >
