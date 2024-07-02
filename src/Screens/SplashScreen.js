@@ -6,6 +6,7 @@ import tw from "twrnc";
 import axios from "axios";
 import { QuizContext } from "../config/QuizContext";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 //parse the quiz into an array of objects
 function parseQuiz(inputString) {
@@ -121,13 +122,24 @@ const SplashScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={tw`flex-1 items-center bg-white`}>
-      <Image
-        source={require("../../assets/quizIcon.jpeg")}
-        style={tw.style(tw`h-3/6`, { aspectRatio: 1 })}
-      />
+    <SafeAreaView style={tw`flex-1 gap-y-10 p-5  bg-white`}>
+      <View style={tw`flex flex-col`}>
+        <View style={tw`flex flex-row items-center justify-between`}>
+          <Text style={tw`text-3xl text-left font-semibold`}>Study Buddy</Text>
+          <Ionicons name="information-circle-outline" size={30} color="black" />
+        </View>
+        <Text style={tw` text-gray-500 text-md text-left font-light mt-2`}>
+          Convert your lecture notes into quizzes to test your knowledge and
+          improve your studying
+        </Text>
+      </View>
+      <View style={tw`flex-1 items-center bg-white`}>
+        <Image
+          source={require("../../assets/quizIcon.jpeg")}
+          style={tw.style(tw`h-3/6`, { aspectRatio: 1 })}
+        />
 
-      {/* <Pressable
+        {/* <Pressable
         style={tw`bg-green-500  pl-4 pr-5 py-1 rounded-xl`}
         title="Upload Notes"
         onPress={pickDocument}
@@ -140,28 +152,32 @@ const SplashScreen = ({ navigation }) => {
         onPress={() => generateQuiz(notes)}
       /> */}
 
-      <Text style={tw`text-3xl text-center font-semibold`}>
-        Quiz Instructions
-      </Text>
-
-      <View
-        style={tw`flex text-center justify-center items-center bg-green-500 mt-10 p-2 w-90 rounded-xl`}
-      >
-        <Text style={tw`text-white text-lg `}>Each Quiz has Four Options</Text>
-        <Text style={tw`text-white text-lg `}>
-          Progress Will Be Shown At The Top
+        <Text style={tw`text-3xl text-center font-semibold`}>
+          Quiz Instructions
         </Text>
-        <Text style={tw`text-white text-lg `}>
-          Score Will Be Shown At The End
-        </Text>
-      </View>
 
-      {/* <Pressable
+        <View
+          style={tw`flex text-center justify-center items-center bg-green-500 mt-10 p-2 w-90 rounded-xl`}
+        >
+          <Text style={tw`text-white text-lg `}>
+            Quizzes are all multiple choice
+          </Text>
+          <Text style={tw`text-white text-lg `}>
+            Progress Will Be Shown At The Top
+          </Text>
+          <Text style={tw`text-white text-lg `}>
+            Score Will Be Shown At The End
+          </Text>
+          <Text style={tw`text-white text-xl font-semibold `}>Goodluck</Text>
+        </View>
+
+        {/* <Pressable
         onPress={() => navigation.navigate("Questions")}
         style={tw`bg-green-500 mt-10 pl-4 pr-5 py-1 rounded-xl `}
       >
         <Text style={tw`text-white text-lg`}>Start</Text>
       </Pressable> */}
+      </View>
     </SafeAreaView>
   );
 };

@@ -124,7 +124,9 @@ const AddNotes = () => {
   return (
     <View style={tw`flex-1 items-center justify-center`}>
       <View style={tw`flex flex-col px-5`}>
-        <Text style={tw`text-2xl`}>Choose the file format of your notes</Text>
+        <Text style={tw`text-2xl font-semibold`}>
+          Choose the file format of your notes
+        </Text>
         <Pressable
           onPress={pickDocument}
           style={tw`border-2  mt-10 pl-4 pr-5 py-1 rounded-xl flex flex-row justify-between `}
@@ -156,7 +158,7 @@ const AddNotes = () => {
       </View>
       <Pressable
         onPress={pickDocument}
-        style={tw`bg-black mt-10 pl-4 pr-5 py-1 rounded-xl flex flex-row justify-between `}
+        style={tw`bg-green-500 mt-10 pl-4 pr-5 py-1 rounded-xl flex flex-row justify-between `}
       >
         <Text
           style={tw`text-white text-lg font-semibold`}
