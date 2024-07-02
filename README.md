@@ -13,6 +13,9 @@ Simple quiz game mobile App
 <img src="/screenshots/6.PNG" width="20%" >
 <img src="/screenshots/6.PNG" width="20%" >
 <img src="/screenshots/7.PNG" width="20%" >
+<img src="/screenshots/8.PNG" width="20%" >
+<img src="/screenshots/9.PNG" width="20%" >
+<img src="/screenshots/10.PNG" width="20%" >
 
 </div>
 
