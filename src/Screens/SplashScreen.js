@@ -5,6 +5,7 @@ import * as FileSystem from "expo-file-system";
 import tw from "twrnc";
 import axios from "axios";
 import { QuizContext } from "../config/QuizContext";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 //parse the quiz into an array of objects
 function parseQuiz(inputString) {
@@ -120,13 +121,13 @@ const SplashScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={tw`flex-1 items-center`}>
+    <SafeAreaView style={tw`flex-1 items-center bg-white`}>
       <Image
         source={require("../../assets/quizIcon.jpeg")}
         style={tw.style(tw`h-3/6`, { aspectRatio: 1 })}
       />
 
-      <Pressable
+      {/* <Pressable
         style={tw`bg-green-500  pl-4 pr-5 py-1 rounded-xl`}
         title="Upload Notes"
         onPress={pickDocument}
@@ -137,7 +138,7 @@ const SplashScreen = ({ navigation }) => {
         style={tw`bg-green-500 mt-10 pl-4 pr-5 py-1 rounded-xl`}
         title="Generate Quiz"
         onPress={() => generateQuiz(notes)}
-      />
+      /> */}
 
       <Text style={tw`text-3xl text-center font-semibold`}>
         Quiz Instructions
@@ -155,13 +156,13 @@ const SplashScreen = ({ navigation }) => {
         </Text>
       </View>
 
-      <Pressable
+      {/* <Pressable
         onPress={() => navigation.navigate("Questions")}
         style={tw`bg-green-500 mt-10 pl-4 pr-5 py-1 rounded-xl `}
       >
         <Text style={tw`text-white text-lg`}>Start</Text>
-      </Pressable>
-    </View>
+      </Pressable> */}
+    </SafeAreaView>
   );
 };
 

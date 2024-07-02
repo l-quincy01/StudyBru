@@ -23,9 +23,7 @@ const Tab = createBottomTabNavigator();
 function AppNavigator() {
   return (
     <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={{ headerShown: false, tabBarActiveTintColor: "#000" }}
-      >
+      <Tab.Navigator screenOptions={{ headerShown: false }}>
         <Tab.Screen
           name="Splash"
           options={{
