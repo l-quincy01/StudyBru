@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { View, Text, Button, Pressable, StyleSheet, Image } from "react-native";
+import { AntDesign } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
+import { Foundation } from "@expo/vector-icons";
 import * as DocumentPicker from "expo-document-picker";
-import * as FileSystem from "expo-file-system";
+import { QuizContext } from "../config/QuizContext";
 import tw from "twrnc";
 import axios from "axios";
-import { QuizContext } from "../config/QuizContext";
-import { SafeAreaView } from "react-native-safe-area-context";
-import Ionicons from "@expo/vector-icons/Ionicons";
 
 //parse the quiz into an array of objects
 function parseQuiz(inputString) {
@@ -33,7 +35,7 @@ function parseQuiz(inputString) {
   return result;
 }
 
-const SplashScreen = ({ navigation }) => {
+const AddNotes = () => {
   const [notes, setNotes] = useState("");
   const { quiz, setQuiz } = useContext(QuizContext);
 
@@ -75,7 +77,6 @@ const SplashScreen = ({ navigation }) => {
     console.log("QUIZ OBJECT HERE :", quiz);
   }, [quiz]);
 
-  //calls the upload document function once a file has been chosen
   const pickDocument = async () => {
     console.log("Document picker opened");
     let result = await DocumentPicker.getDocumentAsync({});
@@ -96,7 +97,6 @@ const SplashScreen = ({ navigation }) => {
     }
   };
 
-  // axios way, send NOTES TO OPEN  AI API TO GENERATE A QUIZ
   const generateQuiz = async (notes) => {
     console.log("Generating quiz with notes:", notes);
 
@@ -122,66 +122,53 @@ const SplashScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={tw`flex-1 gap-y-10 p-5  bg-white`}>
-      <View style={tw`flex flex-col`}>
-        <View style={tw`flex flex-row items-center justify-between`}>
-          <Text style={tw`text-3xl text-left font-semibold`}>Study Buddy</Text>
-          <Ionicons name="information-circle-outline" size={30} color="black" />
-        </View>
-        <Text style={tw` text-gray-500 text-md text-left font-light mt-2`}>
-          Convert your lecture notes into quizzes to test your knowledge and
-          improve your studying
+    <View style={tw`flex-1 items-center justify-center`}>
+      <View style={tw`flex flex-col px-5`}>
+        <Text style={tw`text-2xl font-semibold`}>
+          Choose the file format of your notes
         </Text>
-      </View>
-      <View style={tw`flex-1 items-center bg-white`}>
-        <Image
-          source={require("../../assets/quizIcon.jpeg")}
-          style={tw.style(tw`h-3/6`, { aspectRatio: 1 })}
-        />
-
-        {/* <Pressable
-        style={tw`bg-green-500  pl-4 pr-5 py-1 rounded-xl`}
-        title="Upload Notes"
-        onPress={pickDocument}
-      >
-        <Text style={tw`text-white text-lg`}>Upload</Text>
-      </Pressable>
-      <Button
-        style={tw`bg-green-500 mt-10 pl-4 pr-5 py-1 rounded-xl`}
-        title="Generate Quiz"
-        onPress={() => generateQuiz(notes)}
-      /> */}
-
-        <Text style={tw`text-3xl text-center font-semibold`}>
-          Quiz Instructions
-        </Text>
-
-        <View
-          style={tw`flex text-center justify-center items-center bg-green-500 mt-10 p-2 w-90 rounded-xl`}
+        <Pressable
+          onPress={pickDocument}
+          style={tw`border-2  mt-10 pl-4 pr-5 py-1 rounded-xl flex flex-row justify-between `}
         >
-          <Text style={tw`text-white text-lg `}>
-            Quizzes are all multiple choice
-          </Text>
-          <Text style={tw`text-white text-lg `}>
-            Progress Will Be Shown At The Top
-          </Text>
-          <Text style={tw`text-white text-lg `}>
-            Score Will Be Shown At The End
-          </Text>
-          <Text style={tw`text-white text-xl font-semibold `}>Goodluck</Text>
-        </View>
-
-        {/* <Pressable
-        onPress={() => navigation.navigate("Questions")}
-        style={tw`bg-green-500 mt-10 pl-4 pr-5 py-1 rounded-xl `}
-      >
-        <Text style={tw`text-white text-lg`}>Start</Text>
-      </Pressable> */}
+          <Text style={tw`text-black text-lg`}>PDF</Text>
+          <AntDesign name="pdffile1" size={24} color="black" />
+        </Pressable>
+        <Pressable
+          onPress={pickDocument}
+          style={tw`border-2  mt-10 pl-4 pr-5 py-1 rounded-xl flex flex-row justify-between `}
+        >
+          <Text style={tw`text-black text-lg`}>Word Document</Text>
+          <Foundation name="page-doc" size={24} color="black" />
+        </Pressable>
+        <Pressable
+          onPress={pickDocument}
+          style={tw`border-2  mt-10 pl-4 pr-5 py-1 rounded-xl flex flex-row justify-between `}
+        >
+          <Text style={tw`text-black text-lg`}>PowerPoint Presentation</Text>
+          <FontAwesome name="file-powerpoint-o" size={24} color="black" />
+        </Pressable>
+        <Pressable
+          onPress={pickDocument}
+          style={tw`border-2  mt-10 pl-4 pr-5 py-1 rounded-xl flex flex-row justify-between `}
+        >
+          <Text style={tw`text-black text-lg`}>Text File</Text>
+          <Entypo name="text-document" size={24} color="black" />
+        </Pressable>
       </View>
-    </SafeAreaView>
+      <Pressable
+        onPress={pickDocument}
+        style={tw`bg-green-500 mt-10 pl-4 pr-5 py-1 rounded-xl flex flex-row justify-between `}
+      >
+        <Text
+          style={tw`text-white text-lg font-semibold`}
+          onPress={() => generateQuiz(notes)}
+        >
+          Generate Quiz
+        </Text>
+      </Pressable>
+    </View>
   );
 };
 
-export default SplashScreen;
-
-const styles = StyleSheet.create({});
+export default AddNotes;
