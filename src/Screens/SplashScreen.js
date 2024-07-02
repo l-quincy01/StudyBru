@@ -126,8 +126,18 @@ const SplashScreen = ({ navigation }) => {
         style={tw.style(tw`h-3/6`, { aspectRatio: 1 })}
       />
 
-      <Button title="Upload Notes" onPress={pickDocument} />
-      <Button title="Generate Quiz" onPress={() => generateQuiz(notes)} />
+      <Pressable
+        style={tw`bg-green-500  pl-4 pr-5 py-1 rounded-xl`}
+        title="Upload Notes"
+        onPress={pickDocument}
+      >
+        <Text style={tw`text-white text-lg`}>Upload</Text>
+      </Pressable>
+      <Button
+        style={tw`bg-green-500 mt-10 pl-4 pr-5 py-1 rounded-xl`}
+        title="Generate Quiz"
+        onPress={() => generateQuiz(notes)}
+      />
 
       <Text style={tw`text-3xl text-center font-semibold`}>
         Quiz Instructions
