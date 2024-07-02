@@ -81,10 +81,6 @@
 
 1. Generate your own OpenAI API key to use the backend
 
-## Contributing
-
-Contributions are welcome! Please feel free to submit a pull request or open an issue if you have any suggestions or improvements. I will look at them
-
 ## Future Plans
 
 - **Login:** - OAuth integration for users to login in using social accounts
@@ -92,6 +88,10 @@ Contributions are welcome! Please feel free to submit a pull request or open an 
 - **Flashcards:** - Feature to allow the generation of flashcards for the user
 - **Quiz re-generation:** - Feature to allow users to re-generate quizes on the same set of notes
 - **Notes summariser:** - Feature to allow users to generate a concise and summarised version of long lecture notes
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a pull request or open an issue if you have any suggestions or improvements. I will look at them
 
 ## License
 
