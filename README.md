@@ -10,17 +10,17 @@
 
 <div style="display:flex;" >
 
-<img src="/StudyBuddy/assets/screenshots/1.PNG" width="20%" >
-<img src="/StudyBuddy/assets/screenshots/2.PNG" width="20%" >
-<img src="/StudyBuddy/assets/screenshots/3.PNG" width="20%" >
-<img src="/StudyBuddy/assets/screenshots/4.PNG" width="20%" >
-<img src="/StudyBuddy/assets/screenshots/5.PNG" width="20%" >
-<img src="/StudyBuddy/assets/screenshots/6.PNG" width="20%" >
-<img src="/StudyBuddy/assets/screenshots/6.PNG" width="20%" >
-<img src="/StudyBuddy/assets/screenshots/7.PNG" width="20%" >
-<img src="/StudyBuddy/assets/screenshots/8.PNG" width="20%" >
-<img src="/StudyBuddy/assets/screenshots/9.PNG" width="20%" >
-<img src="/StudyBuddy/assets/screenshots/10.PNG" width="20%" >
+<img src="/assets/screenshots/1.PNG" width="20%" >
+<img src="/assets/screenshots/2.PNG" width="20%" >
+<img src="/assets/screenshots/3.PNG" width="20%" >
+<img src="/assets/screenshots/4.PNG" width="20%" >
+<img src="/assets/screenshots/5.PNG" width="20%" >
+<img src="/assets/screenshots/6.PNG" width="20%" >
+<img src="/assets/screenshots/6.PNG" width="20%" >
+<img src="/assets/screenshots/7.PNG" width="20%" >
+<img src="/assets/screenshots/8.PNG" width="20%" >
+<img src="/assets/screenshots/9.PNG" width="20%" >
+<img src="/assets/screenshots/10.PNG" width="20%" >
 
 </div>
 
