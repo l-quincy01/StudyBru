@@ -1,10 +1,8 @@
-
 # Study Buddy
 
 ## Description
 
 **Study Buddy** is a React Native app designed to help students transform their lecture notes into interactive quizzes. This app allows users to upload documents (PDF, DOCX, PPTX), extract the text content, and generate quizzes based on the extracted information. With Study Buddy, you can test your knowledge and enhance your studying experience in a fun and engaging way.
-
 
 ## Screenshots
 
@@ -87,6 +85,14 @@
 
 Contributions are welcome! Please feel free to submit a pull request or open an issue if you have any suggestions or improvements. I will look at them
 
+## Future Plans
+
+- **Login:** - OAuth integration for users to login in using social accounts
+- **Database and Cloud storage :** - Store the users notes to the cloud
+- **Flashcards:** - Feature to allow the generation of flashcards for the user
+- **Quiz re-generation:** - Feature to allow users to re-generate quizes on the same set of notes
+- **Notes summariser:** - Feature to allow users to generate a concise and summarised version of long lecture notes
+
 ## License
 
 This project is licensed under the MIT License.
@@ -94,4 +100,3 @@ This project is licensed under the MIT License.
 ---
 
 With Study Buddy, you can seamlessly convert your study material into engaging quizzes to make learning more interactive and effective. Happy studying!
-
