@@ -4,7 +4,7 @@ const { OpenAIApi, OpenAI } = require("openai");
 
 // Initialize OpenAI API
 const openai = new OpenAI({
-  apiKey: "sk-proj-TCSUs8LpnK7hwI6YryurT3BlbkFJrvVyGJa7TOrwNDmGEPOL",
+  apiKey: "API KEY HERE",
 });
 
 const app = express();
