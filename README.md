@@ -38,11 +38,11 @@
 1. **Upload Notes:**
 
    - Use the document picker to upload your lecture notes.
-   - The app sends the document to a backend API that parses the document and extracts its text-content.
+   - The app sends the document to a backend API that parses it and extracts its text content.
 
 2. **Generate Quiz:**
 
-   - Once the text is extracted, it is sent to OpenAI API to generate quiz questions.
+   - The text is extracted and sent to OpenAI API to generate quiz questions.
    - The app parses the quiz questions into a structured format.
 
 3. **Take the Quiz:**
@@ -82,6 +82,15 @@
 ### API KEYS
 
 1. Generate your own OpenAI API key to use the backend
+
+
+## Future Plans
+
+- **Login:** - OAuth integration for users to login in using social accounts
+- **Database and Cloud storage :** - Store the users notes to the cloud
+- **Flashcards:** - Feature to allow the generation of flashcards for the user
+- **Quiz Re-generation:** - Feature to allow users to re-generate quizzes on the same set of notes
+- **Notes Summariser:** - Feature to allow users to generate a concise and summarised version of long lecture notes
 
 ## Contributing
 
