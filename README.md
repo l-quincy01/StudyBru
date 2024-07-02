@@ -82,7 +82,7 @@
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a pull request or open an issue if you have any suggestions or improvements.
+Contributions are welcome! Please feel free to submit a pull request or open an issue if you have any suggestions or improvements. I will look at them
 
 ## License
 
