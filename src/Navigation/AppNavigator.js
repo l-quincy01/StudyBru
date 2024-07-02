@@ -14,6 +14,7 @@ import Octicons from "@expo/vector-icons/Octicons";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome6 } from "@expo/vector-icons";
 import AddNotes from "../Screens/AddNotes";
+import QuizStack from "./QuizStack";
 
 const Stack = createNativeStackNavigator();
 
@@ -59,7 +60,7 @@ function AppNavigator() {
               <FontAwesome6 name="brain" size={24} color="black" />
             ),
           }}
-          component={QuestionsScreen}
+          component={QuizStack}
         />
       </Tab.Navigator>
     </NavigationContainer>
