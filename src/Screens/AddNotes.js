@@ -12,8 +12,7 @@ import axios from "axios";
 
 //parse the quiz into an array of objects
 function parseQuiz(inputString) {
-  // Remove line breaks and extra spaces
-  inputString = inputString.replace(/\n/g, "").replace(/\s+/g, " ");
+  inputString = inputString.replace(/\n/g, "").replace(/\s+/g, " "); // Remove line breaks and extra spaces
 
   // Split the string into individual question blocks
   const questionBlocks = inputString.match(/\{[^}]+\}/g);
@@ -41,6 +40,7 @@ const AddNotes = () => {
 
   //upload document fuction. Send the document to parse api endpoint to parse the file into text
   const uploadDocument = async (file) => {
+    console.log("ashee:" + file.assets[0].mimeType);
     const formData = new FormData();
     formData.append("file", {
       uri: file.assets[0].uri,
@@ -49,18 +49,60 @@ const AddNotes = () => {
     });
 
     try {
-      const response = await axios.post(
-        "http://192.168.68.108:3001/parse-pdf",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      console.log("File uploaded successfully", cleanText(response.data.text));
-      setNotes(cleanText(response.data.text));
+      if (file.assets[0].mimeType === "application/pdf") {
+        const response = await axios.post(
+          "http://172.20.10.7:3001/parse-pdf",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        console.log(
+          "File uploaded successfully",
+          cleanText(response.data.text)
+        );
+        setNotes(cleanText(response.data.text));
+      }
+      if (
+        file.assets[0].mimeType ==
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      ) {
+        const response = await axios.post(
+          "http://172.20.10.7:3001/parse-docx",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        console.log(
+          "File uploaded successfully",
+          cleanText(response.data.text)
+        );
+        setNotes(cleanText(response.data.text));
+      }
+      if (
+        file.assets[0].mimeType ==
+        "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+      ) {
+        const response = await axios.post(
+          "http://172.20.10.7:3001/parse-pptx",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        console.log(
+          "File uploaded successfully",
+          cleanText(response.data.text)
+        );
+        setNotes(cleanText(response.data.text));
+      }
     } catch (err) {
       console.error("Error uploading file:", err);
     }
@@ -102,7 +144,7 @@ const AddNotes = () => {
 
     try {
       const response = await axios.post(
-        "http://192.168.68.108:3000/generate-quiz",
+        "http://172.20.10.7:3000/generate-quiz",
         {
           notes: notes,
         },
@@ -122,38 +164,17 @@ const AddNotes = () => {
   };
 
   return (
-    <View style={tw`flex-1 items-center justify-center`}>
+    <View style={tw`flex-1 items-center justify-center bg-white`}>
       <View style={tw`flex flex-col px-5`}>
         <Text style={tw`text-2xl font-semibold`}>
           Choose the file format of your notes
         </Text>
         <Pressable
           onPress={pickDocument}
-          style={tw`border-2  mt-10 pl-4 pr-5 py-1 rounded-xl flex flex-row justify-between `}
+          style={tw`border-2  mt-10 pl-4 pr-5 py-1 rounded-xl flex  flex-col items-center`}
         >
-          <Text style={tw`text-black text-lg`}>PDF</Text>
           <AntDesign name="pdffile1" size={24} color="black" />
-        </Pressable>
-        <Pressable
-          onPress={pickDocument}
-          style={tw`border-2  mt-10 pl-4 pr-5 py-1 rounded-xl flex flex-row justify-between `}
-        >
-          <Text style={tw`text-black text-lg`}>Word Document</Text>
-          <Foundation name="page-doc" size={24} color="black" />
-        </Pressable>
-        <Pressable
-          onPress={pickDocument}
-          style={tw`border-2  mt-10 pl-4 pr-5 py-1 rounded-xl flex flex-row justify-between `}
-        >
-          <Text style={tw`text-black text-lg`}>PowerPoint Presentation</Text>
-          <FontAwesome name="file-powerpoint-o" size={24} color="black" />
-        </Pressable>
-        <Pressable
-          onPress={pickDocument}
-          style={tw`border-2  mt-10 pl-4 pr-5 py-1 rounded-xl flex flex-row justify-between `}
-        >
-          <Text style={tw`text-black text-lg`}>Text File</Text>
-          <Entypo name="text-document" size={24} color="black" />
+          <Text style={tw`text-black text-lg`}>Upload</Text>
         </Pressable>
       </View>
       <Pressable

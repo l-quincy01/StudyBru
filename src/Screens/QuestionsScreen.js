@@ -62,8 +62,10 @@ const QuestionsScreen = ({ navigation }) => {
 
   if (!quiz || quiz.length === 0) {
     return (
-      <View style={tw`flex-1 items-center justify-center`}>
-        <Text style={tw`text-2xl`}>No quiz data available</Text>
+      <View style={tw`flex-1 items-center justify-center  p-5`}>
+        <Text style={tw`text-2xl text-center`}>
+          Quizzes will become availble once you add notes
+        </Text>
       </View>
     );
   }

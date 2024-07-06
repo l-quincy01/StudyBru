@@ -7,6 +7,7 @@ import axios from "axios";
 import { QuizContext } from "../config/QuizContext";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { AntDesign } from "@expo/vector-icons";
 
 //parse the quiz into an array of objects
 function parseQuiz(inputString) {
@@ -39,6 +40,7 @@ const SplashScreen = ({ navigation }) => {
 
   //upload document fuction. Send the document to parse api endpoint to parse the file into text
   const uploadDocument = async (file) => {
+    console.log("ashee:" + file.assets[0].mimeType);
     const formData = new FormData();
     formData.append("file", {
       uri: file.assets[0].uri,
@@ -47,18 +49,60 @@ const SplashScreen = ({ navigation }) => {
     });
 
     try {
-      const response = await axios.post(
-        "http://192.168.68.108:3001/parse-pdf",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      console.log("File uploaded successfully", cleanText(response.data.text));
-      setNotes(cleanText(response.data.text));
+      if (file.assets[0].mimeType === "application/pdf") {
+        const response = await axios.post(
+          "http://172.20.10.7:3001/parse-pdf",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        console.log(
+          "File uploaded successfully",
+          cleanText(response.data.text)
+        );
+        setNotes(cleanText(response.data.text));
+      }
+      if (
+        file.assets[0].mimeType ==
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      ) {
+        const response = await axios.post(
+          "http://172.20.10.7:3001/parse-docx",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        console.log(
+          "File uploaded successfully",
+          cleanText(response.data.text)
+        );
+        setNotes(cleanText(response.data.text));
+      }
+      if (
+        file.assets[0].mimeType ==
+        "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+      ) {
+        const response = await axios.post(
+          "http://172.20.10.7:3001/parse-pptx",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        console.log(
+          "File uploaded successfully",
+          cleanText(response.data.text)
+        );
+        setNotes(cleanText(response.data.text));
+      }
     } catch (err) {
       console.error("Error uploading file:", err);
     }
@@ -133,7 +177,7 @@ const SplashScreen = ({ navigation }) => {
           improve your studying
         </Text>
       </View>
-      <View style={tw`flex-1 items-center bg-white`}>
+      <View style={tw`flex-1 items-center `}>
         <Image
           source={require("../../assets/quizIcon.jpeg")}
           style={tw.style(tw`h-3/6`, { aspectRatio: 1 })}
@@ -151,7 +195,7 @@ const SplashScreen = ({ navigation }) => {
         title="Generate Quiz"
         onPress={() => generateQuiz(notes)}
       /> */}
-
+        {/* 
         <Text style={tw`text-3xl text-center font-semibold`}>
           Quiz Instructions
         </Text>
@@ -169,6 +213,54 @@ const SplashScreen = ({ navigation }) => {
             Score Will Be Shown At The End
           </Text>
           <Text style={tw`text-white text-xl font-semibold `}>Goodluck</Text>
+        </View> */}
+        <View
+          style={tw` flex flex-row gap-x-5  px-20 justify-between items-center`}
+        >
+          <Pressable
+            onPress={pickDocument}
+            //   onPress={() => generateQuiz(notes)}
+            style={tw` gap-y-3 flex text-center justify-center items-center bg-gray-200  py-2 px-5 rounded-xl`}
+          >
+            <Text style={tw` text-left  font-semibold text-md`}>
+              Create Magic Notes
+            </Text>
+            <View style={tw`flex flex-col items-center `}>
+              <AntDesign name="pdffile1" size={24} color="black" />
+              <Text style={tw` text-left  font-semibold text-md`}>
+                Select File
+              </Text>
+              <Text style={tw` text-left  font-light text-xs `}>
+                .pdf, .docx, .pptx
+              </Text>
+            </View>
+
+            <Text style={tw` text-left  font-light text-xs `}>
+              Create beautifully summarised versions of your notes
+            </Text>
+          </Pressable>
+          <Pressable
+            onPress={pickDocument}
+            //   onPress={() => generateQuiz(notes)}
+            style={tw` gap-y-3 flex text-center justify-center items-center bg-gray-200  py-2 px-5 rounded-xl`}
+          >
+            <Text style={tw` text-left  font-semibold text-md`}>
+              Create Quiz Now
+            </Text>
+            <View style={tw`flex flex-col items-center `}>
+              <AntDesign name="pdffile1" size={24} color="black" />
+              <Text style={tw` text-left  font-semibold text-md`}>
+                Select File
+              </Text>
+              <Text style={tw` text-left  font-light text-xs `}>
+                .pdf, .docx, .pptx
+              </Text>
+            </View>
+
+            <Text style={tw` text-left  font-light text-xs `}>
+              Create an interactive quiz to test your knowledge.
+            </Text>
+          </Pressable>
         </View>
 
         {/* <Pressable

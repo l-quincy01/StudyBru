@@ -6,6 +6,7 @@ const pptx2json = require("pptx2json");
 
 const app = express();
 const upload = multer({ storage: multer.memoryStorage() });
+const pptx2jsonInstance = new pptx2json();
 
 app.post("/parse-pdf", upload.single("file"), async (req, res) => {
   try {
@@ -35,7 +36,9 @@ app.post("/parse-pptx", upload.single("file"), async (req, res) => {
   try {
     console.log("Received a PPTX file");
     const pptxBuffer = req.file.buffer;
-    const result = await pptx2json(pptxBuffer);
+
+    const result = await pptx2jsonInstance.parse(pptxBuffer);
+
     res.json({ text: result });
   } catch (error) {
     console.error("Error parsing PPTX:", error);
