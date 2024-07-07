@@ -31,8 +31,6 @@ const MagicNotes = () => {
   const handleNext = () => {
     if (currentQuestionIndex < flashCards.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
-      setSelectedOption(null);
-      setIsCorrect(null);
     } else {
       navigation.navigate("End", { userScore: score });
     }
@@ -55,31 +53,34 @@ const MagicNotes = () => {
   //     </View>
   //   );
   // }
+  const currentCard = flashCards[currentQuestionIndex];
   return (
     //Flash Card
     <View style={tw`flex-1 flex-col items-center justify-center  p-5`}>
+      <View style={tw`flex-row top-5 absolute`}>
+        <View style={tw`flex-1 `}>
+          <Progress.Bar
+            progress={progress}
+            width={null}
+            height={20}
+            color="green"
+          />
+        </View>
+      </View>
       <View
-        // onPress={pickDocument}
-        //   onPress={() => generateQuiz(notes)}
-        style={tw` gap-y-3 flex text-center justify-center items-center bg-gray-200  py-2 px-5 rounded-xl`}
+        style={tw`h-[400px] w-[300px] mt-5 gap-y-3 flex text-center justify-center items-center bg-gray-200  py-2 px-5 rounded-xl`}
       >
-        <Text style={tw` text-center  font-semibold text-xl`}>Front</Text>
-
         <Text style={tw` text-center  font-medium text-lg `}>
-          Create an interactive quiz to test your knowledge. Create an
-          interactive quiz to test your knowledge. Create an interactive quiz to
-          test your knowledge. Create an interactive quiz to test your
-          knowledge. Create an interactive quiz to test your knowledge. Create
-          an interactive quiz to test your knowledge. Create an interactive quiz
-          to test your knowledge. Create an interactive quiz to test your
-          knowledge. Create an interactive quiz to test your knowledge. Create
-          an interactive quiz to test your knowledge. Create an interactive quiz
-          to test your knowledge.
+          {currentCard.back}
         </Text>
       </View>
       <View style={tw`items-center justify-between flex flex-row w-full `}>
-        <FontAwesome5 name="chevron-left" size={24} color="black" />
-        <FontAwesome5 name="chevron-right" size={24} color="black" />
+        <Pressable onPress={handlePrev} style={tw`p-5`}>
+          <FontAwesome5 name="chevron-left" size={24} color="black" />
+        </Pressable>
+        <Pressable onPress={handleNext} style={tw`p-5`}>
+          <FontAwesome5 name="chevron-right" size={24} color="black" />
+        </Pressable>
       </View>
     </View>
   );
