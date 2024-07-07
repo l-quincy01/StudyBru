@@ -16,6 +16,9 @@ import { FontAwesome6 } from "@expo/vector-icons";
 import AddNotes from "../Screens/AddNotes";
 import QuizStack from "./QuizStack";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import Feather from "@expo/vector-icons/Feather";
+import Magicnotes from "../Screens/MagicNotes";
+import MagicNotesStack from "./MagicNotesStack";
 
 const Stack = createNativeStackNavigator();
 
@@ -41,10 +44,10 @@ function AppNavigator() {
           name="Add Notes"
           options={{
             tabBarLabel: ({ color }) => (
-              <Text style={{ color: color }}> Add Notes</Text>
+              <Text style={{ color: color }}> Scan Notes</Text>
             ),
             tabBarIcon: ({ color, size }) => (
-              <Octicons name="diff-added" size={24} color="black" />
+              <Feather name="camera" size={24} color="black" />
             ),
           }}
           component={AddNotes}
@@ -63,7 +66,7 @@ function AppNavigator() {
               />
             ),
           }}
-          component={AddNotes}
+          component={MagicNotesStack}
         />
         <Tab.Screen
           name="Quiz"
@@ -72,7 +75,7 @@ function AppNavigator() {
               <Text style={{ color: color }}> Quiz</Text>
             ),
             tabBarIcon: ({ color, size }) => (
-              <FontAwesome6 name="brain" size={24} color="black" />
+              <MaterialCommunityIcons name="brain" size={24} color="black" />
             ),
           }}
           component={QuizStack}

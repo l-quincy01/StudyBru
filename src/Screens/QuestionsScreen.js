@@ -11,6 +11,7 @@ import tw from "twrnc";
 import * as Progress from "react-native-progress";
 import { QuizContext } from "../config/QuizContext";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { AntDesign } from "@expo/vector-icons";
 
 const QuestionsScreen = ({ navigation }) => {
   const { quiz } = useContext(QuizContext);
@@ -63,9 +64,28 @@ const QuestionsScreen = ({ navigation }) => {
   if (!quiz || quiz.length === 0) {
     return (
       <View style={tw`flex-1 items-center justify-center  p-5`}>
-        <Text style={tw`text-2xl text-center`}>
-          Quizzes will become availble once you add notes
-        </Text>
+        <Pressable
+          // onPress={pickDocument}
+          //   onPress={() => generateQuiz(notes)}
+          style={tw` gap-y-3 flex text-center justify-center items-center bg-gray-200  py-2 px-5 rounded-xl`}
+        >
+          <Text style={tw` text-left  font-semibold text-md`}>
+            Create Quiz Now
+          </Text>
+          <View style={tw`flex flex-col items-center `}>
+            <AntDesign name="pdffile1" size={24} color="black" />
+            <Text style={tw` text-left  font-semibold text-md`}>
+              Select File
+            </Text>
+            <Text style={tw` text-left  font-light text-xs `}>
+              .pdf, .docx, .pptx
+            </Text>
+          </View>
+
+          <Text style={tw` text-left  font-light text-xs `}>
+            Create an interactive quiz to test your knowledge.
+          </Text>
+        </Pressable>
       </View>
     );
   }
