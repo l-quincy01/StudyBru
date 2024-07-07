@@ -15,6 +15,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome6 } from "@expo/vector-icons";
 import AddNotes from "../Screens/AddNotes";
 import QuizStack from "./QuizStack";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 const Stack = createNativeStackNavigator();
 
@@ -44,6 +45,22 @@ function AppNavigator() {
             ),
             tabBarIcon: ({ color, size }) => (
               <Octicons name="diff-added" size={24} color="black" />
+            ),
+          }}
+          component={AddNotes}
+        />
+        <Tab.Screen
+          name="Magic Notes"
+          options={{
+            tabBarLabel: ({ color }) => (
+              <Text style={{ color: color }}>Magic Notes</Text>
+            ),
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons
+                name="card-text-outline"
+                size={24}
+                color="black"
+              />
             ),
           }}
           component={AddNotes}
