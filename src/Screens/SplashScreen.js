@@ -8,6 +8,7 @@ import { QuizContext } from "../config/QuizContext";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { AntDesign } from "@expo/vector-icons";
+import { FlashCardsContext } from "../config/FlashCardsContext";
 
 //parse the quiz into an array of objects
 function parseQuiz(inputString) {
@@ -37,6 +38,7 @@ function parseQuiz(inputString) {
 const SplashScreen = ({ navigation }) => {
   const [notes, setNotes] = useState("");
   const { quiz, setQuiz } = useContext(QuizContext);
+  const { flashCards, setFlashCards } = useContext(FlashCardsContext);
 
   //upload document fuction. Send the document to parse api endpoint to parse the file into text
   const uploadDocument = async (file) => {
@@ -112,9 +114,18 @@ const SplashScreen = ({ navigation }) => {
     // Replace multiple line breaks and spaces with a single space
     return text.replace(/\s+/g, " ");
   };
+
+  useEffect(() => {
+    if (notes) {
+      generateQuiz(notes);
+      generateFlashCards(notes);
+    }
+  }, [notes]);
+
   useEffect(() => {
     console.log("Notes updated:", notes);
   }, [notes]);
+
   useEffect(() => {
     console.log("QUIZ OBJECT HERE :", quiz);
   }, [quiz]);
@@ -139,7 +150,7 @@ const SplashScreen = ({ navigation }) => {
       console.log("Document picker cancelled or failed");
     }
   };
-
+  // QUIZ FUNCTION
   // axios way, send NOTES TO OPEN  AI API TO GENERATE A QUIZ
   const generateQuiz = async (notes) => {
     console.log("Generating quiz with notes:", notes);
@@ -164,6 +175,31 @@ const SplashScreen = ({ navigation }) => {
       console.error("Error generating quiz:", error);
     }
   };
+  /// FLASHCARDS FUNCTION
+  // axios way, send NOTES TO OPEN  AI API TO GENERATE FLASHCARDS
+  const generateFlashCards = async (notes) => {
+    console.log("Generating flashcards with these notes:", notes);
+
+    try {
+      const response = await axios.post(
+        "http://192.168.68.108:3000/generate-flashCards",
+        {
+          notes: notes,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      //set quiz from the response
+      const data = response.data;
+      console.log("Received RAW DATA DATA FLASH-CARDS:", data.questions);
+      setFlashCards(parseQuiz(data.questions));
+    } catch (error) {
+      console.error("Error generating FLASHCARDS:", error);
+    }
+  };
 
   return (
     <SafeAreaView style={tw`flex-1 gap-y-10 p-5  bg-white`}>
@@ -183,43 +219,12 @@ const SplashScreen = ({ navigation }) => {
           style={tw.style(tw`h-3/6`, { aspectRatio: 1 })}
         />
 
-        {/* <Pressable
-        style={tw`bg-green-500  pl-4 pr-5 py-1 rounded-xl`}
-        title="Upload Notes"
-        onPress={pickDocument}
-      >
-        <Text style={tw`text-white text-lg`}>Upload</Text>
-      </Pressable>
-      <Button
-        style={tw`bg-green-500 mt-10 pl-4 pr-5 py-1 rounded-xl`}
-        title="Generate Quiz"
-        onPress={() => generateQuiz(notes)}
-      /> */}
-        {/* 
-        <Text style={tw`text-3xl text-center font-semibold`}>
-          Quiz Instructions
-        </Text>
-
-        <View
-          style={tw`flex text-center justify-center items-center bg-green-500 mt-10 p-2 w-90 rounded-xl`}
-        >
-          <Text style={tw`text-white text-lg `}>
-            Quizzes are all multiple choice
-          </Text>
-          <Text style={tw`text-white text-lg `}>
-            Progress Will Be Shown At The Top
-          </Text>
-          <Text style={tw`text-white text-lg `}>
-            Score Will Be Shown At The End
-          </Text>
-          <Text style={tw`text-white text-xl font-semibold `}>Goodluck</Text>
-        </View> */}
         <View
           style={tw` flex flex-row gap-x-5  px-20 justify-between items-center`}
         >
           <Pressable
             onPress={pickDocument}
-            //   onPress={() => generateQuiz(notes)}
+            onPress={() => generateQuiz(notes)}
             style={tw` gap-y-3 flex text-center justify-center items-center bg-gray-200  py-2 px-5 rounded-xl`}
           >
             <Text style={tw` text-left  font-semibold text-md`}>

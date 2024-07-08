@@ -1,13 +1,14 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import { Animated, Pressable, StyleSheet, Text, View } from "react-native";
 import tw from "twrnc";
 import * as Progress from "react-native-progress";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { flashCards } from "../config/FlashCards";
+import { FlashCardsContext } from "../config/FlashCardsContext";
 
 const MagicNotes = ({ navigation }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [flashCardSide, setFlashCardSide] = useState(false);
+  const { flashCardSide } = useContext(FlashCardsContext);
   const progress =
     flashCards.length > 0 ? (currentQuestionIndex + 1) / flashCards.length : 0;
 
@@ -25,7 +26,7 @@ const MagicNotes = ({ navigation }) => {
     if (currentQuestionIndex < flashCards.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setFlashCardSide(false);
-      flipAnim.setValue(0); // Reset animation
+      flipAnim.setValue(0);
     } else {
       navigation.navigate("End", { userScore: score });
     }
@@ -35,7 +36,7 @@ const MagicNotes = ({ navigation }) => {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(currentQuestionIndex - 1);
       setFlashCardSide(false);
-      flipAnim.setValue(0); // Reset animation
+      flipAnim.setValue(0);
     } else {
       navigation.navigate("Splash");
     }
@@ -75,7 +76,7 @@ const MagicNotes = ({ navigation }) => {
             ]}
           >
             <Text style={tw`text-center font-medium text-lg`}>
-              {currentCard.front}
+              {currentCard.back}
             </Text>
           </Animated.View>
           <Animated.View
@@ -90,7 +91,7 @@ const MagicNotes = ({ navigation }) => {
             ]}
           >
             <Text style={tw`text-center font-medium text-lg`}>
-              {currentCard.back}
+              {currentCard.front}
             </Text>
           </Animated.View>
         </View>
