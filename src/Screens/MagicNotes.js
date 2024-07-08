@@ -3,7 +3,7 @@ import { Animated, Pressable, StyleSheet, Text, View } from "react-native";
 import tw from "twrnc";
 import * as Progress from "react-native-progress";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { flashCards } from "../config/FlashCards";
+//import { flashCards } from "../config/FlashCards";
 import { FlashCardsContext } from "../config/FlashCardsContext";
 
 const MagicNotes = ({ navigation }) => {

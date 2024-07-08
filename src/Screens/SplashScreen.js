@@ -1,5 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, Button, Pressable, StyleSheet, Image } from "react-native";
+import {
+  View,
+  Text,
+  Button,
+  Pressable,
+  StyleSheet,
+  Image,
+  ActivityIndicator,
+} from "react-native";
 import * as DocumentPicker from "expo-document-picker";
 import * as FileSystem from "expo-file-system";
 import tw from "twrnc";
@@ -39,6 +47,7 @@ const SplashScreen = ({ navigation }) => {
   const [notes, setNotes] = useState("");
   const { quiz, setQuiz } = useContext(QuizContext);
   const { flashCards, setFlashCards } = useContext(FlashCardsContext);
+  const [loading, setLoading] = useState(false);
 
   //upload document fuction. Send the document to parse api endpoint to parse the file into text
   const uploadDocument = async (file) => {
@@ -117,18 +126,25 @@ const SplashScreen = ({ navigation }) => {
 
   useEffect(() => {
     if (notes) {
+      setLoading(true);
       generateQuiz(notes);
       generateFlashCards(notes);
     }
   }, [notes]);
 
   useEffect(() => {
-    console.log("Notes updated:", notes);
-  }, [notes]);
+    if (quiz.length > 0 && flashCards.length > 0) {
+      setLoading(false);
+    }
+  }, [quiz, flashCards]);
 
-  useEffect(() => {
-    console.log("QUIZ OBJECT HERE :", quiz);
-  }, [quiz]);
+  // useEffect(() => {
+  //   console.log("Notes updated:", notes);
+  // }, [notes]);
+
+  // useEffect(() => {
+  //   console.log("QUIZ OBJECT HERE :", quiz);
+  // }, [quiz]);
 
   //calls the upload document function once a file has been chosen
   const pickDocument = async () => {
@@ -202,79 +218,82 @@ const SplashScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={tw`flex-1 gap-y-10 p-5  bg-white`}>
-      <View style={tw`flex flex-col`}>
-        <View style={tw`flex flex-row items-center justify-between`}>
-          <Text style={tw`text-3xl text-left font-semibold`}>Study Buddy</Text>
-          <Ionicons name="information-circle-outline" size={30} color="black" />
+    <SafeAreaView style={tw`flex-1 gap-y-10 p-5 bg-white`}>
+      {loading ? (
+        <View style={tw`flex-1 justify-center items-center`}>
+          <ActivityIndicator size="large" color="#0000ff" />
+          <Text>Loading...</Text>
         </View>
-        <Text style={tw` text-gray-500 text-md text-left font-light mt-2`}>
-          Convert your lecture notes into quizzes to test your knowledge and
-          improve your studying
-        </Text>
-      </View>
-      <View style={tw`flex-1 items-center `}>
-        <Image
-          source={require("../../assets/quizIcon.jpeg")}
-          style={tw.style(tw`h-3/6`, { aspectRatio: 1 })}
-        />
-
-        <View
-          style={tw` flex flex-row gap-x-5  px-20 justify-between items-center`}
-        >
-          <Pressable
-            onPress={pickDocument}
-            onPress={() => generateQuiz(notes)}
-            style={tw` gap-y-3 flex text-center justify-center items-center bg-gray-200  py-2 px-5 rounded-xl`}
-          >
-            <Text style={tw` text-left  font-semibold text-md`}>
-              Create Magic Notes
-            </Text>
-            <View style={tw`flex flex-col items-center `}>
-              <AntDesign name="pdffile1" size={24} color="black" />
-              <Text style={tw` text-left  font-semibold text-md`}>
-                Select File
+      ) : (
+        <View style={tw`flex-1`}>
+          <View style={tw`flex flex-col`}>
+            <View style={tw`flex flex-row items-center justify-between`}>
+              <Text style={tw`text-3xl text-left font-semibold`}>
+                Study Buddy
               </Text>
-              <Text style={tw` text-left  font-light text-xs `}>
-                .pdf, .docx, .pptx
-              </Text>
+              <Ionicons
+                name="information-circle-outline"
+                size={30}
+                color="black"
+              />
             </View>
-
-            <Text style={tw` text-left  font-light text-xs `}>
-              Create beautifully summarised versions of your notes
+            <Text style={tw`text-gray-500 text-md text-left font-light mt-2`}>
+              Convert your lecture notes into quizzes to test your knowledge and
+              improve your studying
             </Text>
-          </Pressable>
-          <Pressable
-            onPress={pickDocument}
-            //   onPress={() => generateQuiz(notes)}
-            style={tw` gap-y-3 flex text-center justify-center items-center bg-gray-200  py-2 px-5 rounded-xl`}
-          >
-            <Text style={tw` text-left  font-semibold text-md`}>
-              Create Quiz Now
-            </Text>
-            <View style={tw`flex flex-col items-center `}>
-              <AntDesign name="pdffile1" size={24} color="black" />
-              <Text style={tw` text-left  font-semibold text-md`}>
-                Select File
-              </Text>
-              <Text style={tw` text-left  font-light text-xs `}>
-                .pdf, .docx, .pptx
-              </Text>
+          </View>
+          <View style={tw`flex-1 items-center`}>
+            <Image
+              source={require("../../assets/quizIcon.jpeg")}
+              style={tw.style(tw`h-3/6`, { aspectRatio: 1 })}
+            />
+            <View
+              style={tw`flex flex-row gap-x-5 px-20 justify-between items-center`}
+            >
+              <Pressable
+                onPress={pickDocument}
+                style={tw`gap-y-3 flex text-center justify-center items-center bg-gray-200 py-2 px-5 rounded-xl`}
+              >
+                <Text style={tw`text-left font-semibold text-md`}>
+                  Create Magic Notes
+                </Text>
+                <View style={tw`flex flex-col items-center`}>
+                  <AntDesign name="pdffile1" size={24} color="black" />
+                  <Text style={tw`text-left font-semibold text-md`}>
+                    Select File
+                  </Text>
+                  <Text style={tw`text-left font-light text-xs`}>
+                    .pdf, .docx, .pptx
+                  </Text>
+                </View>
+                <Text style={tw`text-left font-light text-xs`}>
+                  Create beautifully summarised versions of your notes
+                </Text>
+              </Pressable>
+              <Pressable
+                onPress={pickDocument}
+                style={tw`gap-y-3 flex text-center justify-center items-center bg-gray-200 py-2 px-5 rounded-xl`}
+              >
+                <Text style={tw`text-left font-semibold text-md`}>
+                  Create Quiz Now
+                </Text>
+                <View style={tw`flex flex-col items-center`}>
+                  <AntDesign name="pdffile1" size={24} color="black" />
+                  <Text style={tw`text-left font-semibold text-md`}>
+                    Select File
+                  </Text>
+                  <Text style={tw`text-left font-light text-xs`}>
+                    .pdf, .docx, .pptx
+                  </Text>
+                </View>
+                <Text style={tw`text-left font-light text-xs`}>
+                  Create an interactive quiz to test your knowledge.
+                </Text>
+              </Pressable>
             </View>
-
-            <Text style={tw` text-left  font-light text-xs `}>
-              Create an interactive quiz to test your knowledge.
-            </Text>
-          </Pressable>
+          </View>
         </View>
-
-        {/* <Pressable
-        onPress={() => navigation.navigate("Questions")}
-        style={tw`bg-green-500 mt-10 pl-4 pr-5 py-1 rounded-xl `}
-      >
-        <Text style={tw`text-white text-lg`}>Start</Text>
-      </Pressable> */}
-      </View>
+      )}
     </SafeAreaView>
   );
 };
