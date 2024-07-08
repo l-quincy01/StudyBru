@@ -271,7 +271,7 @@ const SplashScreen = ({ navigation }) => {
               style={tw.style(tw`h-3/6`, { aspectRatio: 1 })}
             />
             <View
-              style={tw`flex flex-row gap-x-5 px-15 justify-between items-center`}
+              style={tw`flex flex-col gap-y-5 px-15 justify-between items-center`}
             >
               <Pressable
                 onPress={pickDocument}
@@ -302,6 +302,9 @@ const SplashScreen = ({ navigation }) => {
                   </Text>
                 </View>
               </Pressable>
+              <Text style={tw`font-semibold  text-md`}>
+                Your AI study companion.
+              </Text>
             </View>
           </View>
         </View>

@@ -77,7 +77,7 @@ const MagicNotes = ({ navigation }) => {
           />
         </View>
       </View>
-      <Pressable onPress={handleFlashCardSides} style={tw`mt-5`}>
+      <Pressable onPress={handleFlashCardSides} style={tw`mt-5 `}>
         <View style={styles.flashCardContainer}>
           <Animated.View
             style={[
@@ -131,7 +131,8 @@ const styles = StyleSheet.create({
     width: 300,
     paddingVertical: 10,
     paddingHorizontal: 20,
-    backgroundColor: "gray",
+    backgroundColor: "white",
+    borderWidth: 2,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 10,
