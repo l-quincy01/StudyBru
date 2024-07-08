@@ -3,12 +3,14 @@ import { Animated, Pressable, StyleSheet, Text, View } from "react-native";
 import tw from "twrnc";
 import * as Progress from "react-native-progress";
 import { FontAwesome5 } from "@expo/vector-icons";
-//import { flashCards } from "../config/FlashCards";
 import { FlashCardsContext } from "../config/FlashCardsContext";
+import { AntDesign } from "@expo/vector-icons";
+//import { flashCards } from "../config/FlashCards";
 
 const MagicNotes = ({ navigation }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const { flashCardSide } = useContext(FlashCardsContext);
+  const [flashCardSide, setFlashCardSide] = useState(false);
+  const { flashCards } = useContext(FlashCardsContext);
   const progress =
     flashCards.length > 0 ? (currentQuestionIndex + 1) / flashCards.length : 0;
 
@@ -52,6 +54,36 @@ const MagicNotes = ({ navigation }) => {
   };
 
   const currentCard = flashCards[currentQuestionIndex];
+
+  if (!flashCards || flashCards.length === 0) {
+    return (
+      <View style={tw`flex-1 items-center justify-center  p-5`}>
+        <Pressable
+          // onPress={pickDocument}
+          //   onPress={() => generateQuiz(notes)}
+          style={tw` gap-y-3 flex text-center justify-center items-center bg-gray-200  py-2 px-5 rounded-xl`}
+        >
+          <Text style={tw` text-left  font-semibold text-md`}>
+            Create Quiz Now
+          </Text>
+          <View style={tw`flex flex-col items-center `}>
+            <AntDesign name="pdffile1" size={24} color="black" />
+            <Text style={tw` text-left  font-semibold text-md`}>
+              Select File
+            </Text>
+            <Text style={tw` text-left  font-light text-xs `}>
+              .pdf, .docx, .pptx
+            </Text>
+          </View>
+
+          <Text style={tw` text-left  font-light text-xs `}>
+            Create an interactive quiz to test your knowledge.
+          </Text>
+        </Pressable>
+      </View>
+    );
+  }
+
   return (
     <View style={tw`flex-1 flex-col items-center justify-center p-5`}>
       <View style={tw`flex-row top-5 absolute`}>

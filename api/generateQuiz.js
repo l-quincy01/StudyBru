@@ -3,9 +3,7 @@ const bodyParser = require("body-parser");
 const { OpenAIApi, OpenAI } = require("openai");
 
 // Initialize OpenAI API
-const openai = new OpenAI({
-  apiKey: "API KEY HERE",
-});
+const openai = new OpenAI({});
 
 const app = express();
 app.use(bodyParser.json());

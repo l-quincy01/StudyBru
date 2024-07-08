@@ -18,6 +18,30 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { AntDesign } from "@expo/vector-icons";
 import { FlashCardsContext } from "../config/FlashCardsContext";
 
+function parseFlashCards(inputString) {
+  // Remove line breaks and extra spaces
+  inputString = inputString.replace(/\n/g, "").replace(/\s+/g, " ");
+
+  // Split the string into individual flashcard blocks
+  const flashCardBlocks = inputString.match(/\{[^}]+\}/g);
+
+  // Array to hold the result objects
+  const result = [];
+
+  flashCardBlocks.forEach((block) => {
+    const frontMatch = block.match(/front: "(.*?)"/);
+    const backMatch = block.match(/back: "(.*?)"/);
+
+    if (frontMatch && backMatch) {
+      const front = frontMatch[1];
+      const back = backMatch[1];
+      result.push({ front, back });
+    }
+  });
+
+  return result;
+}
+
 //parse the quiz into an array of objects
 function parseQuiz(inputString) {
   // Remove line breaks and extra spaces
@@ -133,7 +157,7 @@ const SplashScreen = ({ navigation }) => {
   }, [notes]);
 
   useEffect(() => {
-    if (quiz.length > 0 && flashCards.length > 0) {
+    if (quiz.length > 0) {
       setLoading(false);
     }
   }, [quiz, flashCards]);
@@ -169,11 +193,11 @@ const SplashScreen = ({ navigation }) => {
   // QUIZ FUNCTION
   // axios way, send NOTES TO OPEN  AI API TO GENERATE A QUIZ
   const generateQuiz = async (notes) => {
-    console.log("Generating quiz with notes:", notes);
+    // console.log("Generating quiz with notes:", notes);
 
     try {
       const response = await axios.post(
-        "http://192.168.68.108:3000/generate-quiz",
+        "http://172.20.10.7:3000/generate-quiz",
         {
           notes: notes,
         },
@@ -185,7 +209,7 @@ const SplashScreen = ({ navigation }) => {
       );
       //set quiz from the response
       const data = response.data;
-      console.log("Received RAW DATA DATA quiz questions:", data.questions);
+      // console.log("Received RAW DATA DATA quiz questions:", data.questions);
       setQuiz(parseQuiz(data.questions));
     } catch (error) {
       console.error("Error generating quiz:", error);
@@ -198,20 +222,18 @@ const SplashScreen = ({ navigation }) => {
 
     try {
       const response = await axios.post(
-        "http://192.168.68.108:3000/generate-flashCards",
-        {
-          notes: notes,
-        },
+        "http://172.20.10.7:3003/generate-flashCards",
+        { notes: notes },
         {
           headers: {
             "Content-Type": "application/json",
           },
         }
       );
-      //set quiz from the response
+
       const data = response.data;
-      console.log("Received RAW DATA DATA FLASH-CARDS:", data.questions);
-      setFlashCards(parseQuiz(data.questions));
+      console.log("Received RAW DATA DATA FLASH-CARDS:", data.flashCards);
+      setFlashCards(parseFlashCards(data.flashCards));
     } catch (error) {
       console.error("Error generating FLASHCARDS:", error);
     }
@@ -220,7 +242,9 @@ const SplashScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={tw`flex-1 gap-y-10 p-5 bg-white`}>
       {loading ? (
-        <View style={tw`flex-1 justify-center items-center`}>
+        <View
+          style={tw` w-full h-full absolute flex-1 justify-center items-center`}
+        >
           <ActivityIndicator size="large" color="#0000ff" />
           <Text>Loading...</Text>
         </View>
@@ -257,38 +281,20 @@ const SplashScreen = ({ navigation }) => {
                 <Text style={tw`text-left font-semibold text-md`}>
                   Create Magic Notes
                 </Text>
+
+                <Text style={tw`text-center font-light text-xs`}>
+                  Get amazing flashcards and interactive quizzes to test your
+                  knowledge.
+                </Text>
                 <View style={tw`flex flex-col items-center`}>
-                  <AntDesign name="pdffile1" size={24} color="black" />
+                  <AntDesign name="addfile" size={24} color="black" />
                   <Text style={tw`text-left font-semibold text-md`}>
-                    Select File
+                    Select A File
                   </Text>
                   <Text style={tw`text-left font-light text-xs`}>
                     .pdf, .docx, .pptx
                   </Text>
                 </View>
-                <Text style={tw`text-left font-light text-xs`}>
-                  Create beautifully summarised versions of your notes
-                </Text>
-              </Pressable>
-              <Pressable
-                onPress={pickDocument}
-                style={tw`gap-y-3 flex text-center justify-center items-center bg-gray-200 py-2 px-5 rounded-xl`}
-              >
-                <Text style={tw`text-left font-semibold text-md`}>
-                  Create Quiz Now
-                </Text>
-                <View style={tw`flex flex-col items-center`}>
-                  <AntDesign name="pdffile1" size={24} color="black" />
-                  <Text style={tw`text-left font-semibold text-md`}>
-                    Select File
-                  </Text>
-                  <Text style={tw`text-left font-light text-xs`}>
-                    .pdf, .docx, .pptx
-                  </Text>
-                </View>
-                <Text style={tw`text-left font-light text-xs`}>
-                  Create an interactive quiz to test your knowledge.
-                </Text>
               </Pressable>
             </View>
           </View>

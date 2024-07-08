@@ -12,17 +12,17 @@ const generateFlashCards = async (notes) => {
   const messages = [
     {
       role: "system",
-      content: `You are a helpful assistant that generates several flashcards for study notes.YOUR RESPONSE SHOULD BE STRICTLY IN THIS FORMAT ONLY: {
-    front: "The Zürich P‐System kit (2)",
+      content: `You are a helpful assistant that generates several flashcards for study notes. YOUR RESPONSE SHOULD BE STRICTLY IN THIS EXAMPLE FORMAT ONLY: {
+    front: "The Zürich P‐System kit",
     back: "To use the kit, it was necessary to develop a native-code version of the P-Machine emulator using some locally available host language (Fortran, Assembler …)",
   },
        `,
     },
     {
       role: "user",
-      content: `Generate a quiz based on the following notes:\n\n${notes}\n\nProvide multiple-choice and true/false questions and answers. YOUR RESPONSE SHOULD BE STRICTLY IN THIS FORMAT ONLY
+      content: `Generate flashcards based on the following notes:\n\n${notes}\n\nProvide multiple-choice and true/false questions and answers. YOUR RESPONSE SHOULD BE STRICTLY IN THIS EXAMPLE FORMAT ONLY
        {
-    front: "The Zürich P‐System kit (2)",
+    front: "The Zürich P‐System kit",
     back: "To use the kit, it was necessary to develop a native-code version of the P-Machine emulator using some locally available host language (Fortran, Assembler …)",
   },`,
     },
