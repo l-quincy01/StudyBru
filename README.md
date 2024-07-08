@@ -9,6 +9,8 @@
 <div style="display:flex;" >
 
 <img src="/assets/screenshots/1.PNG" width="20%" >
+<img src="/assets/screenshots/14.PNG" width="20%" >
+<img src="/assets/screenshots/15.PNG" width="20%" >
 <img src="/assets/screenshots/2.PNG" width="20%" >
 <img src="/assets/screenshots/3.jpg" width="20%" >
 <img src="/assets/screenshots/4.PNG" width="20%" >
@@ -19,6 +21,9 @@
 <img src="/assets/screenshots/8.PNG" width="20%" >
 <img src="/assets/screenshots/9.PNG" width="20%" >
 <img src="/assets/screenshots/10.PNG" width="20%" >
+<img src="/assets/screenshots/11.PNG" width="20%" >
+<img src="/assets/screenshots/12.PNG" width="20%" >
+<img src="/assets/screenshots/13.PNG" width="20%" >
 
 </div>
 
