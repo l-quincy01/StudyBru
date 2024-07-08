@@ -8,17 +8,17 @@
 
 <div style="display:flex;" >
 
-<img src="/StudyBuddy/assets/screenshots/1.PNG" width="20%" >
-<img src="/StudyBuddy/assets/screenshots/2.PNG" width="20%" >
-<img src="/StudyBuddy/assets/screenshots/3.PNG" width="20%" >
-<img src="/StudyBuddy/assets/screenshots/4.PNG" width="20%" >
-<img src="/StudyBuddy/assets/screenshots/5.PNG" width="20%" >
-<img src="/StudyBuddy/assets/screenshots/6.PNG" width="20%" >
-<img src="/StudyBuddy/assets/screenshots/6.PNG" width="20%" >
-<img src="/StudyBuddy/assets/screenshots/7.PNG" width="20%" >
-<img src="/StudyBuddy/assets/screenshots/8.PNG" width="20%" >
-<img src="/StudyBuddy/assets/screenshots/9.PNG" width="20%" >
-<img src="/StudyBuddy/assets/screenshots/10.PNG" width="20%" >
+<img src="/assets/screenshots/1.PNG" width="20%" >
+<img src="/assets/screenshots/2.PNG" width="20%" >
+<img src="/assets/screenshots/3.jpg" width="20%" >
+<img src="/assets/screenshots/4.PNG" width="20%" >
+<img src="/assets/screenshots/5.PNG" width="20%" >
+<img src="/assets/screenshots/6.PNG" width="20%" >
+<img src="/assets/screenshots/6.PNG" width="20%" >
+<img src="/assets/screenshots/7.PNG" width="20%" >
+<img src="/assets/screenshots/8.PNG" width="20%" >
+<img src="/assets/screenshots/9.PNG" width="20%" >
+<img src="/assets/screenshots/10.PNG" width="20%" >
 
 </div>
 
@@ -36,11 +36,11 @@
 1. **Upload Notes:**
 
    - Use the document picker to upload your lecture notes.
-   - The app sends the document to a backend API that parses the document and extracts its text-content.
+   - The app sends the document to a backend API that parses it and extracts its text content.
 
 2. **Generate Quiz:**
 
-   - Once the text is extracted, it is sent to OpenAI API to generate quiz questions.
+   - The text is extracted and sent to OpenAI API to generate quiz questions.
    - The app parses the quiz questions into a structured format.
 
 3. **Take the Quiz:**
@@ -86,8 +86,8 @@
 - **Login:** - OAuth integration for users to login in using social accounts
 - **Database and Cloud storage :** - Store the users notes to the cloud
 - **Flashcards:** - Feature to allow the generation of flashcards for the user
-- **Quiz re-generation:** - Feature to allow users to re-generate quizes on the same set of notes
-- **Notes summariser:** - Feature to allow users to generate a concise and summarised version of long lecture notes
+- **Quiz Re-generation:** - Feature to allow users to re-generate quizzes on the same set of notes
+- **Notes Summariser:** - Feature to allow users to generate a concise and summarised version of long lecture notes
 
 ## Contributing
 
