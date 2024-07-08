@@ -17,6 +17,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { AntDesign } from "@expo/vector-icons";
 import { FlashCardsContext } from "../config/FlashCardsContext";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
 function parseFlashCards(inputString) {
   // Remove line breaks and extra spaces
@@ -242,9 +243,7 @@ const SplashScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={tw`flex-1 gap-y-10 p-5 bg-white`}>
       {loading ? (
-        <View
-          style={tw` w-full h-full absolute flex-1 justify-center items-center`}
-        >
+        <View style={tw` w-full h-full  flex-1 justify-center items-center`}>
           <ActivityIndicator size="large" color="#0000ff" />
           <Text>Loading...</Text>
         </View>
@@ -272,12 +271,19 @@ const SplashScreen = ({ navigation }) => {
               style={tw.style(tw`h-3/6`, { aspectRatio: 1 })}
             />
             <View
-              style={tw`flex flex-row gap-x-5 px-20 justify-between items-center`}
+              style={tw`flex flex-row gap-x-5 px-15 justify-between items-center`}
             >
               <Pressable
                 onPress={pickDocument}
-                style={tw`gap-y-3 flex text-center justify-center items-center bg-gray-200 py-2 px-5 rounded-xl`}
+                style={tw`gap-y-3 flex text-center justify-center items-center border border-gray-200 py-3 px-5 rounded-xl`}
               >
+                <View style={tw`p-5`}>
+                  <FontAwesome6
+                    name="wand-magic-sparkles"
+                    size={24}
+                    color="black"
+                  />
+                </View>
                 <Text style={tw`text-left font-semibold text-md`}>
                   Create Magic Notes
                 </Text>

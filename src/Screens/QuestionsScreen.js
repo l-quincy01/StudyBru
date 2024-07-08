@@ -57,35 +57,18 @@ const QuestionsScreen = ({ navigation }) => {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(currentQuestionIndex - 1);
     } else {
-      navigation.navigate("Splash");
+      navigation.navigate("Flash Cards");
     }
   };
 
   if (!quiz || quiz.length === 0) {
     return (
       <View style={tw`flex-1 items-center justify-center  p-5`}>
-        <Pressable
-          // onPress={pickDocument}
-          //   onPress={() => generateQuiz(notes)}
-          style={tw` gap-y-3 flex text-center justify-center items-center bg-gray-200  py-2 px-5 rounded-xl`}
-        >
-          <Text style={tw` text-left  font-semibold text-md`}>
-            Create Quiz Now
+        <View style={tw`flex-1 items-center justify-center  p-5`}>
+          <Text style={tw`font-semibold text-xl text-center`}>
+            Upload Notes On Home Page To Get Started.
           </Text>
-          <View style={tw`flex flex-col items-center `}>
-            <AntDesign name="pdffile1" size={24} color="black" />
-            <Text style={tw` text-left  font-semibold text-md`}>
-              Select File
-            </Text>
-            <Text style={tw` text-left  font-light text-xs `}>
-              .pdf, .docx, .pptx
-            </Text>
-          </View>
-
-          <Text style={tw` text-left  font-light text-xs `}>
-            Create an interactive quiz to test your knowledge.
-          </Text>
-        </Pressable>
+        </View>
       </View>
     );
   }
@@ -104,7 +87,7 @@ const QuestionsScreen = ({ navigation }) => {
     <SafeAreaView>
       <ScrollView>
         {/*View wraps  (1)PROGRESS BAR, (2)HEADING OF QUESTION AND (3)SELECT OPTIONS*/}
-        <View style={tw`mt-6 p-5`}>
+        <View style={tw`mt-2 p-5`}>
           {/* For progress bar */}
           <View style={tw`flex-row `}>
             <View style={tw`flex-1 `}>
@@ -118,7 +101,7 @@ const QuestionsScreen = ({ navigation }) => {
           </View>
 
           {/* Heading of the question */}
-          <Text style={tw`text-2xl`}>{currentQuestion.question} ?</Text>
+          <Text style={tw`text-lg`}>{currentQuestion.question} ?</Text>
 
           {/* Select options*/}
           <View>
@@ -127,7 +110,7 @@ const QuestionsScreen = ({ navigation }) => {
                 key={idx}
                 onPress={() => handleOptionPress(option)}
                 disabled={selectedOption !== null}
-                style={tw`border-2 border-green-500 p-5 my-4 rounded-2xl ${
+                style={tw`border-2 border-green-500 p-5 my-2 rounded-2xl ${
                   selectedOption === option
                     ? isCorrect
                       ? "bg-blue-200 border-blue-500"
@@ -135,7 +118,7 @@ const QuestionsScreen = ({ navigation }) => {
                     : "border-green-500"
                 }`}
               >
-                <Text style={tw`text-left ml-2 text-lg font-semibold`}>
+                <Text style={tw`text-left ml-2 text-sm font-semibold`}>
                   {option}
                 </Text>
               </Pressable>
@@ -149,7 +132,7 @@ const QuestionsScreen = ({ navigation }) => {
             onPress={handlePrev}
             style={tw`mt-4 bg-green-500 rounded-xl px-5 py-3 w-1/4 flex items-center justify-center`}
           >
-            <Text style={tw`text-white text-center text-lg font-semibold`}>
+            <Text style={tw`text-white text-center text-md font-semibold`}>
               Back
             </Text>
           </Pressable>
@@ -158,7 +141,7 @@ const QuestionsScreen = ({ navigation }) => {
             style={tw`mt-4 bg-green-500 rounded-xl px-5 py-3 w-2/5 flex items-center justify-center`}
           >
             <Text
-              style={tw`text-white text-center text-lg font-semibold flex-grow`}
+              style={tw`text-white text-center text-md font-semibold flex-grow`}
             >
               {currentQuestionIndex === quiz.length - 1 ? "Finish" : "Next"}
             </Text>

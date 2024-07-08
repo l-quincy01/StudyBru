@@ -15,7 +15,7 @@ function MagicNotesStack() {
         contentStyle: { backgroundColor: "white" },
       }}
     >
-      <Stack.Screen name="Magic Notes" component={MagicNotes} />
+      <Stack.Screen name="Flash Cards" component={MagicNotes} />
     </Stack.Navigator>
   );
 }

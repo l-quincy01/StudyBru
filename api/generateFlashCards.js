@@ -12,7 +12,7 @@ const generateFlashCards = async (notes) => {
   const messages = [
     {
       role: "system",
-      content: `You are a helpful assistant that generates several flashcards for study notes. YOUR RESPONSE SHOULD BE STRICTLY IN THIS EXAMPLE FORMAT ONLY: {
+      content: `You are a helpful assistant that generates several flashcards for study notes. YOUR RESPONSE SHOULD BE  IN THIS EXAMPLE FORMAT: {
     front: "The Zürich P‐System kit",
     back: "To use the kit, it was necessary to develop a native-code version of the P-Machine emulator using some locally available host language (Fortran, Assembler …)",
   },
