@@ -53,10 +53,10 @@ function AppNavigator() {
           component={AddNotes}
         />
         <Tab.Screen
-          name="Flash Cards"
+          name="Notes"
           options={{
             tabBarLabel: ({ color }) => (
-              <Text style={{ color: color }}>Flash Cards</Text>
+              <Text style={{ color: color }}>Notes</Text>
             ),
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons

@@ -4,6 +4,8 @@ import React from "react";
 
 import EndScreen from "../Screens/EndScreen";
 import MagicNotes from "../Screens/MagicNotes";
+import NotesScreen from "../Screens/NotesScreen";
+import SummaryScreen from "../Screens/SummaryScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -11,11 +13,14 @@ function MagicNotesStack() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShown: true,
+        headerShown: false,
         contentStyle: { backgroundColor: "white" },
       }}
     >
-      <Stack.Screen name="Flash Cards" component={MagicNotes} />
+      <Stack.Screen name="Notes" component={NotesScreen} />
+      <Stack.Screen name="Summary" component={SummaryScreen} />
+      <Stack.Screen name="Flashcards" component={MagicNotes} />
+      {/* <Stack.Screen name="Summaries" component={MagicNotes} /> */}
     </Stack.Navigator>
   );
 }
