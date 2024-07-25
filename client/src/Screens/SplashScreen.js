@@ -20,6 +20,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { AntDesign } from "@expo/vector-icons";
 import { FlashCardsContext } from "../config/FlashCardsContext";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import { SummaryContext } from "../config/SummaryContext";
 
 function parseFlashCards(inputString) {
   // Remove line breaks and extra spaces
@@ -73,6 +74,7 @@ function parseQuiz(inputString) {
 const SplashScreen = ({ navigation }) => {
   const [notes, setNotes] = useState("");
   const { quiz, setQuiz } = useContext(QuizContext);
+  const { summary, setSummary } = useContext(SummaryContext);
   const { flashCards, setFlashCards } = useContext(FlashCardsContext);
   const [loading, setLoading] = useState(false);
 
@@ -156,6 +158,7 @@ const SplashScreen = ({ navigation }) => {
       setLoading(true);
       generateQuiz(notes);
       generateFlashCards(notes);
+      generateSummaries(notes);
     }
   }, [notes]);
 
@@ -163,7 +166,7 @@ const SplashScreen = ({ navigation }) => {
     if (quiz.length > 0) {
       setLoading(false);
     }
-  }, [quiz, flashCards]);
+  }, [quiz, flashCards, summary]);
 
   // useEffect(() => {
   //   console.log("Notes updated:", notes);
@@ -239,6 +242,27 @@ const SplashScreen = ({ navigation }) => {
       setFlashCards(parseFlashCards(data.flashCards));
     } catch (error) {
       console.error("Error generating FLASHCARDS:", error);
+    }
+  };
+  const generateSummaries = async (notes) => {
+    console.log("Generating summary with these notes:", notes);
+
+    try {
+      const response = await axios.post(
+        "http://172.20.10.7:3004/generate-summary",
+        { notes: notes },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const data = response.data;
+      console.log("Received RAW DATA Summaries", data.summary);
+      setSummary(data.summary);
+    } catch (error) {
+      console.error("Error generating Summary:", error);
     }
   };
 
