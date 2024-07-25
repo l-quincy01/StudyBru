@@ -10,10 +10,10 @@ const EndScreen = ({ navigation }) => {
 
   return (
     <View style={tw`flex-1 items-center`}>
-      <Image
+      {/* <Image
         source={require("../../assets/quizIcon.jpeg")}
         style={tw.style(tw`h-3/6`, { aspectRatio: 1 })}
-      />
+      /> */}
       <Text>
         Congrats you finished the quiz!! Your score {userScore} points{" "}
       </Text>

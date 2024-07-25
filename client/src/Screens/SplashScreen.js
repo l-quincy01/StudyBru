@@ -7,9 +7,11 @@ import {
   StyleSheet,
   Image,
   ActivityIndicator,
+  ScrollView,
 } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
 import * as FileSystem from "expo-file-system";
+import quizIcon from "../../assets/splash.png";
 import tw from "twrnc";
 import axios from "axios";
 import { QuizContext } from "../config/QuizContext";
@@ -248,7 +250,7 @@ const SplashScreen = ({ navigation }) => {
           <Text>Loading...</Text>
         </View>
       ) : (
-        <View style={tw`flex-1`}>
+        <ScrollView style={tw`flex-1`}>
           <View style={tw`flex flex-col`}>
             <View style={tw`flex flex-row items-center justify-between`}>
               <Text style={tw`text-3xl text-left font-semibold`}>
@@ -260,24 +262,60 @@ const SplashScreen = ({ navigation }) => {
                 color="black"
               />
             </View>
-            <Text style={tw`text-gray-500 text-md text-left font-light mt-2`}>
+            {/* <Text style={tw`text-gray-500 text-md text-left font-light mt-2`}>
               Convert your lecture notes into quizzes to test your knowledge and
               improve your studying
-            </Text>
+            </Text> */}
           </View>
-          <View style={tw`flex-1 items-center`}>
-            <Image
-              source={require("../../assets/quizIcon.jpeg")}
-              style={tw.style(tw`h-3/6`, { aspectRatio: 1 })}
-            />
+
+          <View style={tw`flex-1 items-center mt-10`}>
+            {/*Headline */}
+            <Text
+              style={tw` mt-10 font-medium text-4xl text-center justify-between items-center`}
+            >
+              Summarise Your Classes With Ease!
+            </Text>
+
+            {/*Document icons */}
+            <View style={tw`flex flex-col gap-y-2 items-center mt-4 mb-1`}>
+              <View
+                style={tw`flex flex-row gap-x-4 items-center justify-center`}
+              >
+                <Image
+                  source={require("../../assets/pdfIcon.png")}
+                  style={tw.style(tw``)}
+                />
+                <Image
+                  source={require("../../assets/docIcon.png")}
+                  style={tw.style(tw``)}
+                />
+              </View>
+
+              <Image
+                source={require("../../assets/underlineIcon.png")}
+                style={tw.style(tw``)}
+              />
+            </View>
+
+            {/*Smaal explanation */}
+            <Text
+              style={tw`text-gray-500 text-md text-center font-light mt-2 mb-20`}
+            >
+              Effortlessly transform heavy course material into focused
+              summaries, flashcards and interactive quizzes.
+              {/* to help improve your
+              studying. */}
+            </Text>
+
+            {/*DOCUMENT PICKER */}
             <View
               style={tw`flex flex-col gap-y-5 px-15 justify-between items-center`}
             >
               <Pressable
                 onPress={pickDocument}
-                style={tw`gap-y-3 flex text-center justify-center items-center border border-gray-200 py-3 px-5 rounded-xl`}
+                style={tw`gap-y-2 flex text-center justify-center items-center border border-gray-200 py-3 px-5 rounded-xl`}
               >
-                <View style={tw`p-5`}>
+                <View style={tw`p-2`}>
                   <FontAwesome6
                     name="wand-magic-sparkles"
                     size={24}
@@ -285,14 +323,14 @@ const SplashScreen = ({ navigation }) => {
                   />
                 </View>
                 <Text style={tw`text-left font-semibold text-md`}>
-                  Create Magic Notes
+                  Upload Material
                 </Text>
 
                 <Text style={tw`text-center font-light text-xs`}>
-                  Get amazing flashcards and interactive quizzes to test your
-                  knowledge.
+                  Compatible with all your study material. Choose .pdf, .docx,
+                  .pptx
                 </Text>
-                <View style={tw`flex flex-col items-center`}>
+                {/* <View style={tw`flex flex-col items-center`}>
                   <AntDesign name="addfile" size={24} color="black" />
                   <Text style={tw`text-left font-semibold text-md`}>
                     Select A File
@@ -300,14 +338,14 @@ const SplashScreen = ({ navigation }) => {
                   <Text style={tw`text-left font-light text-xs`}>
                     .pdf, .docx, .pptx
                   </Text>
-                </View>
+                </View> */}
               </Pressable>
               <Text style={tw`font-semibold  text-md`}>
                 Your AI study companion.
               </Text>
             </View>
           </View>
-        </View>
+        </ScrollView>
       )}
     </SafeAreaView>
   );
