@@ -101,7 +101,7 @@ const QuestionsScreen = ({ navigation }) => {
           </View>
 
           {/* Heading of the question */}
-          <Text style={tw`text-lg`}>{currentQuestion.question} ?</Text>
+          <Text style={tw`text-lg`}>{currentQuestion.question} </Text>
 
           {/* Select options*/}
           <View>

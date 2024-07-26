@@ -8,6 +8,7 @@ import {
   Image,
   ActivityIndicator,
   ScrollView,
+  Dimensions,
 } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
 import * as FileSystem from "expo-file-system";
@@ -21,6 +22,11 @@ import { AntDesign } from "@expo/vector-icons";
 import { FlashCardsContext } from "../config/FlashCardsContext";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { SummaryContext } from "../config/SummaryContext";
+
+function removeTripleBackticks(text) {
+  // Use a regular expression to replace triple backticks with an empty string
+  return text.replace(/```/g, "");
+}
 
 function parseFlashCards(inputString) {
   // Remove line breaks and extra spaces
@@ -72,6 +78,8 @@ function parseQuiz(inputString) {
 }
 
 const SplashScreen = ({ navigation }) => {
+  const windowWidth = Dimensions.get("window").width;
+  const windowHeight = Dimensions.get("window").height;
   const [notes, setNotes] = useState("");
   const { quiz, setQuiz } = useContext(QuizContext);
   const { summary, setSummary } = useContext(SummaryContext);
@@ -80,7 +88,7 @@ const SplashScreen = ({ navigation }) => {
 
   //upload document fuction. Send the document to parse api endpoint to parse the file into text
   const uploadDocument = async (file) => {
-    console.log("ashee:" + file.assets[0].mimeType);
+    console.log("hier so:" + file.assets[0].mimeType);
     const formData = new FormData();
     formData.append("file", {
       uri: file.assets[0].uri,
@@ -163,7 +171,7 @@ const SplashScreen = ({ navigation }) => {
   }, [notes]);
 
   useEffect(() => {
-    if (quiz.length > 0) {
+    if (quiz.length > 0 && flashCards.length > 0 && summary.length > 0) {
       setLoading(false);
     }
   }, [quiz, flashCards, summary]);
@@ -259,8 +267,11 @@ const SplashScreen = ({ navigation }) => {
       );
 
       const data = response.data;
-      console.log("Received RAW DATA Summaries", data.summary);
-      setSummary(data.summary);
+      console.log(
+        "Received RAW DATA Summaries",
+        removeTripleBackticks(data.summary)
+      );
+      setSummary(removeTripleBackticks(data.summary));
     } catch (error) {
       console.error("Error generating Summary:", error);
     }
@@ -269,7 +280,9 @@ const SplashScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={tw`flex-1 gap-y-10 p-5 bg-white`}>
       {loading ? (
-        <View style={tw` w-full h-full  flex-1 justify-center items-center`}>
+        <View
+          style={[tw`justify-center items-center`, styles.loadingContainer]}
+        >
           <ActivityIndicator size="large" color="#0000ff" />
           <Text>Loading...</Text>
         </View>
@@ -377,4 +390,14 @@ const SplashScreen = ({ navigation }) => {
 
 export default SplashScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  loadingContainer: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
+    zIndex: 10000,
+  },
+});
