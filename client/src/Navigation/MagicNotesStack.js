@@ -6,6 +6,7 @@ import EndScreen from "../Screens/EndScreen";
 import MagicNotes from "../Screens/MagicNotes";
 import NotesScreen from "../Screens/NotesScreen";
 import SummaryScreen from "../Screens/SummaryScreen";
+import QuestionsScreen from "../Screens/QuestionsScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +21,8 @@ function MagicNotesStack() {
       <Stack.Screen name="Notes" component={NotesScreen} />
       <Stack.Screen name="Summary" component={SummaryScreen} />
       <Stack.Screen name="Flashcards" component={MagicNotes} />
+      <Stack.Screen name="Quiz" component={QuestionsScreen} />
+      <Stack.Screen name="End" component={EndScreen} />
       {/* <Stack.Screen name="Summaries" component={MagicNotes} /> */}
     </Stack.Navigator>
   );

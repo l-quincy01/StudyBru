@@ -43,17 +43,27 @@ const SummaryScreen = ({ navigation }) => {
           <Text style={tw`text-3xl font-semibold`}> Notes Summary</Text>
           <View style={tw`border-b border border-gray-200 w-1/2`}></View>
           {/* Buttons */}
-          <View style={tw`flex flex-row gap-x-3`}>
-            <View style={tw` p-2 border border-2 rounded-full`}>
-              <Entypo name="documents" size={24} color="black" />
-            </View>
 
-            <View style={tw` p-2 border border-2 rounded-full`}>
+          <View style={tw`flex flex-row gap-x-3`}>
+            <Pressable
+              onPress={() => navigation.navigate("Flashcards")}
+              style={tw` p-2 border border-2 rounded-full`}
+            >
+              <Entypo name="documents" size={24} color="black" />
+            </Pressable>
+
+            {/* <Pressable
+              onPress={() => navigation.navigate("Flashcards")}
+              style={tw` p-2 border border-2 rounded-full`}
+            >
               <AntDesign name="question" size={24} color="black" />
-            </View>
-            <View style={tw` p-2 border border-2 rounded-full`}>
+            </Pressable> */}
+            <Pressable
+              onPress={() => navigation.navigate("Quiz")}
+              style={tw` p-2 border border-2 rounded-full`}
+            >
               <MaterialCommunityIcons name="brain" size={24} color="black" />
-            </View>
+            </Pressable>
           </View>
 
           <View>

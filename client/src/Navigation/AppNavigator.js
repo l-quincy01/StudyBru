@@ -56,30 +56,26 @@ function AppNavigator() {
           name="Notes"
           options={{
             tabBarLabel: ({ color }) => (
-              <Text style={{ color: color }}>Notes</Text>
+              <Text style={{ color: color }}>Library</Text>
             ),
             tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons
-                name="card-text-outline"
-                size={24}
-                color="black"
-              />
+              <AntDesign name="folderopen" size={24} color="black" />
             ),
           }}
           component={MagicNotesStack}
         />
-        <Tab.Screen
-          name="Quiz"
+        {/* <Tab.Screen
+          name="Library"
           options={{
             tabBarLabel: ({ color }) => (
               <Text style={{ color: color }}> Quiz</Text>
             ),
             tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="brain" size={24} color="black" />
+              <AntDesign name="folderopen" size={24} color="black" />
             ),
           }}
           component={QuizStack}
-        />
+        /> */}
       </Tab.Navigator>
     </NavigationContainer>
   );

@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import tw from "twrnc";
 import * as Progress from "react-native-progress";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
 import { FlashCardsContext } from "../config/FlashCardsContext";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { AntDesign } from "@expo/vector-icons";
@@ -45,33 +45,34 @@ const NotesScreen = ({ navigation }) => {
         </Text>
 
         <View
-          style={tw`flex flex-row gap-x-6 items-center justify-center mt-10  `}
+          style={tw`flex flex-row gap-x-3 items-center justify-center mt-10  `}
         >
           <Pressable
             onPress={() => navigation.navigate("Summary")}
             style={tw`gap-y-2 flex text-center justify-center items-center border border-gray-200 py-5 px-5 rounded-xl`}
           >
-            <View style={tw`p-2`}>
+            <View style={tw``}>
               <MaterialIcons name="notes" size={24} color="black" />
             </View>
             <Text style={tw`text-left font-semibold text-md`}>Summary</Text>
-
-            {/* <Text style={tw`text-center font-light text-xs`}>
-            
-          </Text> */}
           </Pressable>
           <Pressable
             onPress={() => navigation.navigate("Flashcards")}
             style={tw`gap-y-2 flex text-center justify-center items-center border border-gray-200 py-5 px-5 rounded-xl`}
           >
-            <View style={tw`p-2`}>
+            <View style={tw``}>
               <Entypo name="documents" size={24} color="black" />
             </View>
             <Text style={tw`text-left font-semibold text-md`}>Flashcards</Text>
-
-            {/* <Text style={tw`text-center font-light text-xs`}>
-            
-          </Text> */}
+          </Pressable>
+          <Pressable
+            onPress={() => navigation.navigate("Quiz")}
+            style={tw`gap-y-2 flex text-center justify-center items-center border border-gray-200 py-5 px-5 rounded-xl`}
+          >
+            <View style={tw`px-4`}>
+              <MaterialCommunityIcons name="brain" size={24} color="black" />
+            </View>
+            <Text style={tw`text-left font-semibold text-md`}>Quiz</Text>
           </Pressable>
         </View>
       </View>
