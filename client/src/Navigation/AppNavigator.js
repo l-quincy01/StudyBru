@@ -19,6 +19,7 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Feather from "@expo/vector-icons/Feather";
 import Magicnotes from "../Screens/MagicNotes";
 import MagicNotesStack from "./MagicNotesStack";
+import HomeStackNavigator from "./HomeStackNavigator";
 
 const Stack = createNativeStackNavigator();
 
@@ -27,7 +28,12 @@ const Tab = createBottomTabNavigator();
 function AppNavigator() {
   return (
     <NavigationContainer>
-      <Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Tab.Navigator
+        screenOptions={{
+          tabBarStyle: tw`bg-gray-100`,
+          headerShown: false,
+        }}
+      >
         <Tab.Screen
           name="Splash"
           options={{
@@ -38,7 +44,7 @@ function AppNavigator() {
               <AntDesign name="home" size={24} color={color} />
             ),
           }}
-          component={SplashScreen}
+          component={HomeStackNavigator}
         />
         <Tab.Screen
           name="Add Notes"

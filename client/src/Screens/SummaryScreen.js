@@ -36,46 +36,44 @@ const SummaryScreen = ({ navigation }) => {
   const copy = `\`${summary}\``;
 
   return (
-    <SafeAreaView>
-      <ScrollView>
-        <View style={tw`flex-1 flex-col p-5 gap-y-8`}>
-          {/* Summary Heading */}
-          <Text style={tw`text-3xl font-semibold`}> Notes Summary</Text>
-          <View style={tw`border-b border border-gray-200 w-1/2`}></View>
-          {/* Buttons */}
+    <ScrollView style={tw`bg-gray-100`}>
+      <View style={tw`flex-1 flex-col p-5 gap-y-8 mt-25`}>
+        {/* Summary Heading */}
+        <Text style={tw`text-4xl font-semibold`}> Notes Summary</Text>
+        <View style={tw`border-b border border-gray-200 w-1/2`}></View>
+        {/* Buttons */}
 
-          <View style={tw`flex flex-row gap-x-3`}>
-            <Pressable
-              onPress={() => navigation.navigate("Flashcards")}
-              style={tw` p-2 border border-2 rounded-full`}
-            >
-              <Entypo name="documents" size={24} color="black" />
-            </Pressable>
+        <View style={tw`flex flex-row gap-x-3`}>
+          <Pressable
+            onPress={() => navigation.navigate("Flashcards")}
+            style={tw` p-2 border border-2 rounded-full`}
+          >
+            <Entypo name="documents" size={24} color="black" />
+          </Pressable>
 
-            {/* <Pressable
+          {/* <Pressable
               onPress={() => navigation.navigate("Flashcards")}
               style={tw` p-2 border border-2 rounded-full`}
             >
               <AntDesign name="question" size={24} color="black" />
             </Pressable> */}
-            <Pressable
-              onPress={() => navigation.navigate("Quiz")}
-              style={tw` p-2 border border-2 rounded-full`}
-            >
-              <MaterialCommunityIcons name="brain" size={24} color="black" />
-            </Pressable>
-          </View>
-
-          <View>
-            {!summary || summary.length === 0 ? (
-              <Text> Upload Notes On Home Page To Get Started.</Text>
-            ) : (
-              <Markdown>{summary}</Markdown>
-            )}
-          </View>
+          <Pressable
+            onPress={() => navigation.navigate("Quiz")}
+            style={tw` p-2 border border-2 rounded-full`}
+          >
+            <MaterialCommunityIcons name="brain" size={24} color="black" />
+          </Pressable>
         </View>
-      </ScrollView>
-    </SafeAreaView>
+
+        <View>
+          {!summary || summary.length === 0 ? (
+            <Text> Upload Notes On Home Page To Get Started.</Text>
+          ) : (
+            <Markdown>{summary}</Markdown>
+          )}
+        </View>
+      </View>
+    </ScrollView>
   );
 };
 

@@ -32,10 +32,10 @@ const NotesScreen = ({ navigation }) => {
   // }
 
   return (
-    <ScrollView>
-      <View style={tw`flex-1 flex-col p-5 gap-y-8`}>
+    <ScrollView style={tw`bg-gray-100`}>
+      <View style={tw`flex-1 flex-col px-5 gap-y-8 mt-25`}>
         <Text
-          style={tw` font-medium text-4xl text-center justify-between items-center mt-20`}
+          style={tw` font-medium text-4xl text-center justify-between items-center `}
         >
           We'll take notes so you don't have to.
         </Text>
@@ -49,7 +49,7 @@ const NotesScreen = ({ navigation }) => {
         >
           <Pressable
             onPress={() => navigation.navigate("Summary")}
-            style={tw`gap-y-2 flex text-center justify-center items-center border border-gray-200 py-5 px-5 rounded-xl`}
+            style={tw` bg-white  gap-y-2 flex text-center justify-center items-center border-2 border-gray-300 py-5 px-5 rounded-xl`}
           >
             <View style={tw``}>
               <MaterialIcons name="notes" size={24} color="black" />
@@ -58,21 +58,40 @@ const NotesScreen = ({ navigation }) => {
           </Pressable>
           <Pressable
             onPress={() => navigation.navigate("Flashcards")}
-            style={tw`gap-y-2 flex text-center justify-center items-center border border-gray-200 py-5 px-5 rounded-xl`}
+            style={tw` bg-white  gap-y-2 flex text-center justify-center items-center border-2 border-gray-300 py-5 px-5 rounded-xl`}
           >
             <View style={tw``}>
-              <Entypo name="documents" size={24} color="black" />
+              <MaterialCommunityIcons
+                name="newspaper-variant-multiple-outline"
+                size={24}
+                color="black"
+              />
             </View>
             <Text style={tw`text-left font-semibold text-md`}>Flashcards</Text>
           </Pressable>
           <Pressable
             onPress={() => navigation.navigate("Quiz")}
-            style={tw`gap-y-2 flex text-center justify-center items-center border border-gray-200 py-5 px-5 rounded-xl`}
+            style={tw`  bg-white  gap-y-2 flex text-center justify-center items-center border-2 border-gray-300 py-5 px-5 rounded-xl`}
           >
             <View style={tw`px-4`}>
               <MaterialCommunityIcons name="brain" size={24} color="black" />
             </View>
             <Text style={tw`text-left font-semibold text-md`}>Quiz</Text>
+          </Pressable>
+        </View>
+        <View style={tw`flex flex-row gap-x-3  `}>
+          <Pressable
+            onPress={() => navigation.navigate("Summary")}
+            style={tw` bg-white  gap-y-2 flex text-center justify-center items-center border-2 border-gray-300 py-5 px-5 rounded-xl`}
+          >
+            <View style={tw``}>
+              <MaterialCommunityIcons
+                name="robot-outline"
+                size={24}
+                color="black"
+              />
+            </View>
+            <Text style={tw`text-left font-semibold text-md`}>Co-Pilot</Text>
           </Pressable>
         </View>
       </View>
