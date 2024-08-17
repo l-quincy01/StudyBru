@@ -4,7 +4,7 @@ import * as React from "react";
 import { View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import QuestionsScreen from "../Screens/QuestionsScreen";
+import QuestionsScreen from "../Screens/QuizScreen";
 import SplashScreen from "../Screens/SplashScreen";
 import tw from "twrnc";
 import EndScreen from "../Screens/EndScreen";
@@ -17,9 +17,9 @@ import AddNotes from "../Screens/AddNotes";
 import QuizStack from "./QuizStack";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Feather from "@expo/vector-icons/Feather";
-import Magicnotes from "../Screens/MagicNotes";
-import MagicNotesStack from "./MagicNotesStack";
+
 import HomeStackNavigator from "./HomeStackNavigator";
+import LibraryStackNavigator from "./LibraryStackNavigator";
 
 const Stack = createNativeStackNavigator();
 
@@ -68,7 +68,7 @@ function AppNavigator() {
               <AntDesign name="folderopen" size={24} color="black" />
             ),
           }}
-          component={MagicNotesStack}
+          component={LibraryStackNavigator}
         />
         {/* <Tab.Screen
           name="Library"

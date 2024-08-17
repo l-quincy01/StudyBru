@@ -3,14 +3,16 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 
 import EndScreen from "../Screens/EndScreen";
-import MagicNotes from "../Screens/MagicNotes";
+
 import NotesScreen from "../Screens/NotesScreen";
 import SummaryScreen from "../Screens/SummaryScreen";
-import QuestionsScreen from "../Screens/QuestionsScreen";
+
+import Flashcards from "../Screens/FlashcardsScreen";
+import QuizScreen from "../Screens/QuizScreen";
 
 const Stack = createNativeStackNavigator();
 
-function MagicNotesStack() {
+function LibraryStackNavigator() {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -20,12 +22,12 @@ function MagicNotesStack() {
     >
       <Stack.Screen name="Notes" component={NotesScreen} />
       <Stack.Screen name="Summary" component={SummaryScreen} />
-      <Stack.Screen name="Flashcards" component={MagicNotes} />
-      <Stack.Screen name="Quiz" component={QuestionsScreen} />
+      <Stack.Screen name="Flashcards" component={Flashcards} />
+      <Stack.Screen name="Quiz" component={QuizScreen} />
       <Stack.Screen name="End" component={EndScreen} />
       {/* <Stack.Screen name="Summaries" component={MagicNotes} /> */}
     </Stack.Navigator>
   );
 }
 
-export default MagicNotesStack;
+export default LibraryStackNavigator;

@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
-import QuestionsScreen from "../Screens/QuestionsScreen";
+import QuestionsScreen from "../Screens/QuizScreen";
 import EndScreen from "../Screens/EndScreen";
 
 const Stack = createNativeStackNavigator();

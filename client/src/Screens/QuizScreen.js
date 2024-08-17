@@ -13,7 +13,7 @@ import { QuizContext } from "../config/QuizContext";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AntDesign } from "@expo/vector-icons";
 
-const QuestionsScreen = ({ navigation }) => {
+const QuizScreen = ({ navigation }) => {
   const { quiz } = useContext(QuizContext);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
@@ -152,6 +152,6 @@ const QuestionsScreen = ({ navigation }) => {
   );
 };
 
-export default QuestionsScreen;
+export default QuizScreen;
 
 const styles = StyleSheet.create({});

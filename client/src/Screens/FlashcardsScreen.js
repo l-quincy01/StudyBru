@@ -15,7 +15,7 @@ import { FlashCardsContext } from "../config/FlashCardsContext";
 import { AntDesign } from "@expo/vector-icons";
 //import { flashCards } from "../config/FlashCards";
 
-const MagicNotes = ({ navigation }) => {
+const Flashcards = ({ navigation }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [flashCardSide, setFlashCardSide] = useState(false);
   const { flashCards } = useContext(FlashCardsContext);
@@ -152,4 +152,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MagicNotes;
+export default Flashcards;
