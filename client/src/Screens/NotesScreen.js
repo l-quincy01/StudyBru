@@ -1,131 +1,93 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useContext } from "react";
 import {
-  Animated,
+  FlatList,
   TouchableOpacity,
   ScrollView,
-  StyleSheet,
   Text,
   View,
-  TouchableOpacityBase,
+  StyleSheet,
 } from "react-native";
 import tw from "twrnc";
-import * as Progress from "react-native-progress";
-import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { FlashCardsContext } from "../config/FlashCardsContext";
-import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import { AntDesign } from "@expo/vector-icons";
-import Entypo from "@expo/vector-icons/Entypo";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-
-//import { flashCards } from "../config/FlashCards";
 
 const NotesScreen = ({ navigation }) => {
   const { flashCards } = useContext(FlashCardsContext);
 
-  // if (!flashCards || flashCards.length === 0) {
-  //   return (
-  //     <View style={tw`flex-1 items-center justify-center  p-5`}>
-  //       <Text style={tw`font-semibold text-xl text-center`}>
-  //         Upload Notes On Home Page To Get Started.
-  //       </Text>
-  //     </View>
-  //   );
-  // }
+  // Data for FlatList
+  const data = [
+    {
+      id: "1",
+      name: "Summary",
+      description: "Get beautiful summaries of your notes",
+      icon: "notes",
+      screen: "Summary",
+    },
+    {
+      id: "2",
+      name: "Flashcards",
+      description: "Review your flashcards",
+      icon: "newspaper-variant-multiple-outline",
+      screen: "Flashcards",
+    },
+    {
+      id: "3",
+      name: "Quiz",
+      description: "Test your knowledge with quizzes",
+      icon: "brain",
+      screen: "Quiz",
+    },
+    {
+      id: "4",
+      name: "Co-Pilot",
+      description: "AI-powered assistant to help you",
+      icon: "robot-outline",
+      screen: "Summary",
+    },
+  ];
+
+  // Render each item
+  const renderItem = ({ item }) => (
+    <TouchableOpacity
+      onPress={() => navigation.navigate(item.screen)}
+      style={tw`w-1/2 p-10 bg-white gap-y-2 flex text-center justify-center items-center border border-gray-300 rounded-xl`}
+    >
+      <MaterialIcons name={item.icon} size={24} color="black" />
+      <Text style={tw`text-center font-semibold text-md`}>{item.name}</Text>
+      <Text style={tw`text-center font-medium text-xs text-gray-500`}>
+        {item.description}
+      </Text>
+    </TouchableOpacity>
+  );
 
   return (
     <ScrollView style={tw`bg-gray-100`}>
       <View style={tw`flex-1 flex-col px-5 gap-y-8 mt-25`}>
-        <Text
-          style={tw` font-medium text-4xl text-center justify-between items-center `}
-        >
+        <Text style={tw`font-medium text-4xl text-center`}>
           We'll take notes so you don't have to.
         </Text>
 
-        <Text style={tw`text-gray-500 text-md text-center font-light `}>
+        <Text style={tw`text-gray-500 text-md text-center font-light`}>
           View your summarised notes and flashcards below. Study smarter today.
         </Text>
 
-        <View style={tw`flex flex-row flex-wrap gap-4 justify-center `}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Summary")}
-            style={tw` p-10 bg-white  gap-y-2 flex text-center justify-center items-center border border-gray-300  rounded-xl`}
-          >
-            <View style={tw``}>
-              <MaterialIcons name="notes" size={24} color="black" />
+        {/* FlatList to render items in 2 columns */}
+        <FlatList
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+          numColumns={2}
+          columnWrapperStyle={tw``} // Ensures columns are spaced
+          contentContainerStyle={tw`gap-4`} // Adds vertical gap
+          ItemSeparatorComponent={() => (
+            <View style={tw`mx-4`}>
+              <Text style={tw`mx-4`}> </Text>
             </View>
-            <Text style={tw`text-center font-semibold text-md`}>Summary</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Summary")}
-            style={tw` p-10 bg-white  gap-y-2 flex text-center justify-center items-center border border-gray-300  rounded-xl`}
-          >
-            <View style={tw``}>
-              <MaterialIcons name="notes" size={24} color="black" />
-            </View>
-            <Text style={tw`text-center font-semibold text-md`}>Summary</Text>
-          </TouchableOpacity>
-
-          {/* <TouchableOpacity
-            onPress={() => navigation.navigate("Flashcards")}
-            style={tw` bg-white  gap-y-2 flex text-center justify-center items-center border-2 border-gray-300 py-5 px-5 rounded-xl`}
-          >
-            <View style={tw``}>
-              <MaterialCommunityIcons
-                name="newspaper-variant-multiple-outline"
-                size={24}
-                color="black"
-              />
-            </View>
-            <Text style={tw`text-left font-semibold text-md`}>Flashcards</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Quiz")}
-            style={tw`  bg-white  gap-y-2 flex text-center justify-center items-center border-2 border-gray-300 py-5 px-5 rounded-xl`}
-          >
-            <View style={tw`px-4`}>
-              <MaterialCommunityIcons name="brain" size={24} color="black" />
-            </View>
-            <Text style={tw`text-left font-semibold text-md`}>Quiz</Text>
-          </TouchableOpacity> */}
-        </View>
-
-        {/* <View style={tw`flex flex-row gap-x-3  `}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Summary")}
-            style={tw` bg-white  gap-y-2 flex text-center justify-center items-center border-2 border-gray-300 py-5 px-5 rounded-xl`}
-          >
-            <View style={tw``}>
-              <MaterialCommunityIcons
-                name="robot-outline"
-                size={24}
-                color="black"
-              />
-            </View>
-            <Text style={tw`text-left font-semibold text-md`}>Co-Pilot</Text>
-          </TouchableOpacity>
-        </View> */}
+          )} // Adds horizontal gap
+        />
       </View>
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  flashCardContainer: {
-    width: 300,
-    height: 400,
-  },
-  flashCard: {
-    height: 400,
-    width: 300,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    backgroundColor: "white",
-    borderWidth: 2,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 10,
-    backfaceVisibility: "hidden",
-  },
-});
 
 export default NotesScreen;
