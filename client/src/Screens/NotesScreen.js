@@ -5,15 +5,12 @@ import {
   ScrollView,
   Text,
   View,
-  StyleSheet,
 } from "react-native";
 import tw from "twrnc";
 import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { FlashCardsContext } from "../config/FlashCardsContext";
 
 const NotesScreen = ({ navigation }) => {
-  const { flashCards } = useContext(FlashCardsContext);
-
   // Data for FlatList
   const data = [
     {
@@ -21,6 +18,7 @@ const NotesScreen = ({ navigation }) => {
       name: "Summary",
       description: "Get beautiful summaries of your notes",
       icon: "notes",
+      iconType: "MaterialIcons",
       screen: "Summary",
     },
     {
@@ -28,6 +26,7 @@ const NotesScreen = ({ navigation }) => {
       name: "Flashcards",
       description: "Review your flashcards",
       icon: "newspaper-variant-multiple-outline",
+      iconType: "MaterialCommunityIcons",
       screen: "Flashcards",
     },
     {
@@ -35,6 +34,7 @@ const NotesScreen = ({ navigation }) => {
       name: "Quiz",
       description: "Test your knowledge with quizzes",
       icon: "brain",
+      iconType: "MaterialCommunityIcons",
       screen: "Quiz",
     },
     {
@@ -42,23 +42,32 @@ const NotesScreen = ({ navigation }) => {
       name: "Co-Pilot",
       description: "AI-powered assistant to help you",
       icon: "robot-outline",
+      iconType: "MaterialCommunityIcons",
       screen: "Summary",
     },
   ];
 
-  // Render each item
-  const renderItem = ({ item }) => (
-    <TouchableOpacity
-      onPress={() => navigation.navigate(item.screen)}
-      style={tw`w-1/2 p-10 bg-white gap-y-2 flex text-center justify-center items-center border border-gray-300 rounded-xl`}
-    >
-      <MaterialIcons name={item.icon} size={24} color="black" />
-      <Text style={tw`text-center font-semibold text-md`}>{item.name}</Text>
-      <Text style={tw`text-center font-medium text-xs text-gray-500`}>
-        {item.description}
-      </Text>
-    </TouchableOpacity>
-  );
+  //Touchable item to render
+  const renderItem = ({ item }) => {
+    const IconComponent =
+      item.iconType === "MaterialIcons"
+        ? MaterialIcons
+        : MaterialCommunityIcons;
+
+    return (
+      <TouchableOpacity
+        onPress={() => navigation.navigate(item.screen)}
+        style={tw`mx-2 my-2 w-9/20 p-9 bg-white gap-y-2 flex text-center justify-center items-center border border-gray-300 rounded-xl`}
+      >
+        <IconComponent name={item.icon} size={24} color="black" />
+        <Text style={tw`text-center font-semibold text-md`}>{item.name}</Text>
+        <Text style={tw`text-center font-medium text-xs text-gray-500`}>
+          {item.description}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
+  //--------------------------------------------------------------------------------------
 
   return (
     <ScrollView style={tw`bg-gray-100`}>
@@ -71,19 +80,12 @@ const NotesScreen = ({ navigation }) => {
           View your summarised notes and flashcards below. Study smarter today.
         </Text>
 
-        {/* FlatList to render items in 2 columns */}
+        {/* FlatList Approach, a lot cleaner */}
         <FlatList
           data={data}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
           numColumns={2}
-          columnWrapperStyle={tw``} // Ensures columns are spaced
-          contentContainerStyle={tw`gap-4`} // Adds vertical gap
-          ItemSeparatorComponent={() => (
-            <View style={tw`mx-4`}>
-              <Text style={tw`mx-4`}> </Text>
-            </View>
-          )} // Adds horizontal gap
         />
       </View>
     </ScrollView>
