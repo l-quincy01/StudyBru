@@ -1,11 +1,12 @@
 import React, { useState, useRef, useContext } from "react";
 import {
   Animated,
-  Pressable,
+  TouchableOpacity,
   ScrollView,
   StyleSheet,
   Text,
   View,
+  TouchableOpacityBase,
 } from "react-native";
 import tw from "twrnc";
 import * as Progress from "react-native-progress";
@@ -44,19 +45,27 @@ const NotesScreen = ({ navigation }) => {
           View your summarised notes and flashcards below. Study smarter today.
         </Text>
 
-        <View
-          style={tw`flex flex-row gap-x-3 items-center justify-center mt-10  `}
-        >
-          <Pressable
+        <View style={tw`flex flex-row flex-wrap gap-4 justify-center `}>
+          <TouchableOpacity
             onPress={() => navigation.navigate("Summary")}
-            style={tw` bg-white  gap-y-2 flex text-center justify-center items-center border-2 border-gray-300 py-5 px-5 rounded-xl`}
+            style={tw` p-10 bg-white  gap-y-2 flex text-center justify-center items-center border border-gray-300  rounded-xl`}
           >
             <View style={tw``}>
               <MaterialIcons name="notes" size={24} color="black" />
             </View>
-            <Text style={tw`text-left font-semibold text-md`}>Summary</Text>
-          </Pressable>
-          <Pressable
+            <Text style={tw`text-center font-semibold text-md`}>Summary</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Summary")}
+            style={tw` p-10 bg-white  gap-y-2 flex text-center justify-center items-center border border-gray-300  rounded-xl`}
+          >
+            <View style={tw``}>
+              <MaterialIcons name="notes" size={24} color="black" />
+            </View>
+            <Text style={tw`text-center font-semibold text-md`}>Summary</Text>
+          </TouchableOpacity>
+
+          {/* <TouchableOpacity
             onPress={() => navigation.navigate("Flashcards")}
             style={tw` bg-white  gap-y-2 flex text-center justify-center items-center border-2 border-gray-300 py-5 px-5 rounded-xl`}
           >
@@ -68,8 +77,8 @@ const NotesScreen = ({ navigation }) => {
               />
             </View>
             <Text style={tw`text-left font-semibold text-md`}>Flashcards</Text>
-          </Pressable>
-          <Pressable
+          </TouchableOpacity>
+          <TouchableOpacity
             onPress={() => navigation.navigate("Quiz")}
             style={tw`  bg-white  gap-y-2 flex text-center justify-center items-center border-2 border-gray-300 py-5 px-5 rounded-xl`}
           >
@@ -77,10 +86,11 @@ const NotesScreen = ({ navigation }) => {
               <MaterialCommunityIcons name="brain" size={24} color="black" />
             </View>
             <Text style={tw`text-left font-semibold text-md`}>Quiz</Text>
-          </Pressable>
+          </TouchableOpacity> */}
         </View>
-        <View style={tw`flex flex-row gap-x-3  `}>
-          <Pressable
+
+        {/* <View style={tw`flex flex-row gap-x-3  `}>
+          <TouchableOpacity
             onPress={() => navigation.navigate("Summary")}
             style={tw` bg-white  gap-y-2 flex text-center justify-center items-center border-2 border-gray-300 py-5 px-5 rounded-xl`}
           >
@@ -92,8 +102,8 @@ const NotesScreen = ({ navigation }) => {
               />
             </View>
             <Text style={tw`text-left font-semibold text-md`}>Co-Pilot</Text>
-          </Pressable>
-        </View>
+          </TouchableOpacity>
+        </View> */}
       </View>
     </ScrollView>
   );

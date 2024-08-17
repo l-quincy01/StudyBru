@@ -290,7 +290,7 @@ const SplashScreen = ({ navigation }) => {
         <>
           <View style={tw`flex flex-row items-center justify-between`}>
             <Text style={tw`text-3xl text-left font-semibold`}>Home</Text>
-            <TouchableOpacity onPress={navigation.navigate("Profile")}>
+            <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
               <AntDesign name="user" size={24} color="black" />
             </TouchableOpacity>
           </View>
