@@ -43,7 +43,7 @@ const NotesScreen = ({ navigation }) => {
       description: "AI-powered assistant to help you",
       icon: "robot-outline",
       iconType: "MaterialCommunityIcons",
-      screen: "Summary",
+      screen: "CoPilot",
     },
   ];
 

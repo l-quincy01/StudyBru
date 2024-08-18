@@ -47,13 +47,13 @@ function AppNavigator() {
           component={HomeStackNavigator}
         />
         <Tab.Screen
-          name="Add Notes"
+          name="AddNotes"
           options={{
             tabBarLabel: ({ color }) => (
-              <Text style={{ color: color }}> Scan Notes</Text>
+              <Text style={{ color: color }}> Add Notes</Text>
             ),
             tabBarIcon: ({ color, size }) => (
-              <Feather name="camera" size={24} color="black" />
+              <AntDesign name="pluscircleo" size={24} color="black" />
             ),
           }}
           component={AddNotes}

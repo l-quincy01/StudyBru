@@ -19,7 +19,7 @@ import axios from "axios";
 import { QuizContext } from "../config/QuizContext";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { AntDesign, Entypo, Feather } from "@expo/vector-icons";
+import { AntDesign, Entypo, Feather, FontAwesome5 } from "@expo/vector-icons";
 import { FlashCardsContext } from "../config/FlashCardsContext";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { SummaryContext } from "../config/SummaryContext";
@@ -334,56 +334,9 @@ const SplashScreen = ({ navigation }) => {
                 summaries, flashcards and interactive quizzes.
               </Text>
 
-              {/*SAVED NOTES VIEW */}
-
-              {/* <Pressable
-                onPress={() => navigation.navigate("Summary")}
-                style={tw` bg-white  gap-y-2 flex text-center justify-center items-center border-2 border-gray-300 py-5 px-5 rounded-xl`}
-              >
-                <View style={tw``}>
-                  <Ionicons name="library-outline" size={24} color="black" />
-                </View>
-                <Text style={tw`text-left font-semibold text-md`}>
-                  Your Library
-                </Text>
-              </Pressable> */}
-
-              {/* 
-
-            <View
-              style={tw` bg-white flex flex-col border-2 border-gray-300  rounded-xl mt-5 p-2`}
-            >
-              <View style={tw` px-2 gap-y-2 flex flex-col  `}>
-                <View style={tw`flex flex-row items-center justify-between`}>
-                  <Text style={tw`text-lg font-semibold `}>
-                    Heading of Notes
-                  </Text>
-
-                  <AntDesign name="checkcircle" size={24} color="black" />
-                </View>
-                <Text style={tw`text-xs font-light`}>
-                  Effortlessly transform heavy course material into focused
-                  summaries, flashcards and interactive quizzes.
-                </Text>
-
-                <View style={tw`flex flex-row justify-between items-center`}>
-                  <Text style={tw`text-xs font-light`}>
-                    Date Created: {formattedDate}
-                  </Text>
-                  <Entypo name="documents" size={24} color="black" />
-                </View>
-              </View>
-               <CheckBox
-                notesArr = {notesArray}
-                checkedValues={checkBoxVal}
-                onChange={setCheckBoxVal}
-              /> 
-              <View style={tw`border-t-4 border-green-200 bottom-0 `}></View> 
-            </View> */}
-
               {/*DOCUMENT PICKER */}
 
-              <View style={tw`text-left my-5`}>
+              {/* <View style={tw`text-left my-5`}>
                 <Text style={tw`text-xl font-semibold`}>
                   Here's how to get started
                 </Text>
@@ -403,23 +356,35 @@ const SplashScreen = ({ navigation }) => {
                   Compatible with all your study material. Choose .pdf, .docx,
                   .pptx
                 </Text>
-                {/* <View style={tw`flex flex-col items-center`}>
-                  <AntDesign name="addfile" size={24} color="black" />
-                  <Text style={tw`text-left font-semibold text-md`}>
-                    Select A File
-                  </Text>
-                  <Text style={tw`text-left font-light text-xs`}>
-                    .pdf, .docx, .pptx
-                  </Text>
-                </View> */}
-              </TouchableOpacity>
+           
+              </TouchableOpacity> */}
+
+              <Text style={tw`text-xl font-semibold`}>Get started</Text>
+              <View
+                style={tw` mt-5 bg-white p-5 gap-y-5 items-center justify-center rounded-xl`}
+              >
+                <FontAwesome5 name="file-pdf" size={36} color="black" />
+
+                <TouchableOpacity
+                  style={tw`bg-blue-500 p-3 flex flex-row justify-center items-center gap-x-2 rounded-xl`}
+                >
+                  <AntDesign name="upload" size={24} color="white" />
+
+                  <Text style={tw`text-white `}>Upload Notes</Text>
+                </TouchableOpacity>
+
+                <Text style={tw`text-black `}>
+                  Compatible with pdf, .docx, .pptx
+                </Text>
+              </View>
+
               <View style={tw`text-left my-5 gap-y-5`}>
                 <Text style={tw`text-lg text-gray-400 font-semibold`}>
                   Recently Viewed
                 </Text>
 
                 <View style={tw`justify-center items-center`}>
-                  {false ? ( //Will make a condition to be set to true if user has notes uploaded
+                  {true ? ( //Will make a condition to be set to true if user has notes uploaded
                     <Text style={tw`font-semibold text-md `}>
                       Nothing added.
                     </Text>
