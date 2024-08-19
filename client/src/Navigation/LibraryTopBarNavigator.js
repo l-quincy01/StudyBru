@@ -8,14 +8,14 @@ import CoPilotScreen from "../Screens/CoPilotScreen";
 import { AntDesign, Entypo, FontAwesome5 } from "@expo/vector-icons";
 import tw from "twrnc";
 
-const LibraryTopBarNavigator = () => {
+const LibraryTopBarNavigator = ({ navigation }) => {
   const Tab = createMaterialTopTabNavigator();
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={tw`flex flex-row items-center mt-2 mb-2`}>
         <TouchableOpacity
-          onPress={() => navigation.navigate("Notes")}
+          onPress={() => navigation.navigate("Library")}
           style={tw`m`}
         >
           <Entypo name="chevron-left" size={28} color="black" />
