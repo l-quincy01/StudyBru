@@ -39,13 +39,6 @@ const SummaryScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={tw`flex-1  bg-gray-100`}>
-      <TouchableOpacity
-        onPress={() => navigation.navigate("Notes")}
-        style={tw`mb-4 px-5`}
-      >
-        <Entypo name="chevron-left" size={28} color="black" />
-      </TouchableOpacity>
-
       <ScrollView style={tw`bg-gray-100`}>
         <View style={tw`flex p-5 flex-col gap-y-8 `}>
           {/* Summary Heading */}
