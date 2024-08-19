@@ -35,12 +35,6 @@ const CoPilotScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={tw`flex-1 bg-gray-100`}>
-      <TouchableOpacity
-        onPress={() => navigation.navigate("Notes")}
-        style={tw`mb-4 px-5`}
-      >
-        <Entypo name="chevron-left" size={28} color="black" />
-      </TouchableOpacity>
       <ScrollView style={tw`bg-gray-100`}>
         <View>
           <FlatList
@@ -66,6 +60,7 @@ const CoPilotScreen = ({ navigation }) => {
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.container}
+        keyboardVerticalOffset={150}
       >
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={tw` px-5`}>
