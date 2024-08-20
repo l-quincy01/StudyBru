@@ -366,6 +366,7 @@ const SplashScreen = ({ navigation }) => {
                 <FontAwesome5 name="file-pdf" size={36} color="black" />
 
                 <TouchableOpacity
+                  onPress={pickDocument}
                   style={tw`bg-blue-500 p-3 flex flex-row justify-center items-center gap-x-2 rounded-xl`}
                 >
                   <AntDesign name="upload" size={24} color="white" />

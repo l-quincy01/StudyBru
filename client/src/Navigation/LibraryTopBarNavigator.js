@@ -6,6 +6,9 @@ import Flashcards from "../Screens/FlashcardsScreen";
 import QuizScreen from "../Screens/QuizScreen";
 import CoPilotScreen from "../Screens/CoPilotScreen";
 import { AntDesign, Entypo, FontAwesome5 } from "@expo/vector-icons";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+
 import tw from "twrnc";
 
 const LibraryTopBarNavigator = ({ navigation }) => {
@@ -13,34 +16,29 @@ const LibraryTopBarNavigator = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={tw`flex flex-row items-center mt-2 mb-2`}>
+      <View style={tw`flex flex-row items-center mt-1 mb-1`}>
         <TouchableOpacity
+          style={tw`flex flex-row items-center  justify-center`}
           onPress={() => navigation.navigate("Library")}
-          style={tw`m`}
         >
           <Entypo name="chevron-left" size={28} color="black" />
-        </TouchableOpacity>
 
-        <View style={tw`flex flex-row items-center justify-center`}>
-          <Text style={tw`font-semibold text-md`}> Library</Text>
-        </View>
+          <Text style={tw`font-semibold text-lg`}> Library</Text>
+        </TouchableOpacity>
       </View>
 
       <Tab.Navigator
         screenOptions={{
           tabBarLabelStyle: { fontStyle: "italic", fontSize: 11 },
-          tabBarStyle: { backgroundColor: "white" },
         }}
       >
         <Tab.Screen
           name="Summary"
           component={SummaryScreen}
           options={{
-            tabBarLabel: ({ color }) => (
-              <View style={tw`flex flex-row items-center`}>
-                <AntDesign name="filetext1" size={16} color={color} />
-                <Text style={tw`ml-1 text-xs`}>Summary</Text>
-              </View>
+            title: "Summary",
+            tabBarIcon: ({ color }) => (
+              <MaterialIcons name="notes" size={24} color="black" />
             ),
           }}
         />
@@ -48,11 +46,9 @@ const LibraryTopBarNavigator = ({ navigation }) => {
           name="Flashcards"
           component={Flashcards}
           options={{
-            tabBarLabel: ({ color }) => (
-              <View style={tw`flex flex-row items-center`}>
-                <FontAwesome5 name="sticky-note" size={16} color={color} />
-                <Text style={tw`ml-1 text-xs`}>Flashcards</Text>
-              </View>
+            title: "Flashcard",
+            tabBarIcon: ({ color }) => (
+              <Entypo name="documents" size={24} color="black" />
             ),
           }}
         />
@@ -60,12 +56,9 @@ const LibraryTopBarNavigator = ({ navigation }) => {
           name="Quiz"
           component={QuizScreen}
           options={{
-            tabBarShowLabel: true,
-            tabBarLabel: ({ color }) => (
-              <View style={tw`flex flex-row items-center`}>
-                <Entypo name="edit" size={16} color={color} />
-                <Text style={tw`ml-1 text-xs`}>QuiHz</Text>
-              </View>
+            title: "Quiz",
+            tabBarIcon: ({ color }) => (
+              <MaterialCommunityIcons name="brain" size={24} color="black" />
             ),
           }}
         />
@@ -73,11 +66,13 @@ const LibraryTopBarNavigator = ({ navigation }) => {
           name="CoPilot"
           component={CoPilotScreen}
           options={{
-            tabBarLabel: ({ color }) => (
-              <View style={tw`flex flex-row items-center`}>
-                <AntDesign name="team" size={16} color={color} />
-                <Text style={tw`ml-1 text-xs`}>CoPilot</Text>
-              </View>
+            title: "CoPilot",
+            tabBarIcon: ({ color }) => (
+              <MaterialCommunityIcons
+                name="robot-outline"
+                size={24}
+                color="black"
+              />
             ),
           }}
         />

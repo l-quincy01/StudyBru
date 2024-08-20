@@ -6,6 +6,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 import tw from "twrnc";
@@ -65,11 +66,33 @@ const Flashcards = ({ navigation }) => {
 
   if (!flashCards || flashCards.length === 0) {
     return (
-      <View style={tw`flex-1 items-center justify-center  p-5`}>
-        <Text style={tw`font-semibold text-xl text-center`}>
-          Upload Notes On Home Page To Get Started.
-        </Text>
-      </View>
+      <>
+        <SafeAreaView style={tw`flex-1  bg-gray-100`}>
+          <ScrollView style={tw`bg-gray-100`}>
+            <View style={tw`flex p-5 flex-col gap-y-8 `}>
+              <Text style={tw`text-xl font-semibold`}>Get started</Text>
+              <View
+                style={tw` mt-5 bg-white p-5 gap-y-5 items-center justify-center rounded-xl`}
+              >
+                <FontAwesome5 name="file-pdf" size={36} color="black" />
+
+                <TouchableOpacity
+                  // onPress={pickDocument}
+                  style={tw`bg-blue-500 p-3 flex flex-row justify-center items-center gap-x-2 rounded-xl`}
+                >
+                  <AntDesign name="upload" size={24} color="white" />
+
+                  <Text style={tw`text-white `}>Upload Notes</Text>
+                </TouchableOpacity>
+
+                <Text style={tw`text-black `}>
+                  Compatible with pdf, .docx, .pptx
+                </Text>
+              </View>
+            </View>
+          </ScrollView>
+        </SafeAreaView>
+      </>
     );
   }
 
