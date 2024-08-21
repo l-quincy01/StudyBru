@@ -322,6 +322,7 @@ const SplashScreen = ({ navigation }) => {
             </View>
 
             <View style={tw`flex-1  `}>
+              {/* -----------------------------------------------------------OLD UI-------------------------------------------------------------------------------*/}
               {/*Headline */}
               {/* <Text
                 style={tw` mt-10 font-medium text-3xl text-center justify-between items-center`}
@@ -383,7 +384,7 @@ const SplashScreen = ({ navigation }) => {
                 </Text>
            
               </TouchableOpacity> */}
-
+              {/* -----------------------------------------------------------OLD UI-------------------------------------------------------------------------------*/}
               <View style={tw`flex flex-col my-5 gap-y-7 `}>
                 <View style={tw`flex flex-row items-center gap-x-5`}>
                   <MaterialCommunityIcons
@@ -450,7 +451,6 @@ const SplashScreen = ({ navigation }) => {
                 </View>
               </View>
 
-              <Text style={tw`text-xl font-semibold my-3`}>Get started</Text>
               <TouchableOpacity
                 style={tw` rounded-2xl bg-black items-center  gap-3 justify-center flex flex-row p-5`}
               >
@@ -459,6 +459,7 @@ const SplashScreen = ({ navigation }) => {
                 </Text>
                 <AntDesign name="upload" size={24} color="white" />
               </TouchableOpacity>
+              {/* -----------------------------------------------------------OLD UI-------------------------------------------------------------------------------*/}
               {/* <Pressable
                 onPress={pickDocument}
                 style={tw` bg-white  gap-x-5 flex flex-row  items-center border-2 border-gray-300 p-5 w-full rounded-xl`}
@@ -489,7 +490,7 @@ const SplashScreen = ({ navigation }) => {
                   Compatible with pdf, .docx, .pptx
                 </Text>
               </View> */}
-
+              {/* -----------------------------------------------------------OLD UI-------------------------------------------------------------------------------*/}
               <View style={tw`text-left my-5 gap-y-5`}>
                 <Text style={tw`text-lg text-gray-400 font-semibold`}>
                   Recently Viewed
@@ -524,7 +525,7 @@ const SplashScreen = ({ navigation }) => {
                   )}
                 </View>
               </View>
-
+              {/* -----------------------------------------------------------OLD UI-------------------------------------------------------------------------------*/}
               {/* <Pressable
                 onPress={pickDocument}
                 style={tw` bg-white  gap-x-5 flex flex-row  items-center border-2 border-gray-300 p-5 w-full rounded-xl`}
@@ -535,6 +536,7 @@ const SplashScreen = ({ navigation }) => {
                   Upload Your Study Material
                 </Text>
               </Pressable> */}
+              {/* -----------------------------------------------------------OLD UI-------------------------------------------------------------------------------*/}
             </View>
           </ScrollView>
         </>

@@ -72,14 +72,20 @@ const NotesScreen = ({ navigation }) => {
   return (
     <ScrollView style={tw`bg-gray-100`}>
       <View style={tw`flex-1 flex-col px-5 gap-y-8 mt-25`}>
+        <Text style={tw`mt-4 text-3xl text-left font-extrabold`}>Library</Text>
+        <Text style={tw`text-gray-500 text-md text-left font-light`}>
+          View your summarised notes and flashcards below. Study smarter today.
+        </Text>
+        {/* -----------------------------------------------------------OLD UI-------------------------------------------------------------------------------*/}
+        {/*      
         <Text style={tw`font-medium text-4xl text-center`}>
           We'll take notes so you don't have to.
         </Text>
 
         <Text style={tw`text-gray-500 text-md text-center font-light`}>
           View your summarised notes and flashcards below. Study smarter today.
-        </Text>
-
+        </Text> */}
+        {/* -----------------------------------------------------------OLD UI-------------------------------------------------------------------------------*/}
         {/* FlatList Approach, a lot cleaner */}
         <FlatList
           data={data}
