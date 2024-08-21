@@ -32,6 +32,7 @@ import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { SummaryContext } from "../config/SummaryContext";
 import CheckBox from "../Components/CheckBox";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import GetStartedComponent from "../Components/GetStartedComponent";
 
 function removeTripleBackticks(text) {
   // Use a regular expression to replace triple backticks with an empty string
@@ -302,8 +303,9 @@ const SplashScreen = ({ navigation }) => {
           >
             {/* <Text style={tw`text-3xl text-left font-bold`}> 'StudyBuddy' </Text> */}
             <View style={tw` flex flex-row gap-x-2 items-center `}>
-              <SimpleLineIcons name="fire" size={24} color="black" />
-              <Text style={tw`font-bold text-lg`}>0</Text>
+              <Entypo name="menu" size={24} color="black" />
+              {/* <SimpleLineIcons name="fire" size={24} color="black" />
+              <Text style={tw`font-bold text-lg`}>0</Text> */}
             </View>
             <TouchableOpacity
               style={tw``}
@@ -315,24 +317,18 @@ const SplashScreen = ({ navigation }) => {
 
           {/*Body view */}
           <ScrollView style={tw`flex-1 px-5 bg-gray-100`}>
-            <View style={tw`flex flex-col`}>
-              <Text style={tw`mt-4 text-3xl text-left font-extrabold`}>
-                Get started
-              </Text>
-            </View>
-
-            <View style={tw`flex-1  `}>
-              {/* -----------------------------------------------------------OLD UI-------------------------------------------------------------------------------*/}
-              {/*Headline */}
-              {/* <Text
+            <GetStartedComponent />
+            {/* -----------------------------------------------------------OLD UI-------------------------------------------------------------------------------*/}
+            {/*Headline */}
+            {/* <Text
                 style={tw` mt-10 font-medium text-3xl text-center justify-between items-center`}
               >
                 Summarise With Ease
       
               </Text> */}
 
-              {/*Document icons */}
-              {/* <View style={tw`flex flex-col gap-y-2 items-center mt-4 mb-1`}>
+            {/*Document icons */}
+            {/* <View style={tw`flex flex-col gap-y-2 items-center mt-4 mb-1`}>
                 <View
                   style={tw`flex flex-row gap-x-4 items-center justify-center`}
                 >
@@ -360,9 +356,9 @@ const SplashScreen = ({ navigation }) => {
                 summaries, flashcards and interactive quizzes.
               </Text> */}
 
-              {/*DOCUMENT PICKER */}
+            {/*DOCUMENT PICKER */}
 
-              {/* <View style={tw`text-left my-5`}>
+            {/* <View style={tw`text-left my-5`}>
                 <Text style={tw`text-xl font-semibold`}>
                   Here's how to get started
                 </Text>
@@ -384,83 +380,10 @@ const SplashScreen = ({ navigation }) => {
                 </Text>
            
               </TouchableOpacity> */}
-              {/* -----------------------------------------------------------OLD UI-------------------------------------------------------------------------------*/}
-              <View style={tw`flex flex-col my-5 gap-y-7 `}>
-                <View style={tw`flex flex-row items-center gap-x-5`}>
-                  <MaterialCommunityIcons
-                    name="file-document-edit"
-                    size={40}
-                    color="black"
-                  />
-                  <View style={tw`flex flex-col `}>
-                    <Text style={tw`text-xl font-semibold`}>Summaries</Text>
-                    <Text style={tw`text-md font-light text-gray-500 w-1/2`}>
-                      Get beautiful summaries Get beautiful summaries Get
-                      beautiful summaries
-                    </Text>
-                  </View>
-                </View>
-                <View style={tw`flex flex-row items-center gap-x-5`}>
-                  <MaterialCommunityIcons
-                    name="file-document-multiple"
-                    size={40}
-                    color="black"
-                  />
-                  <View style={tw`flex flex-col `}>
-                    <Text style={tw`text-xl font-semibold`}>Flashcards</Text>
-                    <Text style={tw`text-md font-light text-gray-500 w-2/3 `}>
-                      Create neat and clever flashcards to assist with studying.
-                    </Text>
-                  </View>
-                </View>
-                <View style={tw`flex flex-row items-center gap-x-5`}>
-                  <MaterialCommunityIcons
-                    name="brain"
-                    size={40}
-                    color="black"
-                  />
-                  <View style={tw`flex flex-col `}>
-                    <Text style={tw`text-xl font-semibold`}>Quiz</Text>
-                    <Text style={tw`text-md font-light text-gray-500  w-2/3 `}>
-                      Create interactive quizzes based on your notes.
-                    </Text>
-                  </View>
-                </View>
-                <View style={tw`flex flex-row items-center gap-x-5`}>
-                  <MaterialCommunityIcons
-                    name="robot"
-                    size={40}
-                    color="black"
-                  />
-                  <View style={tw`flex flex-col `}>
-                    <Text style={tw`text-xl font-semibold`}>Co Pilot</Text>
-                    <Text style={tw`text-md font-light text-gray-500 w-2/3  `}>
-                      Get AI explanations on concepts you find difficult.
-                    </Text>
-                  </View>
-                </View>
-                <View style={tw`flex flex-row items-center gap-x-5`}>
-                  <MaterialIcons name="quiz" size={40} color="black" />
-                  <View style={tw`flex flex-col `}>
-                    <Text style={tw`text-xl font-semibold`}>Mock Test</Text>
-                    <Text style={tw`text-md font-light text-gray-500 w-2/3 `}>
-                      Create mock test questions to further improve your
-                      studying
-                    </Text>
-                  </View>
-                </View>
-              </View>
+            {/* -----------------------------------------------------------OLD UI-------------------------------------------------------------------------------*/}
 
-              <TouchableOpacity
-                style={tw` rounded-2xl bg-black items-center  gap-3 justify-center flex flex-row p-5`}
-              >
-                <Text style={tw` text-md font-semibold text-white`}>
-                  Upload Study Material
-                </Text>
-                <AntDesign name="upload" size={24} color="white" />
-              </TouchableOpacity>
-              {/* -----------------------------------------------------------OLD UI-------------------------------------------------------------------------------*/}
-              {/* <Pressable
+            {/* -----------------------------------------------------------OLD UI-------------------------------------------------------------------------------*/}
+            {/* <Pressable
                 onPress={pickDocument}
                 style={tw` bg-white  gap-x-5 flex flex-row  items-center border-2 border-gray-300 p-5 w-full rounded-xl`}
               >
@@ -471,7 +394,7 @@ const SplashScreen = ({ navigation }) => {
                 </Text>
               </Pressable> */}
 
-              {/* <Text style={tw`text-xl font-semibold`}>Get started</Text>
+            {/* <Text style={tw`text-xl font-semibold`}>Get started</Text>
               <View
                 style={tw` mt-5 bg-white p-5 gap-y-5 items-center justify-center rounded-xl`}
               >
@@ -490,43 +413,41 @@ const SplashScreen = ({ navigation }) => {
                   Compatible with pdf, .docx, .pptx
                 </Text>
               </View> */}
-              {/* -----------------------------------------------------------OLD UI-------------------------------------------------------------------------------*/}
-              <View style={tw`text-left my-5 gap-y-5`}>
-                <Text style={tw`text-lg text-gray-400 font-semibold`}>
-                  Recently Viewed
-                </Text>
+            {/* -----------------------------------------------------------OLD UI-------------------------------------------------------------------------------*/}
+            <View style={tw`text-left my-5 gap-y-5`}>
+              <Text style={tw`text-lg text-gray-400 font-semibold`}>
+                Recently Viewed
+              </Text>
 
-                <View style={tw`justify-center items-center`}>
-                  {true ? ( //Will make a condition to be set to true if user has notes uploaded
-                    <Text style={tw`font-semibold text-md `}>
-                      Nothing added.
-                    </Text>
-                  ) : (
-                    <TouchableOpacity
-                      style={tw`flex flex-row gap-x-8 items-center bg-gray-200 rounded-lg py-4 px-2`}
-                    >
-                      <AntDesign name="pptfile1" size={32} color="black" />
-                      <View style={tw`flex flex-col gap-y-2`}>
-                        <Text style={tw`text-md font-semibold`}>
-                          CS Complier Notes
-                        </Text>
-                        <Text style={tw`text-md font-medium text-gray-500`}>
-                          Date created {formattedDate}
-                        </Text>
-                      </View>
-                      <View style={tw`ml-4`}>
-                        <Entypo
-                          name="chevron-small-right"
-                          size={24}
-                          color="black"
-                        />
-                      </View>
-                    </TouchableOpacity>
-                  )}
-                </View>
+              <View style={tw`justify-center items-center`}>
+                {true ? ( //Will make a condition to be set to true if user has notes uploaded
+                  <Text style={tw`font-semibold text-md `}>Nothing added.</Text>
+                ) : (
+                  <TouchableOpacity
+                    style={tw`flex flex-row gap-x-8 items-center bg-gray-200 rounded-lg py-4 px-2`}
+                  >
+                    <AntDesign name="pptfile1" size={32} color="black" />
+                    <View style={tw`flex flex-col gap-y-2`}>
+                      <Text style={tw`text-md font-semibold`}>
+                        CS Complier Notes
+                      </Text>
+                      <Text style={tw`text-md font-medium text-gray-500`}>
+                        Date created {formattedDate}
+                      </Text>
+                    </View>
+                    <View style={tw`ml-4`}>
+                      <Entypo
+                        name="chevron-small-right"
+                        size={24}
+                        color="black"
+                      />
+                    </View>
+                  </TouchableOpacity>
+                )}
               </View>
-              {/* -----------------------------------------------------------OLD UI-------------------------------------------------------------------------------*/}
-              {/* <Pressable
+            </View>
+            {/* -----------------------------------------------------------OLD UI-------------------------------------------------------------------------------*/}
+            {/* <Pressable
                 onPress={pickDocument}
                 style={tw` bg-white  gap-x-5 flex flex-row  items-center border-2 border-gray-300 p-5 w-full rounded-xl`}
               >
@@ -536,8 +457,7 @@ const SplashScreen = ({ navigation }) => {
                   Upload Your Study Material
                 </Text>
               </Pressable> */}
-              {/* -----------------------------------------------------------OLD UI-------------------------------------------------------------------------------*/}
-            </View>
+            {/* -----------------------------------------------------------OLD UI-------------------------------------------------------------------------------*/}
           </ScrollView>
         </>
       )}
