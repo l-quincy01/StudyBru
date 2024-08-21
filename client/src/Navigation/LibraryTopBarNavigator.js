@@ -62,7 +62,7 @@ const LibraryTopBarNavigator = ({ navigation }) => {
             ),
           }}
         />
-        <Tab.Screen
+        {/* <Tab.Screen
           name="CoPilot"
           component={CoPilotScreen}
           options={{
@@ -75,7 +75,7 @@ const LibraryTopBarNavigator = ({ navigation }) => {
               />
             ),
           }}
-        />
+        /> */}
       </Tab.Navigator>
     </SafeAreaView>
   );

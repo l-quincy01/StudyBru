@@ -27,11 +27,12 @@ function LibraryStackNavigator() {
         name="LibraryTopBarNavigator"
         component={LibraryTopBarNavigator}
       />
+      <Stack.Screen name="CoPilot" component={CoPilotScreen} />
       {/* <Stack.Screen name="Notes" component={NotesScreen} />
       <Stack.Screen name="Summary" component={SummaryScreen} />
       <Stack.Screen name="Flashcards" component={Flashcards} />
       <Stack.Screen name="Quiz" component={QuizScreen} />
-      <Stack.Screen name="CoPilot" component={CoPilotScreen} />
+    
       <Stack.Screen name="End" component={EndScreen} /> */}
       {/* <Stack.Screen name="Summaries" component={MagicNotes} /> */}
     </Stack.Navigator>

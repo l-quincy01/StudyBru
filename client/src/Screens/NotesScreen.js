@@ -19,7 +19,7 @@ const NotesScreen = ({ navigation }) => {
       description: "Get beautiful summaries of your notes",
       icon: "notes",
       iconType: "MaterialIcons",
-      screen: "Summary",
+      screen: "LibraryTopBarNavigator",
     },
     {
       id: "2",
@@ -27,7 +27,7 @@ const NotesScreen = ({ navigation }) => {
       description: "Review your flashcards",
       icon: "newspaper-variant-multiple-outline",
       iconType: "MaterialCommunityIcons",
-      screen: "Flashcards",
+      screen: "LibraryTopBarNavigator",
     },
     {
       id: "3",
@@ -35,7 +35,7 @@ const NotesScreen = ({ navigation }) => {
       description: "Test your knowledge with quizzes",
       icon: "brain",
       iconType: "MaterialCommunityIcons",
-      screen: "Quiz",
+      screen: "LibraryTopBarNavigator",
     },
     {
       id: "4",
@@ -56,7 +56,7 @@ const NotesScreen = ({ navigation }) => {
 
     return (
       <TouchableOpacity
-        onPress={() => navigation.navigate("LibraryTopBarNavigator")}
+        onPress={() => navigation.navigate(item.screen)}
         style={tw`mx-2 my-2 w-9/20 p-9 bg-white gap-y-2 flex text-center justify-center items-center border border-gray-300 rounded-xl`}
       >
         <IconComponent name={item.icon} size={24} color="black" />

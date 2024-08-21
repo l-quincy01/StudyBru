@@ -19,11 +19,19 @@ import axios from "axios";
 import { QuizContext } from "../config/QuizContext";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { AntDesign, Entypo, Feather, FontAwesome5 } from "@expo/vector-icons";
+import {
+  AntDesign,
+  Entypo,
+  Feather,
+  FontAwesome5,
+  MaterialIcons,
+  SimpleLineIcons,
+} from "@expo/vector-icons";
 import { FlashCardsContext } from "../config/FlashCardsContext";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { SummaryContext } from "../config/SummaryContext";
 import CheckBox from "../Components/CheckBox";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 function removeTripleBackticks(text) {
   // Use a regular expression to replace triple backticks with an empty string
@@ -99,7 +107,7 @@ const SplashScreen = ({ navigation }) => {
     try {
       if (file.assets[0].mimeType === "application/pdf") {
         const response = await axios.post(
-          "http://172.20.10.7:3001/parse-pdf",
+          "http://192.168.68.113:3001/parse-pdf",
           formData,
           {
             headers: {
@@ -118,7 +126,7 @@ const SplashScreen = ({ navigation }) => {
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
       ) {
         const response = await axios.post(
-          "http://172.20.10.7:3001/parse-docx",
+          "http://192.168.68.113:3001/parse-docx",
           formData,
           {
             headers: {
@@ -137,7 +145,7 @@ const SplashScreen = ({ navigation }) => {
         "application/vnd.openxmlformats-officedocument.presentationml.presentation"
       ) {
         const response = await axios.post(
-          "http://172.20.10.7:3001/parse-pptx",
+          "http://192.168.68.113:3001/parse-pptx",
           formData,
           {
             headers: {
@@ -211,7 +219,7 @@ const SplashScreen = ({ navigation }) => {
 
     try {
       const response = await axios.post(
-        "http://172.20.10.7:3000/generate-quiz",
+        "http://192.168.68.113:3000/generate-quiz",
         {
           notes: notes,
         },
@@ -236,7 +244,7 @@ const SplashScreen = ({ navigation }) => {
 
     try {
       const response = await axios.post(
-        "http://172.20.10.7:3003/generate-flashCards",
+        "http://192.168.68.113:3003/generate-flashCards",
         { notes: notes },
         {
           headers: {
@@ -257,7 +265,7 @@ const SplashScreen = ({ navigation }) => {
 
     try {
       const response = await axios.post(
-        "http://172.20.10.7:3004/generate-summary",
+        "http://192.168.68.113:3004/generate-summary",
         { notes: notes },
         {
           headers: {
@@ -278,7 +286,7 @@ const SplashScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={tw`flex-1  px-5 bg-gray-100`}>
+    <View style={tw`flex-1 mt-12 `}>
       {loading ? (
         <View
           style={[tw`justify-center items-center`, styles.loadingContainer]}
@@ -288,25 +296,42 @@ const SplashScreen = ({ navigation }) => {
         </View>
       ) : (
         <>
-          <View style={tw`flex flex-row items-center justify-between`}>
-            <Text style={tw`text-3xl text-left font-semibold`}>Home</Text>
-            <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
+          {/*Top view */}
+          <View
+            style={tw`flex flex-row items-center justify-between border-b border-gray-200  py-5 px-5`}
+          >
+            {/* <Text style={tw`text-3xl text-left font-bold`}> 'StudyBuddy' </Text> */}
+            <View style={tw` flex flex-row gap-x-2 items-center `}>
+              <SimpleLineIcons name="fire" size={24} color="black" />
+              <Text style={tw`font-bold text-lg`}>0</Text>
+            </View>
+            <TouchableOpacity
+              style={tw``}
+              onPress={() => navigation.navigate("Profile")}
+            >
               <AntDesign name="user" size={24} color="black" />
             </TouchableOpacity>
           </View>
-          <ScrollView style={tw`flex-1`}>
-            <View style={tw`flex flex-col`}></View>
+
+          {/*Body view */}
+          <ScrollView style={tw`flex-1 px-5 bg-gray-100`}>
+            <View style={tw`flex flex-col`}>
+              <Text style={tw`mt-4 text-3xl text-left font-extrabold`}>
+                Get started
+              </Text>
+            </View>
 
             <View style={tw`flex-1  `}>
               {/*Headline */}
-              <Text
-                style={tw` mt-10 font-medium text-4xl text-center justify-between items-center`}
+              {/* <Text
+                style={tw` mt-10 font-medium text-3xl text-center justify-between items-center`}
               >
-                Summarise Your Classes With Ease!
-              </Text>
+                Summarise With Ease
+      
+              </Text> */}
 
               {/*Document icons */}
-              <View style={tw`flex flex-col gap-y-2 items-center mt-4 mb-1`}>
+              {/* <View style={tw`flex flex-col gap-y-2 items-center mt-4 mb-1`}>
                 <View
                   style={tw`flex flex-row gap-x-4 items-center justify-center`}
                 >
@@ -326,13 +351,13 @@ const SplashScreen = ({ navigation }) => {
                 />
               </View>
 
-              {/*Small explanation */}
+              
               <Text
                 style={tw`text-gray-500 text-md text-center font-light mt-2 `}
               >
                 Effortlessly transform heavy course material into focused
                 summaries, flashcards and interactive quizzes.
-              </Text>
+              </Text> */}
 
               {/*DOCUMENT PICKER */}
 
@@ -359,7 +384,93 @@ const SplashScreen = ({ navigation }) => {
            
               </TouchableOpacity> */}
 
-              <Text style={tw`text-xl font-semibold`}>Get started</Text>
+              <View style={tw`flex flex-col my-5 gap-y-7 `}>
+                <View style={tw`flex flex-row items-center gap-x-5`}>
+                  <MaterialCommunityIcons
+                    name="file-document-edit"
+                    size={40}
+                    color="black"
+                  />
+                  <View style={tw`flex flex-col `}>
+                    <Text style={tw`text-xl font-semibold`}>Summaries</Text>
+                    <Text style={tw`text-md font-light text-gray-500 w-1/2`}>
+                      Get beautiful summaries Get beautiful summaries Get
+                      beautiful summaries
+                    </Text>
+                  </View>
+                </View>
+                <View style={tw`flex flex-row items-center gap-x-5`}>
+                  <MaterialCommunityIcons
+                    name="file-document-multiple"
+                    size={40}
+                    color="black"
+                  />
+                  <View style={tw`flex flex-col `}>
+                    <Text style={tw`text-xl font-semibold`}>Flashcards</Text>
+                    <Text style={tw`text-md font-light text-gray-500 w-2/3 `}>
+                      Create neat and clever flashcards to assist with studying.
+                    </Text>
+                  </View>
+                </View>
+                <View style={tw`flex flex-row items-center gap-x-5`}>
+                  <MaterialCommunityIcons
+                    name="brain"
+                    size={40}
+                    color="black"
+                  />
+                  <View style={tw`flex flex-col `}>
+                    <Text style={tw`text-xl font-semibold`}>Quiz</Text>
+                    <Text style={tw`text-md font-light text-gray-500  w-2/3 `}>
+                      Create interactive quizzes based on your notes.
+                    </Text>
+                  </View>
+                </View>
+                <View style={tw`flex flex-row items-center gap-x-5`}>
+                  <MaterialCommunityIcons
+                    name="robot"
+                    size={40}
+                    color="black"
+                  />
+                  <View style={tw`flex flex-col `}>
+                    <Text style={tw`text-xl font-semibold`}>Co Pilot</Text>
+                    <Text style={tw`text-md font-light text-gray-500 w-2/3  `}>
+                      Get AI explanations on concepts you find difficult.
+                    </Text>
+                  </View>
+                </View>
+                <View style={tw`flex flex-row items-center gap-x-5`}>
+                  <MaterialIcons name="quiz" size={40} color="black" />
+                  <View style={tw`flex flex-col `}>
+                    <Text style={tw`text-xl font-semibold`}>Mock Test</Text>
+                    <Text style={tw`text-md font-light text-gray-500 w-2/3 `}>
+                      Create mock test questions to further improve your
+                      studying
+                    </Text>
+                  </View>
+                </View>
+              </View>
+
+              <Text style={tw`text-xl font-semibold my-3`}>Get started</Text>
+              <TouchableOpacity
+                style={tw` rounded-2xl bg-black items-center  gap-3 justify-center flex flex-row p-5`}
+              >
+                <Text style={tw` text-md font-semibold text-white`}>
+                  Upload Study Material
+                </Text>
+                <AntDesign name="upload" size={24} color="white" />
+              </TouchableOpacity>
+              {/* <Pressable
+                onPress={pickDocument}
+                style={tw` bg-white  gap-x-5 flex flex-row  items-center border-2 border-gray-300 p-5 w-full rounded-xl`}
+              >
+                <Ionicons name="documents-outline" size={34} color="black" />
+
+                <Text style={tw` text-lgtext-left font-semibold text-md`}>
+                  Upload Your Study Material
+                </Text>
+              </Pressable> */}
+
+              {/* <Text style={tw`text-xl font-semibold`}>Get started</Text>
               <View
                 style={tw` mt-5 bg-white p-5 gap-y-5 items-center justify-center rounded-xl`}
               >
@@ -377,7 +488,7 @@ const SplashScreen = ({ navigation }) => {
                 <Text style={tw`text-black `}>
                   Compatible with pdf, .docx, .pptx
                 </Text>
-              </View>
+              </View> */}
 
               <View style={tw`text-left my-5 gap-y-5`}>
                 <Text style={tw`text-lg text-gray-400 font-semibold`}>
@@ -428,7 +539,7 @@ const SplashScreen = ({ navigation }) => {
           </ScrollView>
         </>
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 

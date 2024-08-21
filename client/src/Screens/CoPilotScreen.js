@@ -17,27 +17,37 @@ import {
 import tw from "twrnc";
 import Entypo from "@expo/vector-icons/Entypo";
 import Feather from "@expo/vector-icons/Feather";
+import CoPilotSugesstions from "../Components/CoPilotSugesstions";
 
 const CoPilotScreen = ({ navigation }) => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
 
-  const sendMessage = async () => {
-    const userMessage = { role: "user", content: input };
-    setMessages([...messages, userMessage]);
+  // const sendMessage = async () => {
+  //   const userMessage = { role: "user", content: input };
+  //   setMessages([...messages, userMessage]);
 
-    const aiResponse = await chatWithAi(input);
-    const aiMessage = { role: "assistant", content: aiResponse };
+  //   const aiResponse = await chatWithAi(input);
+  //   const aiMessage = { role: "assistant", content: aiResponse };
 
-    setMessages([...messages, userMessage, aiMessage]);
-    setInput("");
+  //   setMessages([...messages, userMessage, aiMessage]);
+  //   setInput("");
+  // };
+
+  const dummyMessage = [
+    { content: "Hey buddy", role: "bot" },
+    { content: "Ja jou poes", role: "User" },
+  ];
+
+  const getCompletion = ({ yea, yeas }) => {
+    console.log("ja jou poes");
   };
 
   return (
     <SafeAreaView style={tw`flex-1 bg-gray-100`}>
       <ScrollView style={tw`bg-gray-100`}>
         <View>
-          <FlatList
+          {/* <FlatList
             data={messages}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item }) =>
@@ -53,32 +63,38 @@ const CoPilotScreen = ({ navigation }) => {
                 </View>
               )
             }
-          />
+          /> */}
         </View>
       </ScrollView>
 
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.container}
-        keyboardVerticalOffset={150}
+        // keyboardVerticalOffset={10}
       >
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View style={tw` px-5`}>
-            <View
-              style={tw` border border-gray-300 rounded-3xl  flex flex-row justify-center items-center mb-5`}
-            >
-              <TextInput
-                style={tw` flex-grow p-5`}
-                value={input}
-                onChangeText={setInput}
-                placeholder="Type your message"
-              />
-              <TouchableOpacity style={tw`  mr-4`} onPress={sendMessage}>
-                <Feather name="send" size={24} color="black" />
+        <View style={tw` px-4 gap-y-4`}>
+          {messages.length === 0 && (
+            <CoPilotSugesstions onSelectedCard={getCompletion} />
+          )}
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View style={tw` flex flex-row  mb-5 items-center gap-x-3`}>
+              <View style={tw` border border-gray-300 rounded-3xl w-4/5 `}>
+                <TextInput
+                  style={tw` flex-grow p-3`}
+                  value={input}
+                  onChangeText={setInput}
+                  placeholder="Type your message"
+                />
+              </View>
+              <TouchableOpacity
+                style={tw` items-center justify-center flex rounded-full bg-black p-2`}
+                // onPress={sendMessage}
+              >
+                <Feather name="send" size={24} color="white" />
               </TouchableOpacity>
             </View>
-          </View>
-        </TouchableWithoutFeedback>
+          </TouchableWithoutFeedback>
+        </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
