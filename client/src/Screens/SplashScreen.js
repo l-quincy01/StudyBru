@@ -33,6 +33,7 @@ import { SummaryContext } from "../config/SummaryContext";
 import CheckBox from "../Components/CheckBox";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import GetStartedComponent from "../Components/GetStartedComponent";
+import { Avatar } from "react-native-paper";
 
 function removeTripleBackticks(text) {
   // Use a regular expression to replace triple backticks with an empty string
@@ -317,103 +318,99 @@ const SplashScreen = ({ navigation }) => {
 
           {/*Body view */}
           <ScrollView style={tw`flex-1 px-5 bg-gray-100`}>
-            <GetStartedComponent />
-            {/* -----------------------------------------------------------OLD UI-------------------------------------------------------------------------------*/}
-            {/*Headline */}
-            {/* <Text
-                style={tw` mt-10 font-medium text-3xl text-center justify-between items-center`}
-              >
-                Summarise With Ease
-      
-              </Text> */}
-
-            {/*Document icons */}
-            {/* <View style={tw`flex flex-col gap-y-2 items-center mt-4 mb-1`}>
-                <View
-                  style={tw`flex flex-row gap-x-4 items-center justify-center`}
-                >
-                  <Image
-                    source={require("../../assets/pdfIcon.png")}
-                    style={tw.style(tw``)}
-                  />
-                  <Image
-                    source={require("../../assets/docIcon.png")}
-                    style={tw.style(tw``)}
-                  />
-                </View>
-
-                <Image
-                  source={require("../../assets/underlineIcon.png")}
-                  style={tw.style(tw``)}
+            {/* <GetStartedComponent /> */}
+            <View style={tw`flex flex-col mt-4 justify-center gap-y-8`}>
+              <View>
+                <Avatar.Image
+                  size={56}
+                  source={require("../../assets/avatar.png")}
                 />
-              </View>
-
-              
-              <Text
-                style={tw`text-gray-500 text-md text-center font-light mt-2 `}
-              >
-                Effortlessly transform heavy course material into focused
-                summaries, flashcards and interactive quizzes.
-              </Text> */}
-
-            {/*DOCUMENT PICKER */}
-
-            {/* <View style={tw`text-left my-5`}>
-                <Text style={tw`text-xl font-semibold`}>
-                  Here's how to get started
+                <Text style={tw` mt-4 text-xl text-left font-bold`}>
+                  Quincy
+                </Text>
+                <Text style={tw` text-md text-gray-500 text-left font-medium`}>
+                  Cs Major Student Rhodes University
                 </Text>
               </View>
-              <TouchableOpacity
-                onPress={pickDocument}
-                style={tw` bg-blue-500 text-white gap-y-2 flex text-center justify-center items-center py-3 px-5 rounded-xl`}
-              >
-                <View style={tw`p-2`}>
-                  <AntDesign name="addfile" size={24} color="white" />
-                </View>
-                <Text style={tw`text-left font-semibold text-md text-white`}>
-                  Upload Material
-                </Text>
-
-                <Text style={tw`text-center font-light text-xs text-white`}>
-                  Compatible with all your study material. Choose .pdf, .docx,
-                  .pptx
-                </Text>
-           
-              </TouchableOpacity> */}
-            {/* -----------------------------------------------------------OLD UI-------------------------------------------------------------------------------*/}
-
-            {/* -----------------------------------------------------------OLD UI-------------------------------------------------------------------------------*/}
-            {/* <Pressable
-                onPress={pickDocument}
-                style={tw` bg-white  gap-x-5 flex flex-row  items-center border-2 border-gray-300 p-5 w-full rounded-xl`}
-              >
-                <Ionicons name="documents-outline" size={34} color="black" />
-
-                <Text style={tw` text-lgtext-left font-semibold text-md`}>
-                  Upload Your Study Material
-                </Text>
-              </Pressable> */}
-
-            {/* <Text style={tw`text-xl font-semibold`}>Get started</Text>
-              <View
-                style={tw` mt-5 bg-white p-5 gap-y-5 items-center justify-center rounded-xl`}
-              >
-                <FontAwesome5 name="file-pdf" size={36} color="black" />
-
-                <TouchableOpacity
-                  onPress={pickDocument}
-                  style={tw`bg-blue-500 p-3 flex flex-row justify-center items-center gap-x-2 rounded-xl`}
+              {/* 
+              <View style={tw`flex flex-row gap-x-4 justify-center`}>
+                <View
+                  style={tw`flex  items-center justify-center px-4 py-2 bg-gray-300 rounded-md`}
                 >
-                  <AntDesign name="upload" size={24} color="white" />
-
-                  <Text style={tw`text-white `}>Upload Notes</Text>
-                </TouchableOpacity>
-
-                <Text style={tw`text-black `}>
-                  Compatible with pdf, .docx, .pptx
-                </Text>
+                  <Text style={tw` font-medium`}>Quincy</Text>
+                </View>
               </View> */}
-            {/* -----------------------------------------------------------OLD UI-------------------------------------------------------------------------------*/}
+              <View style={tw`flex flex-col gap-y-2`}>
+                <Text style={tw` text-xl text-black text-left font-semibold`}>
+                  Computer Science
+                </Text>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                  <View style={tw`flex flex-row gap-x-3`}>
+                    <TouchableOpacity
+                      style={tw`flex flex-row gap-x-8 items-center bg-gray-200 rounded-lg py-4 px-2`}
+                    >
+                      <AntDesign name="pptfile1" size={32} color="black" />
+                      <View style={tw`flex flex-col gap-y-2`}>
+                        <Text style={tw`text-md font-semibold`}>
+                          CS Complier Notes
+                        </Text>
+                        <Text style={tw`text-md font-medium text-gray-500`}>
+                          Date created {formattedDate}
+                        </Text>
+                      </View>
+                      <View style={tw`ml-4`}>
+                        <Entypo
+                          name="chevron-small-right"
+                          size={24}
+                          color="black"
+                        />
+                      </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={tw`flex flex-row gap-x-8 items-center bg-gray-200 rounded-lg py-4 px-2`}
+                    >
+                      <AntDesign name="pptfile1" size={32} color="black" />
+                      <View style={tw`flex flex-col gap-y-2`}>
+                        <Text style={tw`text-md font-semibold`}>
+                          CS Complier Notes
+                        </Text>
+                        <Text style={tw`text-md font-medium text-gray-500`}>
+                          Date created {formattedDate}
+                        </Text>
+                      </View>
+                      <View style={tw`ml-4`}>
+                        <Entypo
+                          name="chevron-small-right"
+                          size={24}
+                          color="black"
+                        />
+                      </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={tw`flex flex-row gap-x-8 items-center bg-gray-200 rounded-lg py-4 px-2`}
+                    >
+                      <AntDesign name="pptfile1" size={32} color="black" />
+                      <View style={tw`flex flex-col gap-y-2`}>
+                        <Text style={tw`text-md font-semibold`}>
+                          CS Complier Notes
+                        </Text>
+                        <Text style={tw`text-md font-medium text-gray-500`}>
+                          Date created {formattedDate}
+                        </Text>
+                      </View>
+                      <View style={tw`ml-4`}>
+                        <Entypo
+                          name="chevron-small-right"
+                          size={24}
+                          color="black"
+                        />
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                </ScrollView>
+              </View>
+            </View>
+
             <View style={tw`text-left my-5 gap-y-5`}>
               <Text style={tw`text-lg text-gray-400 font-semibold`}>
                 Recently Viewed
@@ -446,19 +443,12 @@ const SplashScreen = ({ navigation }) => {
                 )}
               </View>
             </View>
-            {/* -----------------------------------------------------------OLD UI-------------------------------------------------------------------------------*/}
-            {/* <Pressable
-                onPress={pickDocument}
-                style={tw` bg-white  gap-x-5 flex flex-row  items-center border-2 border-gray-300 p-5 w-full rounded-xl`}
-              >
-                <Ionicons name="documents-outline" size={34} color="black" />
-
-                <Text style={tw` text-lgtext-left font-semibold text-md`}>
-                  Upload Your Study Material
-                </Text>
-              </Pressable> */}
-            {/* -----------------------------------------------------------OLD UI-------------------------------------------------------------------------------*/}
           </ScrollView>
+          <View style={tw`left-75 absolute bottom-5 `}>
+            <TouchableOpacity style={tw`p-5 rounded-full bg-blue-500`}>
+              <FontAwesome6 name="add" size={24} color="white" />
+            </TouchableOpacity>
+          </View>
         </>
       )}
     </View>
