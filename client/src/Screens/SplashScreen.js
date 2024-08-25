@@ -34,6 +34,7 @@ import CheckBox from "../Components/CheckBox";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import GetStartedComponent from "../Components/GetStartedComponent";
 import { Avatar } from "react-native-paper";
+import HomeComponent from "../Components/HomeComponent";
 
 function removeTripleBackticks(text) {
   // Use a regular expression to replace triple backticks with an empty string
@@ -88,13 +89,6 @@ const SplashScreen = ({ navigation }) => {
   const { flashCards, setFlashCards } = useContext(FlashCardsContext);
   const [loading, setLoading] = useState(false);
   const [checkBoxVal, setCheckBoxVal] = useState([]);
-
-  const currentDate = new Date();
-  const year = currentDate.getFullYear();
-  const month = String(currentDate.getMonth() + 1).padStart(2, "0");
-  const day = String(currentDate.getDate()).padStart(2, "0");
-
-  const formattedDate = `${year}-${month}-${day}`;
 
   //upload document fuction. Send the document to parse api endpoint to parse the file into text
   const uploadDocument = async (file) => {
@@ -304,9 +298,9 @@ const SplashScreen = ({ navigation }) => {
           >
             {/* <Text style={tw`text-3xl text-left font-bold`}> 'StudyBuddy' </Text> */}
             <View style={tw` flex flex-row gap-x-2 items-center `}>
-              <Entypo name="menu" size={24} color="black" />
-              {/* <SimpleLineIcons name="fire" size={24} color="black" />
-              <Text style={tw`font-bold text-lg`}>0</Text> */}
+              {/* <Entypo name="menu" size={24} color="black" /> */}
+              <SimpleLineIcons name="fire" size={24} color="black" />
+              <Text style={tw`font-bold text-lg`}>0</Text>
             </View>
             <TouchableOpacity
               style={tw``}
@@ -318,137 +312,20 @@ const SplashScreen = ({ navigation }) => {
 
           {/*Body view */}
           <ScrollView style={tw`flex-1 px-5 bg-gray-100`}>
-            {/* <GetStartedComponent /> */}
-            <View style={tw`flex flex-col mt-4 justify-center gap-y-8`}>
-              <View>
-                <Avatar.Image
-                  size={56}
-                  source={require("../../assets/avatar.png")}
-                />
-                <Text style={tw` mt-4 text-xl text-left font-bold`}>
-                  Quincy
-                </Text>
-                <Text style={tw` text-md text-gray-500 text-left font-medium`}>
-                  Cs Major Student Rhodes University
-                </Text>
-              </View>
-              {/* 
-              <View style={tw`flex flex-row gap-x-4 justify-center`}>
-                <View
-                  style={tw`flex  items-center justify-center px-4 py-2 bg-gray-300 rounded-md`}
-                >
-                  <Text style={tw` font-medium`}>Quincy</Text>
-                </View>
-              </View> */}
-              <View style={tw`flex flex-col gap-y-2`}>
-                <Text style={tw` text-xl text-black text-left font-semibold`}>
-                  Computer Science
-                </Text>
-                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                  <View style={tw`flex flex-row gap-x-3`}>
-                    <TouchableOpacity
-                      style={tw`flex flex-row gap-x-8 items-center bg-gray-200 rounded-lg py-4 px-2`}
-                    >
-                      <AntDesign name="pptfile1" size={32} color="black" />
-                      <View style={tw`flex flex-col gap-y-2`}>
-                        <Text style={tw`text-md font-semibold`}>
-                          CS Complier Notes
-                        </Text>
-                        <Text style={tw`text-md font-medium text-gray-500`}>
-                          Date created {formattedDate}
-                        </Text>
-                      </View>
-                      <View style={tw`ml-4`}>
-                        <Entypo
-                          name="chevron-small-right"
-                          size={24}
-                          color="black"
-                        />
-                      </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={tw`flex flex-row gap-x-8 items-center bg-gray-200 rounded-lg py-4 px-2`}
-                    >
-                      <AntDesign name="pptfile1" size={32} color="black" />
-                      <View style={tw`flex flex-col gap-y-2`}>
-                        <Text style={tw`text-md font-semibold`}>
-                          CS Complier Notes
-                        </Text>
-                        <Text style={tw`text-md font-medium text-gray-500`}>
-                          Date created {formattedDate}
-                        </Text>
-                      </View>
-                      <View style={tw`ml-4`}>
-                        <Entypo
-                          name="chevron-small-right"
-                          size={24}
-                          color="black"
-                        />
-                      </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={tw`flex flex-row gap-x-8 items-center bg-gray-200 rounded-lg py-4 px-2`}
-                    >
-                      <AntDesign name="pptfile1" size={32} color="black" />
-                      <View style={tw`flex flex-col gap-y-2`}>
-                        <Text style={tw`text-md font-semibold`}>
-                          CS Complier Notes
-                        </Text>
-                        <Text style={tw`text-md font-medium text-gray-500`}>
-                          Date created {formattedDate}
-                        </Text>
-                      </View>
-                      <View style={tw`ml-4`}>
-                        <Entypo
-                          name="chevron-small-right"
-                          size={24}
-                          color="black"
-                        />
-                      </View>
-                    </TouchableOpacity>
-                  </View>
-                </ScrollView>
-              </View>
-            </View>
+            {quiz.length > 0 && flashCards.length > 0 && summary.length > 0 ? (
+              <GetStartedComponent docPicker={pickDocument} />
+            ) : (
+              <HomeComponent nav={navigation} />
+            )}
 
-            <View style={tw`text-left my-5 gap-y-5`}>
-              <Text style={tw`text-lg text-gray-400 font-semibold`}>
-                Recently Viewed
-              </Text>
-
-              <View style={tw`justify-center items-center`}>
-                {true ? ( //Will make a condition to be set to true if user has notes uploaded
-                  <Text style={tw`font-semibold text-md `}>Nothing added.</Text>
-                ) : (
-                  <TouchableOpacity
-                    style={tw`flex flex-row gap-x-8 items-center bg-gray-200 rounded-lg py-4 px-2`}
-                  >
-                    <AntDesign name="pptfile1" size={32} color="black" />
-                    <View style={tw`flex flex-col gap-y-2`}>
-                      <Text style={tw`text-md font-semibold`}>
-                        CS Complier Notes
-                      </Text>
-                      <Text style={tw`text-md font-medium text-gray-500`}>
-                        Date created {formattedDate}
-                      </Text>
-                    </View>
-                    <View style={tw`ml-4`}>
-                      <Entypo
-                        name="chevron-small-right"
-                        size={24}
-                        color="black"
-                      />
-                    </View>
-                  </TouchableOpacity>
-                )}
-              </View>
-            </View>
+            {/* */}
           </ScrollView>
-          <View style={tw`left-75 absolute bottom-5 `}>
+          {/* ONLY RENDER WHEN NOT NEW */}
+          {/* <View style={tw`left-75 absolute bottom-5 `}>
             <TouchableOpacity style={tw`p-5 rounded-full bg-blue-500`}>
               <FontAwesome6 name="add" size={24} color="white" />
             </TouchableOpacity>
-          </View>
+          </View> */}
         </>
       )}
     </View>

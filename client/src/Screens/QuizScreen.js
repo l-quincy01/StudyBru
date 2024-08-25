@@ -50,7 +50,7 @@ const QuizScreen = ({ navigation }) => {
       setSelectedOption(null);
       setIsCorrect(null);
     } else {
-      navigation.navigate("End", { userScore: score });
+      navigation.navigate("EndScreen", { userScore: score });
     }
   };
 

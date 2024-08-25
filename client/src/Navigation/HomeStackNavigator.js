@@ -3,6 +3,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import ProfileScreen from "../Screens/ProfileScreen";
 import SplashScreen from "../Screens/SplashScreen";
+import AddedNotesScreen from "../Screens/AddedNotesScreen";
+// import demo from "../Screens/demo";
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +18,8 @@ function HomeStackNavigator() {
     >
       <Stack.Screen name="Home" component={SplashScreen} />
       <Stack.Screen name="Profile" component={ProfileScreen} />
+      <Stack.Screen name="AddedNotes" component={AddedNotesScreen} />
+      {/* <Stack.Screen name="demo" component={demo} /> */}
 
       {/* <Stack.Screen name="Summaries" component={MagicNotes} /> */}
     </Stack.Navigator>

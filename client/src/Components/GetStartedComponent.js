@@ -14,7 +14,7 @@ import {
 
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
-const GetStartedComponent = () => {
+const GetStartedComponent = ({ docPicker }) => {
   return (
     <>
       <View style={tw`flex flex-col`}>
@@ -81,6 +81,7 @@ const GetStartedComponent = () => {
       </View>
 
       <TouchableOpacity
+        onPress={docPicker}
         style={tw` rounded-2xl bg-black items-center  gap-3 justify-center flex flex-row p-5`}
       >
         <Text style={tw` text-md font-semibold text-white`}>
