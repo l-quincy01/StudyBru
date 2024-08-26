@@ -91,8 +91,8 @@ const SplashScreen = ({ navigation }) => {
   const [checkBoxVal, setCheckBoxVal] = useState([]);
 
   //upload document fuction. Send the document to parse api endpoint to parse the file into text
+  // Function to upload the document and parse it to text
   const uploadDocument = async (file) => {
-    console.log("hier so:" + file.assets[0].mimeType);
     const formData = new FormData();
     formData.append("file", {
       uri: file.assets[0].uri,
@@ -101,9 +101,36 @@ const SplashScreen = ({ navigation }) => {
     });
 
     try {
-      if (file.assets[0].mimeType === "application/pdf") {
-        const response = await axios.post(
-          "http://192.168.68.113:3001/parse-pdf",
+      let parseEndpoint;
+      switch (file.assets[0].mimeType) {
+        case "application/pdf":
+          parseEndpoint = "http://192.168.68.103:3001/parse-pdf";
+          break;
+        case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+          parseEndpoint = "http://192.168.68.103:3001/parse-docx";
+          break;
+        case "application/vnd.openxmlformats-officedocument.presentationml.presentation":
+          parseEndpoint = "http://192.168.68.103:3001/parse-pptx";
+          break;
+        default:
+          throw new Error("Unsupported file type");
+      }
+
+      // Send the file to the appropriate parsing endpoint
+      const parseResponse = await axios.post(parseEndpoint, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      // Handle the parsed text
+      const parsedText = cleanText(parseResponse.data.text);
+      setNotes(parsedText);
+
+      // Attempt to upload the file
+      try {
+        const uploadResponse = await axios.post(
+          "http://192.168.68.103:4001/uploadNotes",
           formData,
           {
             headers: {
@@ -111,52 +138,14 @@ const SplashScreen = ({ navigation }) => {
             },
           }
         );
-        console.log(
-          "File uploaded successfully",
-          cleanText(response.data.text)
-        );
-        setNotes(cleanText(response.data.text));
+        console.log("File uploaded successfully:", uploadResponse.data);
+      } catch (uploadError) {
+        console.error("Error uploading file:", uploadError);
       }
-      if (
-        file.assets[0].mimeType ==
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-      ) {
-        const response = await axios.post(
-          "http://192.168.68.113:3001/parse-docx",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-        console.log(
-          "File uploaded successfully",
-          cleanText(response.data.text)
-        );
-        setNotes(cleanText(response.data.text));
-      }
-      if (
-        file.assets[0].mimeType ==
-        "application/vnd.openxmlformats-officedocument.presentationml.presentation"
-      ) {
-        const response = await axios.post(
-          "http://192.168.68.113:3001/parse-pptx",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-        console.log(
-          "File uploaded successfully",
-          cleanText(response.data.text)
-        );
-        setNotes(cleanText(response.data.text));
-      }
-    } catch (err) {
-      console.error("Error uploading file:", err);
+
+      console.log("File parsed and notes set successfully", parsedText);
+    } catch (error) {
+      console.error("Error processing file:", error);
     }
   };
 
@@ -215,7 +204,7 @@ const SplashScreen = ({ navigation }) => {
 
     try {
       const response = await axios.post(
-        "http://192.168.68.113:3000/generate-quiz",
+        "http://192.168.68.103:3000/generate-quiz",
         {
           notes: notes,
         },
@@ -240,7 +229,7 @@ const SplashScreen = ({ navigation }) => {
 
     try {
       const response = await axios.post(
-        "http://192.168.68.113:3003/generate-flashCards",
+        "http://192.168.68.103:3003/generate-flashCards",
         { notes: notes },
         {
           headers: {
@@ -261,7 +250,7 @@ const SplashScreen = ({ navigation }) => {
 
     try {
       const response = await axios.post(
-        "http://192.168.68.113:3004/generate-summary",
+        "http://192.168.68.103:3004/generate-summary",
         { notes: notes },
         {
           headers: {
@@ -296,7 +285,6 @@ const SplashScreen = ({ navigation }) => {
           <View
             style={tw`flex flex-row items-center justify-between border-b border-gray-200  py-5 px-5`}
           >
-            {/* <Text style={tw`text-3xl text-left font-bold`}> 'StudyBuddy' </Text> */}
             <View style={tw` flex flex-row gap-x-2 items-center `}>
               {/* <Entypo name="menu" size={24} color="black" /> */}
               <SimpleLineIcons name="fire" size={24} color="black" />
@@ -313,9 +301,9 @@ const SplashScreen = ({ navigation }) => {
           {/*Body view */}
           <ScrollView style={tw`flex-1 px-5 bg-gray-100`}>
             {quiz.length > 0 && flashCards.length > 0 && summary.length > 0 ? (
-              <GetStartedComponent docPicker={pickDocument} />
-            ) : (
               <HomeComponent nav={navigation} />
+            ) : (
+              <GetStartedComponent docPicker={pickDocument} />
             )}
 
             {/* */}

@@ -7,7 +7,12 @@ import {
   View,
 } from "react-native";
 import tw from "twrnc";
-import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
+import {
+  MaterialIcons,
+  MaterialCommunityIcons,
+  SimpleLineIcons,
+  AntDesign,
+} from "@expo/vector-icons";
 import { FlashCardsContext } from "../config/FlashCardsContext";
 
 const NotesScreen = ({ navigation }) => {
@@ -70,31 +75,36 @@ const NotesScreen = ({ navigation }) => {
   //--------------------------------------------------------------------------------------
 
   return (
-    <ScrollView style={tw`bg-gray-100`}>
-      <View style={tw`flex-1 flex-col px-5 gap-y-8 mt-25`}>
-        <Text style={tw`mt-4 text-3xl text-left font-extrabold`}>Library</Text>
-        <Text style={tw`text-gray-500 text-md text-left font-light`}>
-          View your summarised notes and flashcards below. Study smarter today.
-        </Text>
-        {/* -----------------------------------------------------------OLD UI-------------------------------------------------------------------------------*/}
-        {/*      
-        <Text style={tw`font-medium text-4xl text-center`}>
-          We'll take notes so you don't have to.
-        </Text>
+    <>
+      <View style={tw`flex-1 mt-12 `}>
+        <View
+          style={tw`flex flex-row items-center justify-between border-b border-gray-200  py-5 px-5`}
+        >
+          <View style={tw` flex flex-row gap-x-2 items-center `}>
+            <Text style={tw`text-3xl text-left font-extrabold`}>Resources</Text>
+          </View>
+        </View>
 
-        <Text style={tw`text-gray-500 text-md text-center font-light`}>
-          View your summarised notes and flashcards below. Study smarter today.
-        </Text> */}
-        {/* -----------------------------------------------------------OLD UI-------------------------------------------------------------------------------*/}
-        {/* FlatList Approach, a lot cleaner */}
-        <FlatList
-          data={data}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          numColumns={2}
-        />
+        <ScrollView style={tw`bg-gray-100`}>
+          <View style={tw`flex-1 flex-col px-5 gap-y-8 `}>
+            <Text
+              style={tw` mt-6 text-center text-gray-500 text-md  font-light`}
+            >
+              View your summarised notes and flashcards below. Study smarter
+              today.
+            </Text>
+
+            {/* FlatList Approach, a lot cleaner */}
+            <FlatList
+              data={data}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id}
+              numColumns={2}
+            />
+          </View>
+        </ScrollView>
       </View>
-    </ScrollView>
+    </>
   );
 };
 
