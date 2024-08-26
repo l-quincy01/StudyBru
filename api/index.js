@@ -49,18 +49,3 @@ app.get("/test", (req, res) => {
 app.listen(4001, () => {
   console.log("Server started on http://localhost:4001");
 });
-
-// try {
-//     const uploadResponse = await axios.post(
-//       "http://localhost:4001/uploadNotes",
-//       formData,
-//       {
-//         headers: {
-//           "Content-Type": "multipart/form-data",
-//         },
-//       }
-//     );
-//     console.log("File uploaded successfully:", uploadResponse.data);
-//   } catch (uploadError) {
-//     console.error("Error uploading file:", uploadError);
-//   }
