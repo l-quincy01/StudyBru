@@ -1,11 +1,24 @@
-import React, { useContext, useEffect, useState } from "react";
+import React from "react";
 import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
-
 import tw from "twrnc";
+import {
+  AntDesign,
+  Entypo,
+  Ionicons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
+import { WebView } from "react-native-webview";
+import fileURI from "../config/testPDF.pdf";
 
-import { AntDesign, Entypo, SimpleLineIcons } from "@expo/vector-icons";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+// const ViewPDF = ({ uri }) => {
+//   return (
+//     <WebView
+//       onLoad={console.log("loaded")}
+//       source={{ uri }}
+//       style={{ flex: 1 }}
+//     />
+//   );
+// };
 
 const AddedNotesScreen = ({ navigation }) => {
   const currentDate = new Date();
@@ -24,20 +37,19 @@ const AddedNotesScreen = ({ navigation }) => {
     "purple",
   ];
 
+  //   const [isViewingPDF, setIsViewingPDF] = React.useState(false);
+
   return (
     <View style={tw`flex-1 mt-12 `}>
       {/*Top view */}
       <View
         style={tw`flex flex-row items-center justify-between border-b border-gray-200  py-5 px-5`}
       >
-        {/* <Text style={tw`text-3xl text-left font-bold`}> 'StudyBuddy' </Text> */}
-
         <TouchableOpacity
           style={tw`flex flex-row items-center  justify-center`}
           onPress={() => navigation.navigate("Home")}
         >
           <Entypo name="chevron-left" size={28} color="black" />
-
           <Text style={tw`font-semibold text-lg`}> Library</Text>
         </TouchableOpacity>
       </View>
@@ -53,12 +65,16 @@ const AddedNotesScreen = ({ navigation }) => {
           <ScrollView style={tw`flex flex-col gap-y-2 `}>
             {/* Notes Card */}
             <View
-              // onPress={() => nav.navigate("AddedNotes")}
               style={tw`my-2  py-3 flex flex-row  items-center bg-white rounded-lg w-full`}
             >
-              {/* COLOUR CODE */}
               <View style={tw`ml-2`}>
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("NotesDocumentView", {
+                      route: fileURI,
+                    })
+                  }
+                >
                   <Image
                     source={require("../../assets/imgPlaceholder.png")}
                     style={tw`w-[75px] h-[75px]`}
@@ -66,7 +82,6 @@ const AddedNotesScreen = ({ navigation }) => {
                 </TouchableOpacity>
               </View>
 
-              {/* <AntDesign name="pptfile1" size={32} color="black" /> */}
               <View style={tw`flex flex-col w-9/10 px-5 `}>
                 <Text style={tw`text-lg font-semibold mb-2 `}>
                   Lecture 5 PLT
@@ -108,6 +123,8 @@ const AddedNotesScreen = ({ navigation }) => {
           </ScrollView>
         </View>
       </View>
+      {/* 
+      {isViewingPDF && <ViewPDF uri="https://reactnative.dev/" />} */}
     </View>
   );
 };
