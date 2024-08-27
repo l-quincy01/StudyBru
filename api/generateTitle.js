@@ -8,15 +8,15 @@ const openai = new OpenAI({});
 const app = express();
 app.use(bodyParser.json());
 
-const generateSummary = async (notes) => {
+const generateTitle = async (notes) => {
   const messages = [
     {
       role: "system",
-      content: `You are a helpful assistant that generates study notes summaries. YOUR RESPONSE SHOULD BE STRICTLY IN MARKDOWN LIKE FORMAT  WITHOUT ANY BACKTICKS`,
+      content: `You are a helpful assistant that generates ssimple titles for study notes`,
     },
     {
       role: "user",
-      content: `Generate a SUMMARY based on the following notes: \n\n${notes}\n\n YOUR RESPONSE SHOULD BE STRICTLY IN  MARKDOWN LIKE FORMAT WITHOUT ANY BACKTICKS`,
+      content: `Generate a simple title based on the following notes: \n\n${notes}\n\n `,
     },
   ];
 
@@ -31,27 +31,20 @@ const generateSummary = async (notes) => {
   return response.choices[0].message.content;
 };
 
-app.post("/generate-summary", async (req, res) => {
-  const { notes } = req.body;
-  try {
-    const summary = await generateSummary(notes);
-    res.json({ summary });
-    // console.log(summary);
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-});
 app.post("/generate-title", async (req, res) => {
   const { notes } = req.body;
   try {
     const title = await generateTitle(notes);
     res.json({ title });
-    console.log(title);
+    console.log(
+      "TIIIIIIIIITTTTTTLLLLLEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE HERE",
+      title
+    );
   } catch (error) {
     res.status(500).send(error.message);
   }
 });
 
-app.listen(3004, () => {
-  console.log("Server is running on port 3004");
+app.listen(3006, () => {
+  console.log("Server is running on port 3006");
 });
