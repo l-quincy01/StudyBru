@@ -5,7 +5,7 @@ import { Entypo } from "@expo/vector-icons";
 import { WebView } from "react-native-webview";
 
 const NotesDocumentView = ({ navigation, route }) => {
-  const { uri } = route.params; // Correct parameter name
+  const { uri } = route.params;
 
   return (
     <View style={tw`flex-1 mt-12`}>
@@ -24,7 +24,7 @@ const NotesDocumentView = ({ navigation, route }) => {
 
       <WebView
         onLoad={() => console.log("WebView loaded with:", uri)}
-        source={{ uri: `http://192.168.68.103:4001${uri}` }} // Correctly form the URL
+        source={{ uri: `http://192.168.68.103:4001${uri}` }}
         style={{ flex: 1 }}
       />
     </View>
