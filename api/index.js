@@ -77,6 +77,26 @@ app.get("/user-notes", async (req, res) => {
   res.json(await File.find());
 });
 
+app.get("/notes/:title", async (req, res) => {
+  try {
+    const { title } = req.params;
+
+    // Find the file by title
+    const file = await File.findOne({ title });
+
+    if (!file) {
+      return res.status(404).json({ error: "Note not found" });
+    }
+
+    res.status(200).json({
+      message: "Note fetched successfully",
+      content: file.filePath,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching note" });
+  }
+});
+
 app.get("/test", (req, res) => {
   res.json("test ok");
 });

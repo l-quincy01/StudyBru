@@ -19,7 +19,7 @@ const LibraryTopBarNavigator = ({ navigation }) => {
       <View style={tw`flex flex-row items-center mt-1 mb-1`}>
         <TouchableOpacity
           style={tw`flex flex-row items-center  justify-center`}
-          onPress={() => navigation.navigate("Library")}
+          onPress={() => navigation.goBack()}
         >
           <Entypo name="chevron-left" size={28} color="black" />
 

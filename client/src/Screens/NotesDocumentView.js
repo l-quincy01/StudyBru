@@ -15,7 +15,7 @@ const NotesDocumentView = ({ navigation, route }) => {
       >
         <TouchableOpacity
           style={tw`flex flex-row items-center justify-center`}
-          onPress={() => navigation.navigate("Home")}
+          onPress={() => navigation.goBack()}
         >
           <Entypo name="chevron-left" size={28} color="black" />
           <Text style={tw`font-semibold text-lg`}>Library</Text>
@@ -24,7 +24,7 @@ const NotesDocumentView = ({ navigation, route }) => {
 
       <WebView
         onLoad={() => console.log("WebView loaded with:", uri)}
-        source={{ uri: `http://192.168.68.103:4001${uri}` }}
+        source={{ uri: `http://172.20.10.7:4001${uri}` }}
         style={{ flex: 1 }}
       />
     </View>

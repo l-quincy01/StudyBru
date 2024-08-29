@@ -93,7 +93,7 @@ const SplashScreen = ({ navigation }) => {
 
     try {
       const uploadResponse = await axios.post(
-        "http://192.168.68.103:4001/uploadNotes",
+        "http://172.20.10.7:4001/uploadNotes",
         formData,
         {
           headers: {
@@ -105,7 +105,7 @@ const SplashScreen = ({ navigation }) => {
       const { fileId } = uploadResponse.data;
 
       const uploadTitleResponse = await axios.post(
-        "http://192.168.68.103:4001/uploadTitle",
+        "http://172.20.10.7:4001/uploadTitle",
         { fileId, title: notesTitle },
         {
           headers: {
@@ -128,11 +128,11 @@ const SplashScreen = ({ navigation }) => {
   const getParseEndpoint = (mimeType) => {
     switch (mimeType) {
       case "application/pdf":
-        return "http://192.168.68.103:3001/parse-pdf";
+        return "http://172.20.10.7:3001/parse-pdf";
       case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
-        return "http://192.168.68.103:3001/parse-docx";
+        return "http://172.20.10.7:3001/parse-docx";
       case "application/vnd.openxmlformats-officedocument.presentationml.presentation":
-        return "http://192.168.68.103:3001/parse-pptx";
+        return "http://172.20.10.7:3001/parse-pptx";
       default:
         throw new Error("Unsupported file type");
     }
@@ -166,7 +166,7 @@ const SplashScreen = ({ navigation }) => {
     if (result.assets[0].uri) {
       console.log("Document picked successfully");
       setSelectedFile(result);
-      uploadDocument(result); // Initiate document parsing
+      uploadDocument(result);
     } else {
       console.log("Document picker cancelled or failed");
     }
@@ -175,7 +175,7 @@ const SplashScreen = ({ navigation }) => {
   const generateQuiz = async (notes) => {
     try {
       const response = await axios.post(
-        "http://192.168.68.103:3000/generate-quiz",
+        "http://172.20.10.7:3000/generate-quiz",
         { notes: notes },
         {
           headers: {
@@ -192,7 +192,7 @@ const SplashScreen = ({ navigation }) => {
   const generateFlashCards = async (notes) => {
     try {
       const response = await axios.post(
-        "http://192.168.68.103:3003/generate-flashCards",
+        "http://172.20.10.7:3003/generate-flashCards",
         { notes: notes },
         {
           headers: {
@@ -209,7 +209,7 @@ const SplashScreen = ({ navigation }) => {
   const generateSummaries = async (notes) => {
     try {
       const response = await axios.post(
-        "http://192.168.68.103:3004/generate-summary",
+        "http://172.20.10.7:3004/generate-summary",
         { notes: notes },
         {
           headers: {
@@ -226,7 +226,7 @@ const SplashScreen = ({ navigation }) => {
   const generateTitle = async (notes) => {
     try {
       const response = await axios.post(
-        "http://192.168.68.103:3006/generate-title",
+        "http://172.20.10.7:3006/generate-title",
         { notes: notes },
         {
           headers: {
