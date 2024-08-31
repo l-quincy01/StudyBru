@@ -41,52 +41,264 @@ const HomeComponent = ({ nav }) => {
                   <Text style={tw` font-medium`}>Quincy</Text>
                 </View>
               </View> */}
-      <View style={tw`flex flex-col gap-y-2 `}>
-        <View style={tw` flex flex-row gap-x-2 items-center`}>
-          <Text style={tw` text-xl text-black text-left font-semibold`}>
-            Computer Science
-          </Text>
-          <TouchableOpacity style={tw``}>
-            <AntDesign name="pluscircleo" size={17} color="blue" />
-          </TouchableOpacity>
-        </View>
-        {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}> */}
-
-        {/*Subject/course card */}
-        <View style={tw`flex flex-row gap-x-3 w-full`}>
-          <TouchableOpacity
-            onPress={() => nav.navigate("AddedNotes")}
-            style={tw`flex flex-row  items-center bg-white rounded-lg w-full`}
-          >
-            {/* COLOUR CODE */}
-            <View
-              style={tw`w-1/24 h-full bg-${colourCodes[5]}-500 rounded-l-lg`}
-            >
-              <Text> {/* NEEDED PLACE HOLDER FOR COLOUR CODE */} </Text>
-            </View>
-
-            {/* <AntDesign name="pptfile1" size={32} color="black" /> */}
-            <View style={tw`flex flex-col w-9/10 px-5 py-3`}>
-              <Text style={tw`text-lg font-semibold mb-2 `}>
-                CS Complier Notes
-              </Text>
-              <View style={tw` w-full border-b border-gray-300 mb-5`}></View>
-
-              <View style={tw` flex flex-row justify-between`}>
-                <View style={tw`flex flex-col`}>
-                  <Text style={tw`text-sm font-light text-gray-500`}>
-                    Notes added: {2}
-                  </Text>
-                  <Text style={tw`text-sm font-light text-gray-500`}>
-                    Date created {formattedDate}
-                  </Text>
+      <View style={tw`flex flex-col gap-y-6 `}>
+        <View>
+          <View style={tw` flex flex-row gap-x-2 items-center`}>
+            <Text style={tw` text-xl text-black text-left font-semibold`}>
+              Computer Science
+            </Text>
+            <TouchableOpacity style={tw``}>
+              <AntDesign name="pluscircleo" size={17} color="blue" />
+            </TouchableOpacity>
+          </View>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {/*Subject/course card */}
+            <View style={tw`flex flex-row gap-x-3 w-full`}>
+              <TouchableOpacity
+                onPress={() => nav.navigate("AddedNotes")}
+                style={tw`flex flex-row  items-center bg-white rounded-lg w-full`}
+              >
+                {/* COLOUR CODE */}
+                <View
+                  style={tw`w-1/24 h-full bg-${colourCodes[5]}-500 rounded-l-lg`}
+                >
+                  <Text> {/* NEEDED PLACE HOLDER FOR COLOUR CODE */} </Text>
                 </View>
-                <View style={tw`left-3`}>
-                  <Entypo name="chevron-small-right" size={34} color="black" />
+
+                {/* <AntDesign name="pptfile1" size={32} color="black" /> */}
+                <View style={tw`flex flex-col w-9/10 px-5 py-3`}>
+                  <Text style={tw`text-lg font-semibold mb-2 `}>
+                    CS Complier Notes
+                  </Text>
+                  <View
+                    style={tw` w-full border-b border-gray-300 mb-5`}
+                  ></View>
+
+                  <View style={tw` flex flex-row justify-between`}>
+                    <View style={tw`flex flex-col`}>
+                      <Text style={tw`text-sm font-light text-gray-500`}>
+                        Notes added: {2}
+                      </Text>
+                      <Text style={tw`text-sm font-light text-gray-500`}>
+                        Date created {formattedDate}
+                      </Text>
+                    </View>
+                    <View style={tw`left-3`}>
+                      <Entypo
+                        name="chevron-small-right"
+                        size={34}
+                        color="black"
+                      />
+                    </View>
+                  </View>
+                </View>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
+        </View>
+        <View>
+          <View style={tw` flex flex-row gap-x-2 items-center`}>
+            <Text style={tw` text-xl text-black text-left font-semibold`}>
+              Maths
+            </Text>
+            <TouchableOpacity style={tw``}>
+              <AntDesign name="pluscircleo" size={17} color="blue" />
+            </TouchableOpacity>
+          </View>
+          {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}> */}
+
+          {/*Subject/course card */}
+          <View style={tw`flex flex-row gap-x-3 w-full`}>
+            <TouchableOpacity
+              onPress={() => nav.navigate("AddedNotes")}
+              style={tw`flex flex-row  items-center bg-white rounded-lg w-full`}
+            >
+              {/* COLOUR CODE */}
+              <View
+                style={tw`w-1/24 h-full bg-${colourCodes[4]}-500 rounded-l-lg`}
+              >
+                <Text> {/* NEEDED PLACE HOLDER FOR COLOUR CODE */} </Text>
+              </View>
+
+              {/* <AntDesign name="pptfile1" size={32} color="black" /> */}
+              <View style={tw`flex flex-col w-9/10 px-5 py-3`}>
+                <Text style={tw`text-lg font-semibold mb-2 `}>
+                  Differential Equations
+                </Text>
+                <View style={tw` w-full border-b border-gray-300 mb-5`}></View>
+
+                <View style={tw` flex flex-row justify-between`}>
+                  <View style={tw`flex flex-col`}>
+                    <Text style={tw`text-sm font-light text-gray-500`}>
+                      Notes added: {4}
+                    </Text>
+                    <Text style={tw`text-sm font-light text-gray-500`}>
+                      Date created {formattedDate}
+                    </Text>
+                  </View>
+                  <View style={tw`left-3`}>
+                    <Entypo
+                      name="chevron-small-right"
+                      size={34}
+                      color="black"
+                    />
+                  </View>
                 </View>
               </View>
-            </View>
-          </TouchableOpacity>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View>
+          <View style={tw` flex flex-row gap-x-2 items-center`}>
+            <Text style={tw` text-xl text-black text-left font-semibold`}>
+              Information Systems
+            </Text>
+            <TouchableOpacity style={tw``}>
+              <AntDesign name="pluscircleo" size={17} color="blue" />
+            </TouchableOpacity>
+          </View>
+          {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}> */}
+
+          {/*Subject/course card */}
+          <View style={tw`flex flex-row gap-x-3 w-full`}>
+            <TouchableOpacity
+              onPress={() => nav.navigate("AddedNotes")}
+              style={tw`flex flex-row  items-center bg-white rounded-lg w-full`}
+            >
+              {/* COLOUR CODE */}
+              <View
+                style={tw`w-1/24 h-full bg-${colourCodes[3]}-500 rounded-l-lg`}
+              >
+                <Text> {/* NEEDED PLACE HOLDER FOR COLOUR CODE */} </Text>
+              </View>
+
+              {/* <AntDesign name="pptfile1" size={32} color="black" /> */}
+              <View style={tw`flex flex-col w-9/10 px-5 py-3`}>
+                <Text style={tw`text-lg font-semibold mb-2 `}>Big Data</Text>
+                <View style={tw` w-full border-b border-gray-300 mb-5`}></View>
+
+                <View style={tw` flex flex-row justify-between`}>
+                  <View style={tw`flex flex-col`}>
+                    <Text style={tw`text-sm font-light text-gray-500`}>
+                      Notes added: {3}
+                    </Text>
+                    <Text style={tw`text-sm font-light text-gray-500`}>
+                      Date created {formattedDate}
+                    </Text>
+                  </View>
+                  <View style={tw`left-3`}>
+                    <Entypo
+                      name="chevron-small-right"
+                      size={34}
+                      color="black"
+                    />
+                  </View>
+                </View>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View>
+          <View style={tw` flex flex-row gap-x-2 items-center`}>
+            <Text style={tw` text-xl text-black text-left font-semibold`}>
+              Psychology
+            </Text>
+            <TouchableOpacity style={tw``}>
+              <AntDesign name="pluscircleo" size={17} color="blue" />
+            </TouchableOpacity>
+          </View>
+          {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}> */}
+
+          {/*Subject/course card */}
+          <View style={tw`flex flex-row gap-x-3 w-full`}>
+            <TouchableOpacity
+              onPress={() => nav.navigate("AddedNotes")}
+              style={tw`flex flex-row  items-center bg-white rounded-lg w-full`}
+            >
+              {/* COLOUR CODE */}
+              <View
+                style={tw`w-1/24 h-full bg-${colourCodes[2]}-500 rounded-l-lg`}
+              >
+                <Text> {/* NEEDED PLACE HOLDER FOR COLOUR CODE */} </Text>
+              </View>
+
+              {/* <AntDesign name="pptfile1" size={32} color="black" /> */}
+              <View style={tw`flex flex-col w-9/10 px-5 py-3`}>
+                <Text style={tw`text-lg font-semibold mb-2 `}>Freudian</Text>
+                <View style={tw` w-full border-b border-gray-300 mb-5`}></View>
+
+                <View style={tw` flex flex-row justify-between`}>
+                  <View style={tw`flex flex-col`}>
+                    <Text style={tw`text-sm font-light text-gray-500`}>
+                      Notes added: {2}
+                    </Text>
+                    <Text style={tw`text-sm font-light text-gray-500`}>
+                      Date created {formattedDate}
+                    </Text>
+                  </View>
+                  <View style={tw`left-3`}>
+                    <Entypo
+                      name="chevron-small-right"
+                      size={34}
+                      color="black"
+                    />
+                  </View>
+                </View>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View>
+          <View style={tw` flex flex-row gap-x-2 items-center`}>
+            <Text style={tw` text-xl text-black text-left font-semibold`}>
+              Chemistry
+            </Text>
+            <TouchableOpacity style={tw``}>
+              <AntDesign name="pluscircleo" size={17} color="blue" />
+            </TouchableOpacity>
+          </View>
+          {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}> */}
+
+          {/*Subject/course card */}
+          <View style={tw`flex flex-row gap-x-3 w-full`}>
+            <TouchableOpacity
+              onPress={() => nav.navigate("AddedNotes")}
+              style={tw`flex flex-row  items-center bg-white rounded-lg w-full`}
+            >
+              {/* COLOUR CODE */}
+              <View
+                style={tw`w-1/24 h-full bg-${colourCodes[1]}-500 rounded-l-lg`}
+              >
+                <Text> {/* NEEDED PLACE HOLDER FOR COLOUR CODE */} </Text>
+              </View>
+
+              {/* <AntDesign name="pptfile1" size={32} color="black" /> */}
+              <View style={tw`flex flex-col w-9/10 px-5 py-3`}>
+                <Text style={tw`text-lg font-semibold mb-2 `}>
+                  Redox reactions
+                </Text>
+                <View style={tw` w-full border-b border-gray-300 mb-5`}></View>
+
+                <View style={tw` flex flex-row justify-between`}>
+                  <View style={tw`flex flex-col`}>
+                    <Text style={tw`text-sm font-light text-gray-500`}>
+                      Notes added: {2}
+                    </Text>
+                    <Text style={tw`text-sm font-light text-gray-500`}>
+                      Date created {formattedDate}
+                    </Text>
+                  </View>
+                  <View style={tw`left-3`}>
+                    <Entypo
+                      name="chevron-small-right"
+                      size={34}
+                      color="black"
+                    />
+                  </View>
+                </View>
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
         {/* </ScrollView> */}
         {/* <TouchableOpacity

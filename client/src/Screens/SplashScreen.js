@@ -58,6 +58,8 @@ const SplashScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [notes, setNotes] = useState("");
   const [notesTitle, setNotesTitle] = useState("");
+  const [subjectTitle, setSubjectTitle] = useState("");
+  const [setsTitle, setSetsTitle] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
 
   const uploadDocument = async (file) => {
@@ -83,7 +85,7 @@ const SplashScreen = ({ navigation }) => {
     }
   };
 
-  const uploadFile = async (file) => {
+  const uploadFile = async (file, userSubjectTitle, userSetsTitle) => {
     const formData = new FormData();
     formData.append("file", {
       uri: file.assets[0].uri,
@@ -106,7 +108,12 @@ const SplashScreen = ({ navigation }) => {
 
       const uploadTitleResponse = await axios.post(
         "http://172.20.10.7:4001/uploadTitle",
-        { fileId, title: notesTitle },
+        {
+          fileId,
+          title: notesTitle,
+          subjectTitle: subjectTitle,
+          setsTitle: setsTitle,
+        },
         {
           headers: {
             "Content-Type": "application/json",
@@ -272,7 +279,13 @@ const SplashScreen = ({ navigation }) => {
             {quiz.length > 0 && flashCards.length > 0 && summary.length > 0 ? (
               <HomeComponent nav={navigation} />
             ) : (
-              <GetStartedComponent docPicker={pickDocument} />
+              <GetStartedComponent
+                docPicker={pickDocument}
+                subjectTitle={subjectTitle}
+                setsTitle={setsTitle}
+                onSubjectTitleChange={setSubjectTitle}
+                onSetsTitleChange={setSetsTitle}
+              />
             )}
           </ScrollView>
         </>

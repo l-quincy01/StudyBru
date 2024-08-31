@@ -15,6 +15,8 @@ mongoose.connect(process.env.MONGO_URL, {
 const fileSchema = new mongoose.Schema({
   filePath: String,
   title: String,
+  subjectTitle: { String, default: "General" },
+  setsTitle: { String, default: "General" },
   uploadedAt: { type: Date, default: Date.now },
 });
 
@@ -41,7 +43,27 @@ app.post("/uploadNotes", upload.single("file"), async (req, res) => {
     const savedFile = await newFile.save();
     res.status(200).json({
       message: "File uploaded successfully",
-      fileId: savedFile._id, // Return the file ID for later use
+      fileId: savedFile._id,
+      filePath: savedFile.filePath,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Error uploading file" });
+  }
+});
+
+app.post("/uploadNotes", upload.single("file"), async (req, res) => {
+  try {
+    const { title, subjectTitle, setsTitle } = req.body;
+    const newFile = new File({
+      filePath: `/uploads/${req.file.filename}`,
+      title, // Optional: you can include these fields here if provided in the request
+      subjectTitle,
+      setsTitle,
+    });
+    const savedFile = await newFile.save();
+    res.status(200).json({
+      message: "File uploaded successfully",
+      fileId: savedFile._id,
       filePath: savedFile.filePath,
     });
   } catch (error) {
@@ -51,12 +73,12 @@ app.post("/uploadNotes", upload.single("file"), async (req, res) => {
 
 app.post("/uploadTitle", async (req, res) => {
   try {
-    const { fileId, title } = req.body;
+    const { fileId, title, subjectTitle, setsTitle } = req.body;
 
-    // Find the file by ID and update it with the title
+    // Find the file by ID and update it with the provided titles
     const updatedFile = await File.findByIdAndUpdate(
       fileId,
-      { title: title },
+      { title, subjectTitle, setsTitle },
       { new: true }
     );
 
@@ -65,16 +87,12 @@ app.post("/uploadTitle", async (req, res) => {
     }
 
     res.status(200).json({
-      message: "Title uploaded successfully",
+      message: "Titles uploaded successfully",
       updatedFile,
     });
   } catch (error) {
-    res.status(500).json({ error: "Error uploading title" });
+    res.status(500).json({ error: "Error uploading titles" });
   }
-});
-
-app.get("/user-notes", async (req, res) => {
-  res.json(await File.find());
 });
 
 app.get("/notes/:title", async (req, res) => {
