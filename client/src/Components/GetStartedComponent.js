@@ -53,7 +53,7 @@ const CustomModal = ({
               </Text>
             )}
             <TextInput
-              placeholder="Title describing your created set."
+              placeholder="Title Of Set. i.e Maths"
               value={setsTitle}
               onChangeText={handleSetsTitleChange}
               mode="outlined"
@@ -70,12 +70,15 @@ const CustomModal = ({
               </Text>
             )}
             <TextInput
-              placeholder="Title describing your subject"
+              placeholder="Title Of Subject. i.e Calculus"
               value={subjectTitle}
               onChangeText={handleSubjectTitleChange}
               mode="outlined"
             />
           </View>
+          <Text style={tw`text-gray-500 text-md font-light `}>
+            * Title of your notes will be automaticall generated
+          </Text>
           <TouchableOpacity
             style={[
               tw`rounded-2xl items-center gap-3 justify-center flex flex-row p-5`,
@@ -121,7 +124,7 @@ const GetStartedComponent = ({
           />
           <View style={tw`flex flex-col`}>
             <Text style={tw`text-xl font-semibold`}>Summaries</Text>
-            <Text style={tw`text-md font-light text-gray-500 w-1/2`}>
+            <Text style={tw`text-md font-light text-gray-500 w-2/3`}>
               Get beautiful summaries
             </Text>
           </View>

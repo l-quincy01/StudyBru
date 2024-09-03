@@ -1,19 +1,91 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
-
 import tw from "twrnc";
+import { AntDesign, Entypo, Ionicons } from "@expo/vector-icons";
+import axios from "axios";
+import { Modal } from "./Modal";
+import { TextInput } from "react-native-paper";
 
-import { AntDesign, Entypo } from "@expo/vector-icons";
+const CustomModal = ({
+  isModalOpen,
+  setIsModalOpen,
+  docPicker,
+  subjectTitle,
+  setsTitle, // Added this prop
+  onSubjectTitleChange,
+  onSetsTitleChange,
+}) => {
+  const [isSubjectTitleValid, setIsSubjectTitleValid] = useState(false);
 
-import { Avatar } from "react-native-paper";
+  const handleSubjectTitleChange = (text) => {
+    onSubjectTitleChange(text);
+    setIsSubjectTitleValid(text.length >= 3);
+  };
 
-const HomeComponent = ({ nav }) => {
-  const currentDate = new Date();
-  const year = currentDate.getFullYear();
-  const month = String(currentDate.getMonth() + 1).padStart(2, "0");
-  const day = String(currentDate.getDate()).padStart(2, "0");
+  useEffect(() => {
+    onSetsTitleChange(setsTitle); // Update onSetsTitleChange when setsTitle changes
+  }, [setsTitle]);
 
-  const formattedDate = `${year}-${month}-${day}`;
+  return (
+    <Modal isOpen={isModalOpen} withInput>
+      <View style={tw`bg-white w-full p-4 rounded-xl flex-col gap-y-6`}>
+        <View style={tw`flex flex-row justify-between`}>
+          <Text style={tw`text-lg font-semibold`}>Create New Subject</Text>
+          <TouchableOpacity onPress={() => setIsModalOpen(false)}>
+            <AntDesign name="close" size={24} color="black" />
+          </TouchableOpacity>
+        </View>
+        <View style={tw`flex flex-col gap-y-4`}>
+          <Text style={tw`text-lg font-semibold`}>Set: {setsTitle}</Text>
+          {/* Display setsTitle */}
+          <View style={tw`flex flex-col gap-y-1`}>
+            {isSubjectTitleValid ? (
+              <Text style={tw`text-md font-semibold text-gray-500`}>
+                Subject Title
+              </Text>
+            ) : (
+              <Text style={tw`text-md font-semibold text-red-500`}>
+                At least 3 Characters
+              </Text>
+            )}
+            <TextInput
+              placeholder="Title Of Subject. i.e Calculus"
+              value={subjectTitle}
+              onChangeText={handleSubjectTitleChange}
+              mode="outlined"
+            />
+          </View>
+          <Text style={tw`text-gray-500 text-md font-light `}>
+            * Title of your notes will be automatically generated
+          </Text>
+          <TouchableOpacity
+            style={[
+              tw`rounded-2xl items-center gap-3 justify-center flex flex-row p-5`,
+              isSubjectTitleValid ? tw`bg-black` : tw`bg-gray-400`,
+            ]}
+            onPress={docPicker}
+            disabled={!isSubjectTitleValid}
+          >
+            <Text style={tw`text-white`}>Select document to finish</Text>
+            <Ionicons name="cloud-upload-outline" size={24} color="white" />
+          </TouchableOpacity>
+        </View>
+      </View>
+    </Modal>
+  );
+};
+
+const HomeComponent = ({
+  nav,
+  docPicker,
+  subjectTitle,
+  onSubjectTitleChange,
+  onSetsTitleChange,
+}) => {
+  const [databaseNotes, setDatabaseNotes] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedSetsTitle, setSelectedSetsTitle] = useState("");
+
   const colourCodes = [
     "blue",
     "red",
@@ -24,318 +96,138 @@ const HomeComponent = ({ nav }) => {
     "purple",
   ];
 
+  useEffect(() => {
+    const fetchNotes = async () => {
+      try {
+        const { data } = await axios.get("http://172.20.10.7:4001/user-notes");
+        setDatabaseNotes(data);
+      } catch (error) {
+        console.error("Error fetching user notes:", error);
+      }
+    };
+
+    fetchNotes();
+  }, []);
+
+  // Group notes by setsTitle and subjectTitle
+  const groupNotes = (notes) => {
+    const grouped = {};
+    notes.forEach((note) => {
+      const { setsTitle, subjectTitle } = note;
+      if (!grouped[setsTitle]) {
+        grouped[setsTitle] = {};
+      }
+      if (!grouped[setsTitle][subjectTitle]) {
+        grouped[setsTitle][subjectTitle] = [];
+      }
+      grouped[setsTitle][subjectTitle].push(note);
+    });
+    return grouped;
+  };
+
+  const groupedNotes = groupNotes(databaseNotes);
+
   return (
-    <View style={tw`flex flex-col mt-4 justify-center gap-y-8`}>
-      <View>
-        <Avatar.Image size={56} source={require("../../assets/avatar.png")} />
-        <Text style={tw` mt-4 text-xl text-left font-bold`}>Quincy</Text>
-        <Text style={tw` text-md text-gray-500 text-left font-medium`}>
-          Cs Major Student Rhodes University
-        </Text>
-      </View>
-      {/* 
-              <View style={tw`flex flex-row gap-x-4 justify-center`}>
-                <View
-                  style={tw`flex  items-center justify-center px-4 py-2 bg-gray-300 rounded-md`}
-                >
-                  <Text style={tw` font-medium`}>Quincy</Text>
-                </View>
-              </View> */}
-      <View style={tw`flex flex-col gap-y-6 `}>
+    <>
+      <View style={tw`flex flex-col mt-4 justify-center gap-y-8`}>
         <View>
-          <View style={tw` flex flex-row gap-x-2 items-center`}>
-            <Text style={tw` text-xl text-black text-left font-semibold`}>
-              Computer Science
-            </Text>
-            <TouchableOpacity style={tw``}>
-              <AntDesign name="pluscircleo" size={17} color="blue" />
-            </TouchableOpacity>
-          </View>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {/*Subject/course card */}
-            <View style={tw`flex flex-row gap-x-3 w-full`}>
-              <TouchableOpacity
-                onPress={() => nav.navigate("AddedNotes")}
-                style={tw`flex flex-row  items-center bg-white rounded-lg w-full`}
-              >
-                {/* COLOUR CODE */}
-                <View
-                  style={tw`w-1/24 h-full bg-${colourCodes[5]}-500 rounded-l-lg`}
+          <Text style={tw` mt-4 text-xl text-left font-bold`}>Quincy</Text>
+          <Text style={tw` text-md text-gray-500 text-left font-medium`}>
+            Cs Major Student Rhodes University
+          </Text>
+        </View>
+        <View style={tw`flex flex-col gap-y-6`}>
+          {Object.entries(groupedNotes).map(([setsTitle, subjects], index) => (
+            <View key={index}>
+              <View style={tw` flex flex-row gap-x-2 items-center`}>
+                <Text style={tw` text-xl text-black text-left font-semibold`}>
+                  {setsTitle}
+                </Text>
+                <TouchableOpacity
+                  onPress={() => {
+                    setSelectedSetsTitle(setsTitle); // Set the selected setsTitle
+                    setIsModalOpen(true);
+                  }}
+                  style={tw``}
                 >
-                  <Text> {/* NEEDED PLACE HOLDER FOR COLOUR CODE */} </Text>
-                </View>
+                  <AntDesign name="pluscircleo" size={17} color="blue" />
+                </TouchableOpacity>
+              </View>
+              <ScrollView
+                style={tw` gap-x-4`}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+              >
+                {Object.entries(subjects).map(
+                  ([subjectTitle, notes], subjectIndex) => (
+                    <View
+                      key={subjectIndex}
+                      style={tw` flex flex-col w-[250px] mr-4 `}
+                    >
+                      <TouchableOpacity
+                        onPress={() =>
+                          nav.navigate("AddedNotes", { subjectTitle })
+                        }
+                        style={tw`flex flex-row items-center bg-white rounded-lg w-full my-4 `}
+                      >
+                        <View
+                          style={tw`w-1/24 h-full bg-${colourCodes[6]}-500 rounded-l-lg`}
+                        >
+                          <Text> {/* Placeholder for Colour Code */} </Text>
+                        </View>
 
-                {/* <AntDesign name="pptfile1" size={32} color="black" /> */}
-                <View style={tw`flex flex-col w-9/10 px-5 py-3`}>
-                  <Text style={tw`text-lg font-semibold mb-2 `}>
-                    CS Complier Notes
-                  </Text>
-                  <View
-                    style={tw` w-full border-b border-gray-300 mb-5`}
-                  ></View>
-
-                  <View style={tw` flex flex-row justify-between`}>
-                    <View style={tw`flex flex-col`}>
-                      <Text style={tw`text-sm font-light text-gray-500`}>
-                        Notes added: {2}
-                      </Text>
-                      <Text style={tw`text-sm font-light text-gray-500`}>
-                        Date created {formattedDate}
-                      </Text>
+                        <View style={tw`flex flex-col w-9/10 px-5 py-3`}>
+                          <Text style={tw`text-lg font-semibold mb-2 `}>
+                            {subjectTitle}
+                          </Text>
+                          <View
+                            style={tw` w-full border-b border-gray-300 mb-5`}
+                          ></View>
+                          <View style={tw` flex flex-row justify-between`}>
+                            <View style={tw`flex flex-col`}>
+                              <Text
+                                style={tw`text-sm font-light text-gray-500`}
+                              >
+                                Notes added: {notes.length}
+                              </Text>
+                              <Text
+                                style={tw`text-sm font-light text-gray-500`}
+                              >
+                                Date created{" "}
+                                {new Date(
+                                  notes[0].uploadedAt
+                                ).toLocaleDateString()}
+                              </Text>
+                            </View>
+                            <View style={tw`left-3`}>
+                              <Entypo
+                                name="chevron-small-right"
+                                size={34}
+                                color="black"
+                              />
+                            </View>
+                          </View>
+                        </View>
+                      </TouchableOpacity>
                     </View>
-                    <View style={tw`left-3`}>
-                      <Entypo
-                        name="chevron-small-right"
-                        size={34}
-                        color="black"
-                      />
-                    </View>
-                  </View>
-                </View>
-              </TouchableOpacity>
+                  )
+                )}
+              </ScrollView>
             </View>
-          </ScrollView>
+          ))}
         </View>
-        <View>
-          <View style={tw` flex flex-row gap-x-2 items-center`}>
-            <Text style={tw` text-xl text-black text-left font-semibold`}>
-              Maths
-            </Text>
-            <TouchableOpacity style={tw``}>
-              <AntDesign name="pluscircleo" size={17} color="blue" />
-            </TouchableOpacity>
-          </View>
-          {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}> */}
-
-          {/*Subject/course card */}
-          <View style={tw`flex flex-row gap-x-3 w-full`}>
-            <TouchableOpacity
-              onPress={() => nav.navigate("AddedNotes")}
-              style={tw`flex flex-row  items-center bg-white rounded-lg w-full`}
-            >
-              {/* COLOUR CODE */}
-              <View
-                style={tw`w-1/24 h-full bg-${colourCodes[4]}-500 rounded-l-lg`}
-              >
-                <Text> {/* NEEDED PLACE HOLDER FOR COLOUR CODE */} </Text>
-              </View>
-
-              {/* <AntDesign name="pptfile1" size={32} color="black" /> */}
-              <View style={tw`flex flex-col w-9/10 px-5 py-3`}>
-                <Text style={tw`text-lg font-semibold mb-2 `}>
-                  Differential Equations
-                </Text>
-                <View style={tw` w-full border-b border-gray-300 mb-5`}></View>
-
-                <View style={tw` flex flex-row justify-between`}>
-                  <View style={tw`flex flex-col`}>
-                    <Text style={tw`text-sm font-light text-gray-500`}>
-                      Notes added: {4}
-                    </Text>
-                    <Text style={tw`text-sm font-light text-gray-500`}>
-                      Date created {formattedDate}
-                    </Text>
-                  </View>
-                  <View style={tw`left-3`}>
-                    <Entypo
-                      name="chevron-small-right"
-                      size={34}
-                      color="black"
-                    />
-                  </View>
-                </View>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View>
-          <View style={tw` flex flex-row gap-x-2 items-center`}>
-            <Text style={tw` text-xl text-black text-left font-semibold`}>
-              Information Systems
-            </Text>
-            <TouchableOpacity style={tw``}>
-              <AntDesign name="pluscircleo" size={17} color="blue" />
-            </TouchableOpacity>
-          </View>
-          {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}> */}
-
-          {/*Subject/course card */}
-          <View style={tw`flex flex-row gap-x-3 w-full`}>
-            <TouchableOpacity
-              onPress={() => nav.navigate("AddedNotes")}
-              style={tw`flex flex-row  items-center bg-white rounded-lg w-full`}
-            >
-              {/* COLOUR CODE */}
-              <View
-                style={tw`w-1/24 h-full bg-${colourCodes[3]}-500 rounded-l-lg`}
-              >
-                <Text> {/* NEEDED PLACE HOLDER FOR COLOUR CODE */} </Text>
-              </View>
-
-              {/* <AntDesign name="pptfile1" size={32} color="black" /> */}
-              <View style={tw`flex flex-col w-9/10 px-5 py-3`}>
-                <Text style={tw`text-lg font-semibold mb-2 `}>Big Data</Text>
-                <View style={tw` w-full border-b border-gray-300 mb-5`}></View>
-
-                <View style={tw` flex flex-row justify-between`}>
-                  <View style={tw`flex flex-col`}>
-                    <Text style={tw`text-sm font-light text-gray-500`}>
-                      Notes added: {3}
-                    </Text>
-                    <Text style={tw`text-sm font-light text-gray-500`}>
-                      Date created {formattedDate}
-                    </Text>
-                  </View>
-                  <View style={tw`left-3`}>
-                    <Entypo
-                      name="chevron-small-right"
-                      size={34}
-                      color="black"
-                    />
-                  </View>
-                </View>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View>
-          <View style={tw` flex flex-row gap-x-2 items-center`}>
-            <Text style={tw` text-xl text-black text-left font-semibold`}>
-              Psychology
-            </Text>
-            <TouchableOpacity style={tw``}>
-              <AntDesign name="pluscircleo" size={17} color="blue" />
-            </TouchableOpacity>
-          </View>
-          {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}> */}
-
-          {/*Subject/course card */}
-          <View style={tw`flex flex-row gap-x-3 w-full`}>
-            <TouchableOpacity
-              onPress={() => nav.navigate("AddedNotes")}
-              style={tw`flex flex-row  items-center bg-white rounded-lg w-full`}
-            >
-              {/* COLOUR CODE */}
-              <View
-                style={tw`w-1/24 h-full bg-${colourCodes[2]}-500 rounded-l-lg`}
-              >
-                <Text> {/* NEEDED PLACE HOLDER FOR COLOUR CODE */} </Text>
-              </View>
-
-              {/* <AntDesign name="pptfile1" size={32} color="black" /> */}
-              <View style={tw`flex flex-col w-9/10 px-5 py-3`}>
-                <Text style={tw`text-lg font-semibold mb-2 `}>Freudian</Text>
-                <View style={tw` w-full border-b border-gray-300 mb-5`}></View>
-
-                <View style={tw` flex flex-row justify-between`}>
-                  <View style={tw`flex flex-col`}>
-                    <Text style={tw`text-sm font-light text-gray-500`}>
-                      Notes added: {2}
-                    </Text>
-                    <Text style={tw`text-sm font-light text-gray-500`}>
-                      Date created {formattedDate}
-                    </Text>
-                  </View>
-                  <View style={tw`left-3`}>
-                    <Entypo
-                      name="chevron-small-right"
-                      size={34}
-                      color="black"
-                    />
-                  </View>
-                </View>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View>
-          <View style={tw` flex flex-row gap-x-2 items-center`}>
-            <Text style={tw` text-xl text-black text-left font-semibold`}>
-              Chemistry
-            </Text>
-            <TouchableOpacity style={tw``}>
-              <AntDesign name="pluscircleo" size={17} color="blue" />
-            </TouchableOpacity>
-          </View>
-          {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}> */}
-
-          {/*Subject/course card */}
-          <View style={tw`flex flex-row gap-x-3 w-full`}>
-            <TouchableOpacity
-              onPress={() => nav.navigate("AddedNotes")}
-              style={tw`flex flex-row  items-center bg-white rounded-lg w-full`}
-            >
-              {/* COLOUR CODE */}
-              <View
-                style={tw`w-1/24 h-full bg-${colourCodes[1]}-500 rounded-l-lg`}
-              >
-                <Text> {/* NEEDED PLACE HOLDER FOR COLOUR CODE */} </Text>
-              </View>
-
-              {/* <AntDesign name="pptfile1" size={32} color="black" /> */}
-              <View style={tw`flex flex-col w-9/10 px-5 py-3`}>
-                <Text style={tw`text-lg font-semibold mb-2 `}>
-                  Redox reactions
-                </Text>
-                <View style={tw` w-full border-b border-gray-300 mb-5`}></View>
-
-                <View style={tw` flex flex-row justify-between`}>
-                  <View style={tw`flex flex-col`}>
-                    <Text style={tw`text-sm font-light text-gray-500`}>
-                      Notes added: {2}
-                    </Text>
-                    <Text style={tw`text-sm font-light text-gray-500`}>
-                      Date created {formattedDate}
-                    </Text>
-                  </View>
-                  <View style={tw`left-3`}>
-                    <Entypo
-                      name="chevron-small-right"
-                      size={34}
-                      color="black"
-                    />
-                  </View>
-                </View>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
-        {/* </ScrollView> */}
-        {/* <TouchableOpacity
-          style={tw`mt-3 flex flex-row gap-x-2 items-center justify-center`}
-        >
-          <Text style={tw`text-md font-bold text-blue-500`}> Add Notes</Text>
-          <AntDesign name="plus" size={24} color="blue" />
-        </TouchableOpacity> */}
       </View>
 
-      {/* <View style={tw`text-left my-5 gap-y-5`}>
-        <Text style={tw`text-lg text-gray-400 font-semibold`}>
-          Recently Viewed
-        </Text>
-
-        <View style={tw`justify-center items-center`}>
-          {true ? ( //Will make a condition to be set to true if user has notes uploaded
-            <Text style={tw`font-semibold text-md `}>Nothing added.</Text>
-          ) : (
-            <TouchableOpacity
-              style={tw`flex flex-row gap-x-8 items-center bg-gray-200 rounded-lg py-4 px-2`}
-            >
-              <AntDesign name="pptfile1" size={32} color="black" />
-              <View style={tw`flex flex-col gap-y-2`}>
-                <Text style={tw`text-md font-semibold`}>CS Complier Notes</Text>
-                <Text style={tw`text-md font-medium text-gray-500`}>
-                  Date created {formattedDate}
-                </Text>
-              </View>
-              <View style={tw`ml-4`}>
-                <Entypo name="chevron-small-right" size={24} color="black" />
-              </View>
-            </TouchableOpacity>
-          )}
-        </View>
-      </View> */}
-    </View>
+      <CustomModal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        docPicker={() => docPicker(selectedSetsTitle)} // Pass the selected setsTitle to docPicker
+        subjectTitle={subjectTitle}
+        setsTitle={selectedSetsTitle} // Pass the selected setsTitle to the modal
+        onSubjectTitleChange={onSubjectTitleChange}
+        onSetsTitleChange={onSetsTitleChange}
+      />
+    </>
   );
 };
 

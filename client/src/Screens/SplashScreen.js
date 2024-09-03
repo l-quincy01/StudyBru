@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useCallback } from "react";
 import {
   View,
   Text,
@@ -15,7 +15,15 @@ import { FlashCardsContext } from "../config/FlashCardsContext";
 import { SummaryContext } from "../config/SummaryContext";
 import GetStartedComponent from "../Components/GetStartedComponent";
 import HomeComponent from "../Components/HomeComponent";
-import { AntDesign, SimpleLineIcons } from "@expo/vector-icons";
+import {
+  AntDesign,
+  Entypo,
+  Ionicons,
+  SimpleLineIcons,
+} from "@expo/vector-icons";
+import { Modal } from "../Components/Modal";
+import { TextInput } from "react-native-paper";
+import HomeComponentMainModal from "../Components/HomeComponentMainModal";
 
 function removeTripleBackticks(text) {
   return text.replace(/```/g, "");
@@ -61,6 +69,7 @@ const SplashScreen = ({ navigation }) => {
   const [subjectTitle, setSubjectTitle] = useState("");
   const [setsTitle, setSetsTitle] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const uploadDocument = async (file) => {
     const formData = new FormData();
@@ -78,14 +87,16 @@ const SplashScreen = ({ navigation }) => {
         },
       });
       const parsedText = cleanText(parseResponse.data.text);
+
       setNotes(parsedText);
-      console.log("File parsed and notes set successfully", parsedText);
+
+      console.log("NOTEESSSS SUCCESSFULLY SETTTTT-------", parsedText);
     } catch (error) {
       console.error("Error processing file:", error);
     }
   };
 
-  const uploadFile = async (file, userSubjectTitle, userSetsTitle) => {
+  const uploadFile = async (file) => {
     const formData = new FormData();
     formData.append("file", {
       uri: file.assets[0].uri,
@@ -95,7 +106,7 @@ const SplashScreen = ({ navigation }) => {
 
     try {
       const uploadResponse = await axios.post(
-        "http://172.20.10.7:4001/uploadNotes",
+        "http://172.20.10.7:4001/uploadNotesFile",
         formData,
         {
           headers: {
@@ -106,13 +117,17 @@ const SplashScreen = ({ navigation }) => {
 
       const { fileId } = uploadResponse.data;
 
+      if (fileId) {
+        console.log("Heres the file ID", fileId);
+      }
+
       const uploadTitleResponse = await axios.post(
-        "http://172.20.10.7:4001/uploadTitle",
+        "http://172.20.10.7:4001/uploadNoteDetails",
         {
           fileId,
           title: notesTitle,
           subjectTitle: subjectTitle,
-          setsTitle: setsTitle,
+          setsTitle: setsTitle, // Pass the selected setsTitle
         },
         {
           headers: {
@@ -124,7 +139,13 @@ const SplashScreen = ({ navigation }) => {
       console.log("File uploaded successfully:", uploadResponse.data);
       console.log("Title uploaded successfully:", uploadTitleResponse.data);
     } catch (uploadError) {
-      console.error("Error uploading file:", uploadError);
+      console.error(
+        "Error uploading file:",
+        uploadError,
+        notesTitle,
+        subjectTitle,
+        setsTitle
+      );
     }
   };
 
@@ -145,6 +166,20 @@ const SplashScreen = ({ navigation }) => {
     }
   };
 
+  // const handleSetsTitleChange = useCallback((text) => {
+  //   setSetsTitle(text);
+  // }, []);
+
+  // const handleSubjectTitleChange = useCallback((text) => {
+  //   setSubjectTitle(text);
+  // }, []);
+
+  useEffect(() => {
+    if ((quiz, flashCards, summary)) {
+      setNotes("");
+    }
+  }, [quiz, flashCards, summary]);
+
   useEffect(() => {
     if (notes) {
       setLoading(true);
@@ -154,6 +189,9 @@ const SplashScreen = ({ navigation }) => {
       generateTitle(notes);
     }
   }, [notes]);
+  useEffect(() => {
+    console.log("isModal Value:", isModalOpen);
+  }, [isModalOpen]);
 
   useEffect(() => {
     if (quiz.length > 0 && flashCards.length > 0 && summary.length > 0) {
@@ -162,7 +200,7 @@ const SplashScreen = ({ navigation }) => {
   }, [quiz, flashCards, summary]);
 
   useEffect(() => {
-    if (notesTitle && selectedFile) {
+    if (notesTitle) {
       uploadFile(selectedFile);
     }
   }, [notesTitle]);
@@ -173,7 +211,7 @@ const SplashScreen = ({ navigation }) => {
     if (result.assets[0].uri) {
       console.log("Document picked successfully");
       setSelectedFile(result);
-      uploadDocument(result);
+      await uploadDocument(result);
     } else {
       console.log("Document picker cancelled or failed");
     }
@@ -247,6 +285,93 @@ const SplashScreen = ({ navigation }) => {
     }
   };
 
+  const CustomModal = ({
+    setIsModalOpen,
+    docPicker,
+    subjectTitle,
+    setsTitle,
+    onSubjectTitleChange,
+    onSetsTitleChange,
+  }) => {
+    const [isSetsTitleValid, setIsSetsTitleValid] = useState(false);
+    const [isSubjectTitleValid, setIsSubjectTitleValid] = useState(false);
+
+    const handleSetsTitleInputChange = (text) => {
+      onSetsTitleChange(text);
+      setIsSetsTitleValid(text.length >= 3);
+    };
+
+    const handleSubjectTitleInputChange = (text) => {
+      onSubjectTitleChange(text);
+      setIsSubjectTitleValid(text.length >= 3);
+    };
+
+    return (
+      <Modal isOpen={isModalOpen} withInput>
+        <View style={tw`bg-white w-full p-4 rounded-xl flex-col gap-y-6`}>
+          <View style={tw`flex flex-row justify-between`}>
+            <Text style={tw`text-lg font-semibold`}>Create New Note Set</Text>
+            <TouchableOpacity onPress={() => setIsModalOpen(false)}>
+              <AntDesign name="close" size={24} color="black" />
+            </TouchableOpacity>
+          </View>
+          <View style={tw`flex flex-col gap-y-4`}>
+            <View style={tw`flex flex-col gap-y-1`}>
+              {isSetsTitleValid ? (
+                <Text style={tw`text-md font-semibold text-gray-500`}>
+                  Title of Set
+                </Text>
+              ) : (
+                <Text style={tw`text-md font-semibold text-red-500`}>
+                  At least 3 Characters
+                </Text>
+              )}
+              <TextInput
+                placeholder="Title Of Set. i.e Maths"
+                value={setsTitle}
+                onChangeText={handleSetsTitleInputChange}
+                mode="outlined"
+              />
+            </View>
+            <View style={tw`flex flex-col gap-y-1`}>
+              {isSubjectTitleValid ? (
+                <Text style={tw`text-md font-semibold text-gray-500`}>
+                  Title of Subject
+                </Text>
+              ) : (
+                <Text style={tw`text-md font-semibold text-red-500`}>
+                  At least 3 Characters
+                </Text>
+              )}
+              <TextInput
+                placeholder="Title Of Subject. i.e Calculus"
+                value={subjectTitle}
+                onChangeText={handleSubjectTitleInputChange}
+                mode="outlined"
+              />
+            </View>
+            <Text style={tw`text-gray-500 text-md font-light `}>
+              * Title of your notes will be automatically generated
+            </Text>
+            <TouchableOpacity
+              style={[
+                tw`rounded-2xl items-center gap-3 justify-center flex flex-row p-5`,
+                isSetsTitleValid && isSubjectTitleValid
+                  ? tw`bg-black`
+                  : tw`bg-gray-400`,
+              ]}
+              onPress={docPicker}
+              disabled={!isSetsTitleValid || !isSubjectTitleValid}
+            >
+              <Text style={tw`text-white`}>Select document to finish</Text>
+              <Ionicons name="cloud-upload-outline" size={24} color="white" />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+    );
+  };
+
   return (
     <View style={tw`flex-1 mt-12 `}>
       {loading ? (
@@ -275,9 +400,19 @@ const SplashScreen = ({ navigation }) => {
           </View>
 
           {/*Body view */}
+
           <ScrollView style={tw`flex-1 px-5 bg-gray-100`}>
             {quiz.length > 0 && flashCards.length > 0 && summary.length > 0 ? (
-              <HomeComponent nav={navigation} />
+              <>
+                <HomeComponent
+                  nav={navigation}
+                  docPicker={pickDocument}
+                  setsTitle={setsTitle}
+                  onSubjectTitleChange={setSubjectTitle}
+                  subjectTitle={subjectTitle}
+                  onSetsTitleChange={setSetsTitle}
+                />
+              </>
             ) : (
               <GetStartedComponent
                 docPicker={pickDocument}
@@ -288,6 +423,32 @@ const SplashScreen = ({ navigation }) => {
               />
             )}
           </ScrollView>
+
+          {quiz.length > 0 && flashCards.length > 0 && summary.length > 0 && (
+            <>
+              {/* <TouchableOpacity
+                onPress={() => setIsModalOpen(true)}
+                style={tw`absolute bottom-5 left-75 p-3 bg-black rounded-full`}
+              >
+                <Entypo name="plus" size={30} color="white" />
+              </TouchableOpacity>
+              <CustomModal
+                setIsModalOpen={setIsModalOpen}
+                docPicker={pickDocument}
+                subjectTitle={subjectTitle}
+                setsTitle={setsTitle}
+                onSubjectTitleChange={handleSubjectTitleChange}
+                onSetsTitleChange={handleSetsTitleChange}
+              /> */}
+              <HomeComponentMainModal
+                docPicker={pickDocument}
+                subjectTitle={subjectTitle}
+                setsTitle={setsTitle}
+                onSubjectTitleChange={setSubjectTitle}
+                onSetsTitleChange={setSetsTitle}
+              />
+            </>
+          )}
         </>
       )}
     </View>

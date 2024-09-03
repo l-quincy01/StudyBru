@@ -61,8 +61,9 @@ function parseQuiz(inputString) {
   return result;
 }
 
-const AddedNotesScreen = ({ navigation }) => {
-  const [databaseNotes, setDatabaseNotes] = useState([]); // Updated variable name
+const AddedNotesScreen = ({ navigation, route }) => {
+  const { subjectTitle } = route.params;
+  const [databaseNotes, setDatabaseNotes] = useState([]);
   const [selectedNoteTitle, setSelectedNoteTitle] = useState("");
   const [loading, setLoading] = useState(false);
   const { quiz, setQuiz } = useContext(QuizContext);
@@ -171,12 +172,17 @@ const AddedNotesScreen = ({ navigation }) => {
     axios
       .get("http://172.20.10.7:4001/user-notes")
       .then(({ data }) => {
-        setDatabaseNotes(data); // Updated variable name
+        setDatabaseNotes(data);
       })
       .catch((error) => {
         console.error("Error fetching user notes:", error);
       });
   }, []);
+
+  //filtering notes to display only those with the relevant subjectTitle
+  const filteredNotes = databaseNotes.filter(
+    (note) => note.subjectTitle === subjectTitle
+  );
 
   const [isOpen, setIsOpen] = useState(false);
   const snapPoints = useMemo(() => ["45%"], []);
@@ -245,73 +251,74 @@ const AddedNotesScreen = ({ navigation }) => {
                 <View style={tw`flex-1 px-5 bg-gray-100`}>
                   <View style={tw`flex flex-col mt-4 justify-center gap-y-8`}>
                     <View style={tw`flex flex-row gap-x-2 items-center`}>
-                      <Text
-                        style={tw`text-2xl text-black text-left font-semibold`}
-                      >
-                        Computer Science
-                      </Text>
+                      {filteredNotes.length > 0 ? (
+                        <Text
+                          style={tw`text-2xl text-black text-left font-semibold`}
+                        >
+                          {subjectTitle} Notes
+                        </Text>
+                      ) : (
+                        <Text
+                          style={tw`text-2xl text-black text-left font-semibold`}
+                        >
+                          No notes available for {subjectTitle}
+                        </Text>
+                      )}
                     </View>
 
                     <ScrollView style={tw`flex flex-col gap-y-2`}>
-                      {databaseNotes.map(
-                        (
-                          note,
-                          index // Updated variable name
-                        ) => (
-                          <TouchableOpacity
-                            onPress={() =>
-                              navigation.navigate("NotesDocumentView", {
-                                uri: note.filePath,
-                              })
-                            }
-                            key={index}
-                            style={tw`my-2 py-3 flex flex-row items-start bg-white rounded-lg w-full`}
-                          >
-                            <View style={tw`ml-2`}>
-                              <Image
-                                source={require("../../assets/imgPlaceholder.png")}
-                                style={tw`w-[75px] h-[75px]`}
-                              />
-                            </View>
+                      {filteredNotes.map((note, index) => (
+                        <TouchableOpacity
+                          onPress={() =>
+                            navigation.navigate("NotesDocumentView", {
+                              uri: note.filePath,
+                            })
+                          }
+                          key={index}
+                          style={tw`my-2 py-3 flex flex-row items-start bg-white rounded-lg w-full`}
+                        >
+                          <View style={tw`ml-2`}>
+                            <Image
+                              source={require("../../assets/imgPlaceholder.png")}
+                              style={tw`w-[75px] h-[75px]`}
+                            />
+                          </View>
 
-                            <View style={tw`flex flex-col w-9/10 px-5`}>
-                              <Text
-                                style={tw`text-md font-semibold mb-2 w-3/4`}
-                              >
-                                {note.title}
-                              </Text>
-                              <View
-                                style={tw`w-4/5 border-b border-gray-300 mb-2`}
-                              ></View>
+                          <View style={tw`flex flex-col w-9/10 px-5`}>
+                            <Text style={tw`text-md font-semibold mb-2 w-3/4`}>
+                              {note.title}
+                            </Text>
+                            <View
+                              style={tw`w-4/5 border-b border-gray-300 mb-2`}
+                            ></View>
 
-                              <View style={tw`flex flex-row justify-between`}>
-                                <View style={tw`flex flex-col`}>
-                                  <Text
-                                    style={tw`text-sm font-light text-gray-500`}
-                                  >
-                                    {new Date(
-                                      note.uploadedAt
-                                    ).toLocaleDateString()}{" "}
-                                  </Text>
-                                </View>
-                              </View>
-
-                              <View
-                                style={tw`left-45 flex flex-row items-center gap-x-2`}
-                              >
-                                <TouchableOpacity>
-                                  <SimpleLineIcons
-                                    onPress={() => handleOpenPress(note.title)} // Pass the title when opening the sheet
-                                    name="options"
-                                    size={20}
-                                    color="black"
-                                  />
-                                </TouchableOpacity>
+                            <View style={tw`flex flex-row justify-between`}>
+                              <View style={tw`flex flex-col`}>
+                                <Text
+                                  style={tw`text-sm font-light text-gray-500`}
+                                >
+                                  {new Date(
+                                    note.uploadedAt
+                                  ).toLocaleDateString()}{" "}
+                                </Text>
                               </View>
                             </View>
-                          </TouchableOpacity>
-                        )
-                      )}
+
+                            <View
+                              style={tw`left-45 flex flex-row items-center gap-x-2`}
+                            >
+                              <TouchableOpacity style={tw``}>
+                                <SimpleLineIcons
+                                  onPress={() => handleOpenPress(note.title)} // Pass the title when opening the sheet
+                                  name="options"
+                                  size={20}
+                                  color="black"
+                                />
+                              </TouchableOpacity>
+                            </View>
+                          </View>
+                        </TouchableOpacity>
+                      ))}
                     </ScrollView>
                   </View>
                 </View>

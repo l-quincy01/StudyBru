@@ -15,8 +15,8 @@ mongoose.connect(process.env.MONGO_URL, {
 const fileSchema = new mongoose.Schema({
   filePath: String,
   title: String,
-  subjectTitle: { String, default: "General" },
-  setsTitle: { String, default: "General" },
+  subjectTitle: String,
+  setsTitle: String,
   uploadedAt: { type: Date, default: Date.now },
 });
 
@@ -37,26 +37,21 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-app.post("/uploadNotes", upload.single("file"), async (req, res) => {
-  try {
-    const newFile = new File({ filePath: `/uploads/${req.file.filename}` });
-    const savedFile = await newFile.save();
-    res.status(200).json({
-      message: "File uploaded successfully",
-      fileId: savedFile._id,
-      filePath: savedFile.filePath,
-    });
-  } catch (error) {
-    res.status(500).json({ error: "Error uploading file" });
-  }
-});
-
-app.post("/uploadNotes", upload.single("file"), async (req, res) => {
+app.post("/uploadNotesFile", upload.single("file"), async (req, res) => {
   try {
     const { title, subjectTitle, setsTitle } = req.body;
+
+    // Check if the subjectTitle already exists within the same setsTitle
+    const existingSubject = await File.findOne({ setsTitle, subjectTitle });
+    if (existingSubject) {
+      return res
+        .status(400)
+        .json({ error: "Subject title already exists within this set." });
+    }
+
     const newFile = new File({
       filePath: `/uploads/${req.file.filename}`,
-      title, // Optional: you can include these fields here if provided in the request
+      title,
       subjectTitle,
       setsTitle,
     });
@@ -71,7 +66,7 @@ app.post("/uploadNotes", upload.single("file"), async (req, res) => {
   }
 });
 
-app.post("/uploadTitle", async (req, res) => {
+app.post("/uploadNoteDetails", async (req, res) => {
   try {
     const { fileId, title, subjectTitle, setsTitle } = req.body;
 
@@ -112,6 +107,15 @@ app.get("/notes/:title", async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ error: "Error fetching note" });
+  }
+});
+
+app.get("/user-notes", async (req, res) => {
+  try {
+    const notes = await File.find();
+    res.json(notes);
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching user notes" });
   }
 });
 

@@ -7,10 +7,7 @@ import { AntDesign, Entypo, Feather, MaterialIcons } from "@expo/vector-icons";
 const ProfileScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={tw`flex-1 px-5 bg-gray-100`}>
-      <TouchableOpacity
-        onPress={() => navigation.navigate("Home")}
-        style={tw`mb-4`}
-      >
+      <TouchableOpacity onPress={() => navigation.goBack()} style={tw`mb-4`}>
         <Entypo name="chevron-left" size={28} color="black" />
       </TouchableOpacity>
       <ScrollView

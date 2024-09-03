@@ -3,7 +3,6 @@
 import * as React from "react";
 import { View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import tw from "twrnc";
 
@@ -15,8 +14,6 @@ import AddNotes from "../Screens/AddNotes";
 
 import HomeStackNavigator from "./HomeStackNavigator";
 import LibraryStackNavigator from "./LibraryStackNavigator";
-
-const Stack = createNativeStackNavigator();
 
 const Tab = createBottomTabNavigator();
 
@@ -48,7 +45,7 @@ function AppNavigator() {
               <Text style={{ color: color }}> Add Notes</Text>
             ),
             tabBarIcon: ({ color, size }) => (
-              <AntDesign name="pluscircleo" size={24} color="black" />
+              <AntDesign name="pluscircleo" size={24} color={color} />
             ),
           }}
           component={AddNotes}
@@ -60,7 +57,7 @@ function AppNavigator() {
               <Text style={{ color: color }}>Library</Text>
             ),
             tabBarIcon: ({ color, size }) => (
-              <AntDesign name="folderopen" size={24} color="black" />
+              <AntDesign name="folderopen" size={24} color={color} />
             ),
           }}
           component={LibraryStackNavigator}
