@@ -67,92 +67,84 @@ const Flashcards = ({ navigation }) => {
   if (!flashCards || flashCards.length === 0) {
     return (
       <>
-        <SafeAreaView style={tw`flex-1  bg-gray-100`}>
-          <ScrollView style={tw`bg-gray-100`}>
-            <View style={tw`flex p-5 flex-col gap-y-8 `}>
-              <Text style={tw`text-xl font-semibold`}>Get started</Text>
-              <View
-                style={tw` mt-5 bg-white p-5 gap-y-5 items-center justify-center rounded-xl`}
-              >
-                <FontAwesome5 name="file-pdf" size={36} color="black" />
+        <View style={tw`flex  flex-col gap-y-8 `}>
+          <Text style={tw`text-xl font-semibold`}>Get started</Text>
+          <View
+            style={tw` mt-5 bg-white p-5 gap-y-5 items-center justify-center rounded-xl`}
+          >
+            <FontAwesome5 name="file-pdf" size={36} color="black" />
 
-                <TouchableOpacity
-                  // onPress={pickDocument}
-                  style={tw`bg-blue-500 p-3 flex flex-row justify-center items-center gap-x-2 rounded-xl`}
-                >
-                  <AntDesign name="upload" size={24} color="white" />
+            <TouchableOpacity
+              // onPress={pickDocument}
+              style={tw`bg-blue-500 p-3 flex flex-row justify-center items-center gap-x-2 rounded-xl`}
+            >
+              <AntDesign name="upload" size={24} color="white" />
 
-                  <Text style={tw`text-white `}>Upload Notes</Text>
-                </TouchableOpacity>
+              <Text style={tw`text-white `}>Upload Notes</Text>
+            </TouchableOpacity>
 
-                <Text style={tw`text-black `}>
-                  Compatible with pdf, .docx, .pptx
-                </Text>
-              </View>
-            </View>
-          </ScrollView>
-        </SafeAreaView>
+            <Text style={tw`text-black `}>
+              Compatible with pdf, .docx, .pptx
+            </Text>
+          </View>
+        </View>
       </>
     );
   }
 
   return (
-    <SafeAreaView style={tw`flex-1`}>
-      <ScrollView style={tw`flex-1`}>
-        <View style={tw`flex-1 flex-col items-center justify-center p-5`}>
-          <View style={tw`flex-row top-5 absolute `}>
-            <View style={tw`flex-1`}>
-              <Progress.Bar
-                progress={progress}
-                width={null}
-                height={20}
-                color="green"
-              />
-            </View>
-          </View>
-          <Pressable onPress={handleFlashCardSides} style={tw`mt-20 `}>
-            <View style={styles.flashCardContainer}>
-              <Animated.View
-                style={[
-                  styles.flashCard,
-                  {
-                    transform: [{ rotateY: flipDeg }],
-                    zIndex: flashCardSide ? 0 : 1,
-                  },
-                ]}
-              >
-                <Text style={tw`text-center font-medium text-lg`}>
-                  {currentCard.front}
-                </Text>
-              </Animated.View>
-              <Animated.View
-                style={[
-                  styles.flashCard,
-                  {
-                    transform: [{ rotateY: flipDegBack }],
-                    zIndex: flashCardSide ? 1 : 0,
-                    position: "absolute",
-                    top: 0,
-                  },
-                ]}
-              >
-                <Text style={tw`text-center font-medium text-lg`}>
-                  {currentCard.back}
-                </Text>
-              </Animated.View>
-            </View>
-          </Pressable>
-          <View style={tw`items-center justify-between flex flex-row w-full`}>
-            <Pressable onPress={handlePrev} style={tw`p-5`}>
-              <FontAwesome5 name="chevron-left" size={24} color="black" />
-            </Pressable>
-            <Pressable onPress={handleNext} style={tw`p-5`}>
-              <FontAwesome5 name="chevron-right" size={24} color="black" />
-            </Pressable>
-          </View>
+    <View style={tw`flex-col items-center justify-center p-5`}>
+      <View style={tw`flex-row top-5 absolute `}>
+        <View style={tw`flex-1`}>
+          <Progress.Bar
+            progress={progress}
+            width={null}
+            height={20}
+            color="green"
+          />
         </View>
-      </ScrollView>
-    </SafeAreaView>
+      </View>
+      <Pressable onPress={handleFlashCardSides} style={tw`mt-20 `}>
+        <View style={styles.flashCardContainer}>
+          <Animated.View
+            style={[
+              styles.flashCard,
+              {
+                transform: [{ rotateY: flipDeg }],
+                zIndex: flashCardSide ? 0 : 1,
+              },
+            ]}
+          >
+            <Text style={tw`text-center font-medium text-lg`}>
+              {currentCard.front}
+            </Text>
+          </Animated.View>
+          <Animated.View
+            style={[
+              styles.flashCard,
+              {
+                transform: [{ rotateY: flipDegBack }],
+                zIndex: flashCardSide ? 1 : 0,
+                position: "absolute",
+                top: 0,
+              },
+            ]}
+          >
+            <Text style={tw`text-center font-medium text-lg`}>
+              {currentCard.back}
+            </Text>
+          </Animated.View>
+        </View>
+      </Pressable>
+      <View style={tw`items-center justify-between flex flex-row w-full`}>
+        <Pressable onPress={handlePrev} style={tw`p-5`}>
+          <FontAwesome5 name="chevron-left" size={24} color="black" />
+        </Pressable>
+        <Pressable onPress={handleNext} style={tw`p-5`}>
+          <FontAwesome5 name="chevron-right" size={24} color="black" />
+        </Pressable>
+      </View>
+    </View>
   );
 };
 

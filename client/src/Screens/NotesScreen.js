@@ -24,7 +24,9 @@ const NotesScreen = ({ navigation }) => {
       description: "Get beautiful summaries of your notes",
       icon: "notes",
       iconType: "MaterialIcons",
-      screen: "LibraryTopBarNavigator",
+      screen: "AllResourcesScreen",
+      iconColour: "blue",
+      iconBgColour: "blue",
     },
     {
       id: "2",
@@ -32,7 +34,9 @@ const NotesScreen = ({ navigation }) => {
       description: "Review your flashcards",
       icon: "newspaper-variant-multiple-outline",
       iconType: "MaterialCommunityIcons",
-      screen: "LibraryTopBarNavigator",
+      screen: "AllResourcesScreen",
+      iconColour: "red",
+      iconBgColour: "yellow",
     },
     {
       id: "3",
@@ -40,7 +44,9 @@ const NotesScreen = ({ navigation }) => {
       description: "Test your knowledge with quizzes",
       icon: "brain",
       iconType: "MaterialCommunityIcons",
-      screen: "LibraryTopBarNavigator",
+      screen: "AllResourcesScreen",
+      iconColour: "green",
+      iconBgColour: "green",
     },
     {
       id: "4",
@@ -49,6 +55,8 @@ const NotesScreen = ({ navigation }) => {
       icon: "robot-outline",
       iconType: "MaterialCommunityIcons",
       screen: "CoPilot",
+      iconColour: "red",
+      iconBgColour: "yellow",
     },
   ];
 
@@ -61,10 +69,14 @@ const NotesScreen = ({ navigation }) => {
 
     return (
       <TouchableOpacity
-        onPress={() => navigation.navigate(item.screen)}
+        onPress={() =>
+          navigation.navigate(item.screen, { location: item.name })
+        }
         style={tw`mx-2 my-2 w-9/20 p-9 bg-white gap-y-2 flex text-center justify-center items-center border border-gray-300 rounded-xl`}
       >
-        <IconComponent name={item.icon} size={24} color="black" />
+        <View style={tw`p-2 bg-${item.iconBgColour}-100 rounded-xl`}>
+          <IconComponent name={item.icon} size={24} color={item.iconColour} />
+        </View>
         <Text style={tw`text-center font-semibold text-md`}>{item.name}</Text>
         <Text style={tw`text-center font-medium text-xs text-gray-500`}>
           {item.description}

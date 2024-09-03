@@ -8,7 +8,7 @@ import tw from "twrnc";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
 
 import AddNotes from "../Screens/AddNotes";
 
@@ -54,10 +54,10 @@ function AppNavigator() {
           name="Notes"
           options={{
             tabBarLabel: ({ color }) => (
-              <Text style={{ color: color }}>Library</Text>
+              <Text style={{ color: color }}>Resources</Text>
             ),
             tabBarIcon: ({ color, size }) => (
-              <AntDesign name="folderopen" size={24} color={color} />
+              <Ionicons name="library-outline" size={24} color={color} />
             ),
           }}
           component={LibraryStackNavigator}

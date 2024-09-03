@@ -29,11 +29,9 @@ const SummaryScreen = ({ navigation }) => {
   const copy = `\`${summary}\``;
 
   return (
-    <SafeAreaView style={tw`flex-1  bg-gray-100`}>
-      <ScrollView style={tw`bg-gray-100`}>
-        <View style={tw`flex p-5 flex-col gap-y-8 `}>
-          {/* Summary Heading */}
-          {/* <Text style={tw`text-xl font-semibold`}> Notes Summary</Text>
+    <View style={tw`flex  flex-col gap-y-8 `}>
+      {/* Summary Heading */}
+      {/* <Text style={tw`text-xl font-semibold`}> Notes Summary</Text>
 
           {/* Buttons }
 
@@ -53,14 +51,14 @@ const SummaryScreen = ({ navigation }) => {
             </Pressable>
           </View> */}
 
-          <View>
-            {!summary || summary.length === 0 ? (
-              <>
-                <Text style={tw`mt-4 text-3xl text-left font-extrabold`}>
-                  Get started
-                </Text>
-                {/* -----------------------------------------------------------OLD UI-------------------------------------------------------------------------------*/}
-                {/* <View
+      <View>
+        {!summary || summary.length === 0 ? (
+          <>
+            <Text style={tw`mt-4 text-3xl text-left font-extrabold`}>
+              Get started
+            </Text>
+            {/* -----------------------------------------------------------OLD UI-------------------------------------------------------------------------------*/}
+            {/* <View
                   style={tw` mt-5 bg-white p-5 gap-y-5 items-center justify-center rounded-xl`}
                 >
                   <FontAwesome5 name="file-pdf" size={36} color="black" />
@@ -78,25 +76,23 @@ const SummaryScreen = ({ navigation }) => {
                     Compatible with pdf, .docx, .pptx
                   </Text> 
                 </View>*/}
-                {/* -----------------------------------------------------------OLD UI-------------------------------------------------------------------------------*/}
-                <View style={tw`flex flex-col items-center justify-center`}>
-                  <TouchableOpacity
-                    style={tw` rounded-2xl bg-black items-center  gap-3 justify-center flex flex-row p-5`}
-                  >
-                    <Text style={tw` text-md font-semibold text-white`}>
-                      Upload Study Material
-                    </Text>
-                    <AntDesign name="upload" size={24} color="white" />
-                  </TouchableOpacity>
-                </View>
-              </>
-            ) : (
-              <Markdown>{summary}</Markdown>
-            )}
-          </View>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+            {/* -----------------------------------------------------------OLD UI-------------------------------------------------------------------------------*/}
+            <View style={tw`flex flex-col items-center justify-center`}>
+              <TouchableOpacity
+                style={tw` rounded-2xl bg-black items-center  gap-3 justify-center flex flex-row p-5`}
+              >
+                <Text style={tw` text-md font-semibold text-white`}>
+                  Upload Study Material
+                </Text>
+                <AntDesign name="upload" size={24} color="white" />
+              </TouchableOpacity>
+            </View>
+          </>
+        ) : (
+          <Markdown>{summary}</Markdown>
+        )}
+      </View>
+    </View>
   );
 };
 
