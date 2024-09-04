@@ -1,22 +1,9 @@
 import React, { useContext } from "react";
-import {
-  FlatList,
-  TouchableOpacity,
-  ScrollView,
-  Text,
-  View,
-} from "react-native";
+import { FlatList, TouchableOpacity, Text, View } from "react-native";
 import tw from "twrnc";
-import {
-  MaterialIcons,
-  MaterialCommunityIcons,
-  SimpleLineIcons,
-  AntDesign,
-} from "@expo/vector-icons";
-import { FlashCardsContext } from "../config/FlashCardsContext";
+import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 
 const NotesScreen = ({ navigation }) => {
-  // Data for FlatList
   const data = [
     {
       id: "1",
@@ -50,17 +37,36 @@ const NotesScreen = ({ navigation }) => {
     },
     {
       id: "4",
+      name: "Mock Questions",
+      description: "Long Practice Questions.",
+      icon: "question-mark",
+      iconType: "MaterialIcons",
+      screen: "AllResourcesScreen",
+      iconColour: "blue",
+      iconBgColour: "blue",
+    },
+    {
+      id: "5",
+      name: "Terms",
+      description: "Keywords, Terms And Definitions",
+      icon: "lightning-bolt",
+      iconType: "MaterialCommunityIcons",
+      screen: "AllResourcesScreen",
+      iconColour: "red",
+      iconBgColour: "yellow",
+    },
+    {
+      id: "6",
       name: "Co-Pilot",
       description: "AI-powered assistant to help you",
       icon: "robot-outline",
       iconType: "MaterialCommunityIcons",
       screen: "CoPilot",
-      iconColour: "red",
-      iconBgColour: "yellow",
+      iconColour: "green",
+      iconBgColour: "green",
     },
   ];
 
-  //Touchable item to render
   const renderItem = ({ item }) => {
     const IconComponent =
       item.iconType === "MaterialIcons"
@@ -84,39 +90,25 @@ const NotesScreen = ({ navigation }) => {
       </TouchableOpacity>
     );
   };
-  //--------------------------------------------------------------------------------------
 
   return (
-    <>
-      <View style={tw`flex-1 mt-12 `}>
-        <View
-          style={tw`flex flex-row items-center justify-between border-b border-gray-200  py-5 px-5`}
-        >
-          <View style={tw` flex flex-row gap-x-2 items-center `}>
-            <Text style={tw`text-3xl text-left font-extrabold`}>Resources</Text>
-          </View>
+    <View style={tw`flex-1 mt-12 bg-gray-100`}>
+      <View
+        style={tw` bg-white flex flex-row items-center justify-between border-b border-gray-200  py-5 px-5`}
+      >
+        <View style={tw`flex flex-row gap-x-2 items-center`}>
+          <Text style={tw`text-3xl text-left font-extrabold`}>Resources</Text>
         </View>
-
-        <ScrollView style={tw`bg-gray-100`}>
-          <View style={tw`flex-1 flex-col px-5 gap-y-8 `}>
-            <Text
-              style={tw` mt-6 text-center text-gray-500 text-md  font-light`}
-            >
-              View your summarised notes and flashcards below. Study smarter
-              today.
-            </Text>
-
-            {/* FlatList Approach, a lot cleaner */}
-            <FlatList
-              data={data}
-              renderItem={renderItem}
-              keyExtractor={(item) => item.id}
-              numColumns={2}
-            />
-          </View>
-        </ScrollView>
       </View>
-    </>
+
+      <FlatList
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+        numColumns={2}
+        contentContainerStyle={tw`px-5 gap-y-8 mt-5 bg-gray-100`}
+      />
+    </View>
   );
 };
 

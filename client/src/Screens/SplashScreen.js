@@ -28,7 +28,7 @@ import HomeComponentMainModal from "../Components/HomeComponentMainModal";
 function removeTripleBackticks(text) {
   return text.replace(/```/g, "");
 }
-
+//parsing quiz and flashcards into an array of objects
 function parseFlashCards(inputString) {
   inputString = inputString.replace(/\n/g, "").replace(/\s+/g, " ");
   const flashCardBlocks = inputString.match(/\{[^}]+\}/g);

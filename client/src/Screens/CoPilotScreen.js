@@ -1,92 +1,158 @@
-import React, { useState } from "react";
-import {
-  View,
-  TextInput,
-  Button,
-  Text,
-  FlatList,
-  SafeAreaView,
-  TouchableOpacity,
-  ScrollView,
-  TouchableWithoutFeedback,
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  StyleSheet,
-} from "react-native";
-import tw from "twrnc";
-import Entypo from "@expo/vector-icons/Entypo";
-import Feather from "@expo/vector-icons/Feather";
-import CoPilotSugesstions from "../Components/CoPilotSugesstions";
-import { SQLiteProvider, useSQLiteContext } from "expo-sqlite";
+// import React, { useState, useMemo, useEffect, useRef } from "react";
+// import {
+//   SafeAreaView,
+//   ScrollView,
+//   View,
+//   KeyboardAvoidingView,
+//   Platform,
+//   TextInput,
+//   TouchableOpacity,
+//   TouchableWithoutFeedback,
+//   Keyboard,
+//   StyleSheet,
+// } from "react-native";
+// import tw from "twrnc";
+// import { Feather } from "@expo/vector-icons";
+// import { addChat, addMessage, getMessages } from "../config/Database";
+// import { Role } from "../config/interfaces";
+// // import { OPENAI_API_KEY, OPENAI_ORGANIZATION_ID } from "@env";
+// import OpenAI from "react-native-openai";
+// import { useSQLiteContext } from "expo-sqlite";
 
-const CoPilotScreen = ({ navigation }) => {
-  const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState("");
+// const CoPilotScreen = () => {
+//   const [input, setInput] = useState("");
+//   const [messages, setMessages] = useState([]);
+//   const [height, setHeight] = useState(0);
+//   const [chatId, _setChatId] = useState(null);
+//   const chatIdRef = useRef(chatId);
+//   const db = useSQLiteContext(); // Assuming you're using SQLite context
 
-  const dummyMessage = [
-    { content: "Hey buddy", role: "bot" },
-    { content: "Ja jou poes", role: "User" },
-  ];
+//   function setChatId(id) {
+//     chatIdRef.current = id;
+//     _setChatId(id);
+//   }
 
-  const getCompletion = ({ message, yeas }) => {
-    console.log("Getting completion for:", message);
-    if (messages.length === 0) {
-      //
-    }
-  };
+//   useEffect(() => {
+//     if (chatId) {
+//       getMessages(db, parseInt(chatId)).then((res) => {
+//         setMessages(res);
+//       });
+//     }
+//   }, [chatId]);
 
-  const db = useSQLiteContext();
+//   const openAI = useMemo(
+//     () =>
+//       new OpenAI({
+//         apiKey: key,
+//         organization: "",
+//       }),
+//     []
+//   );
 
-  return (
-    <SafeAreaView style={tw`flex-1 bg-gray-100`}>
-      <ScrollView style={tw`bg-gray-100`}>
-        <View></View>
-      </ScrollView>
+//   useEffect(() => {
+//     const handleNewMessage = (payload) => {
+//       setMessages((messages) => {
+//         const newMessage = payload.choices[0]?.delta.content;
+//         if (newMessage) {
+//           messages[messages.length - 1].content += newMessage;
+//           return [...messages];
+//         }
+//         if (payload.choices[0]?.finishReason) {
+//           addMessage(db, parseInt(chatIdRef.current), {
+//             content: messages[messages.length - 1].content,
+//             role: Role.Bot,
+//           });
+//         }
+//         return messages;
+//       });
+//     };
 
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.container}
-        // keyboardVerticalOffset={10}
-      >
-        <View style={tw` px-4 gap-y-4`}>
-          {messages.length === 0 && (
-            <CoPilotSugesstions onSelectedCard={getCompletion} />
-          )}
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <View style={tw` flex flex-row  mb-5 items-center gap-x-3`}>
-              <View style={tw` border border-gray-300 rounded-3xl w-4/5 `}>
-                <TextInput
-                  style={tw` flex-grow p-3`}
-                  value={input}
-                  onChangeText={setInput}
-                  placeholder="Type your message"
-                />
-              </View>
-              <TouchableOpacity
-                style={tw` items-center justify-center flex rounded-full bg-black p-2`}
-                // onPress={sendMessage}
-              >
-                <Feather name="send" size={24} color="white" />
-              </TouchableOpacity>
-            </View>
-          </TouchableWithoutFeedback>
-        </View>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
-  );
-};
-const styles = StyleSheet.create({
-  inner: {
-    padding: 24,
-    flex: 1,
-    justifyContent: "space-around",
-  },
+//     openAI.chat.addListener("onChatMessageReceived", handleNewMessage);
 
-  textInput: {
-    borderColor: "#000000",
-    borderBottomWidth: 1,
-  },
-});
+//     return () => {
+//       openAI.chat.removeListener("onChatMessageReceived");
+//     };
+//   }, [openAI]);
 
-export default CoPilotScreen;
+//   const getCompletion = async (text) => {
+//     if (messages.length === 0) {
+//       addChat(db, text).then((res) => {
+//         const chatID = res.lastInsertRowId;
+//         setChatId(chatID.toString());
+//         addMessage(db, chatID, { content: text, role: Role.User });
+//       });
+//     }
+
+//     setMessages([
+//       ...messages,
+//       { role: Role.User, content: text },
+//       { role: Role.Bot, content: "" },
+//     ]);
+
+//     openAI.chat.stream({
+//       messages: [
+//         {
+//           role: "user",
+//           content: text,
+//         },
+//       ],
+//       model: "gpt-3.5-turbo", // or use a variable if you want to change models dynamically
+//     });
+//   };
+
+//   return (
+//     <SafeAreaView style={tw`flex-1 bg-gray-100`}>
+//       <ScrollView style={tw`bg-gray-100`}>
+//         <View style={tw`p-4`}>
+//           {messages.map((msg, index) => (
+//             <View key={index} style={tw`mb-2`}>
+//               <Text style={tw`text-base`}>
+//                 {msg.role === Role.User ? "You: " : "Bot: "}
+//                 {msg.content}
+//               </Text>
+//             </View>
+//           ))}
+//         </View>
+//       </ScrollView>
+
+//       <KeyboardAvoidingView
+//         behavior={Platform.OS === "ios" ? "padding" : "height"}
+//         style={styles.container}
+//       >
+//         <View style={tw`px-4 gap-y-4`}>
+//           {messages.length === 0 && (
+//             <CoPilotSugesstions onSelectedCard={getCompletion} />
+//           )}
+//           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+//             <View style={tw`flex flex-row mb-5 items-center gap-x-3`}>
+//               <View style={tw`border border-gray-300 rounded-3xl w-4/5`}>
+//                 <TextInput
+//                   style={tw`flex-grow p-3`}
+//                   value={input}
+//                   onChangeText={setInput}
+//                   placeholder="Type your message"
+//                 />
+//               </View>
+//               <TouchableOpacity
+//                 style={tw`items-center justify-center flex rounded-full bg-black p-2`}
+//                 onPress={() => getCompletion(input)}
+//               >
+//                 <Feather name="send" size={24} color="white" />
+//               </TouchableOpacity>
+//             </View>
+//           </TouchableWithoutFeedback>
+//         </View>
+//       </KeyboardAvoidingView>
+//     </SafeAreaView>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   container: {
+//     padding: 24,
+//     flex: 1,
+//     justifyContent: "space-around",
+//   },
+// });
+
+// export default CoPilotScreen;
