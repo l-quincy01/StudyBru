@@ -18,53 +18,30 @@ import tw from "twrnc";
 import Entypo from "@expo/vector-icons/Entypo";
 import Feather from "@expo/vector-icons/Feather";
 import CoPilotSugesstions from "../Components/CoPilotSugesstions";
+import { SQLiteProvider, useSQLiteContext } from "expo-sqlite";
 
 const CoPilotScreen = ({ navigation }) => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-
-  // const sendMessage = async () => {
-  //   const userMessage = { role: "user", content: input };
-  //   setMessages([...messages, userMessage]);
-
-  //   const aiResponse = await chatWithAi(input);
-  //   const aiMessage = { role: "assistant", content: aiResponse };
-
-  //   setMessages([...messages, userMessage, aiMessage]);
-  //   setInput("");
-  // };
 
   const dummyMessage = [
     { content: "Hey buddy", role: "bot" },
     { content: "Ja jou poes", role: "User" },
   ];
 
-  const getCompletion = ({ yea, yeas }) => {
-    console.log("ja jou poes");
+  const getCompletion = ({ message, yeas }) => {
+    console.log("Getting completion for:", message);
+    if (messages.length === 0) {
+      //
+    }
   };
+
+  const db = useSQLiteContext();
 
   return (
     <SafeAreaView style={tw`flex-1 bg-gray-100`}>
       <ScrollView style={tw`bg-gray-100`}>
-        <View>
-          {/* <FlatList
-            data={messages}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item }) =>
-              item.role === "user" ? (
-                <View
-                  style={tw` left-50  p-5 m-3 rounded-3xl bg-gray-500 w-1/3`}
-                >
-                  <Text style={tw` text-white `}>{item.content} </Text>
-                </View>
-              ) : (
-                <View style={tw` p-5 m-3 rounded-3xl bg-gray-500 w-1/3`}>
-                  <Text style={tw` text-white `}>{item.content} </Text>
-                </View>
-              )
-            }
-          /> */}
-        </View>
+        <View></View>
       </ScrollView>
 
       <KeyboardAvoidingView
