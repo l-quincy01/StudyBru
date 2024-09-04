@@ -46,7 +46,7 @@ const AllResourcesScreen = ({ navigation }) => {
       </View>
 
       <View
-        style={tw`flex flex-row gap-x-6 items-center  justify-center px-5 `}
+        style={tw`flex flex-row gap-x-6 items-center  justify-center px-5 py-3 `}
       >
         <TouchableOpacity
           onPress={() => {
@@ -105,7 +105,7 @@ const AllResourcesScreen = ({ navigation }) => {
           </Text>
         </TouchableOpacity>
       </View>
-      <ScrollView style={tw`flex-1 px-5 `}>
+      <ScrollView style={tw`flex-1 p-5 `}>
         {summaryIsActive && <SummaryScreen />}
         {flashcardsIsActive && <Flashcards />}
         {quizIsActive && <QuizScreen />}

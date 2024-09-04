@@ -106,7 +106,7 @@ const SplashScreen = ({ navigation }) => {
 
     try {
       const uploadResponse = await axios.post(
-        "http://172.20.10.7:4001/uploadNotesFile",
+        "http://192.168.0.181:4001/uploadNotesFile",
         formData,
         {
           headers: {
@@ -122,7 +122,7 @@ const SplashScreen = ({ navigation }) => {
       }
 
       const uploadTitleResponse = await axios.post(
-        "http://172.20.10.7:4001/uploadNoteDetails",
+        "http://192.168.0.181:4001/uploadNoteDetails",
         {
           fileId,
           title: notesTitle,
@@ -156,11 +156,11 @@ const SplashScreen = ({ navigation }) => {
   const getParseEndpoint = (mimeType) => {
     switch (mimeType) {
       case "application/pdf":
-        return "http://172.20.10.7:3001/parse-pdf";
+        return "http://192.168.0.181:3001/parse-pdf";
       case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
-        return "http://172.20.10.7:3001/parse-docx";
+        return "http://192.168.0.181:3001/parse-docx";
       case "application/vnd.openxmlformats-officedocument.presentationml.presentation":
-        return "http://172.20.10.7:3001/parse-pptx";
+        return "http://192.168.0.181:3001/parse-pptx";
       default:
         throw new Error("Unsupported file type");
     }
@@ -220,7 +220,7 @@ const SplashScreen = ({ navigation }) => {
   const generateQuiz = async (notes) => {
     try {
       const response = await axios.post(
-        "http://172.20.10.7:3000/generate-quiz",
+        "http://192.168.0.181:3000/generate-quiz",
         { notes: notes },
         {
           headers: {
@@ -237,7 +237,7 @@ const SplashScreen = ({ navigation }) => {
   const generateFlashCards = async (notes) => {
     try {
       const response = await axios.post(
-        "http://172.20.10.7:3003/generate-flashCards",
+        "http://192.168.0.181:3003/generate-flashCards",
         { notes: notes },
         {
           headers: {
@@ -254,7 +254,7 @@ const SplashScreen = ({ navigation }) => {
   const generateSummaries = async (notes) => {
     try {
       const response = await axios.post(
-        "http://172.20.10.7:3004/generate-summary",
+        "http://192.168.0.181:3004/generate-summary",
         { notes: notes },
         {
           headers: {
@@ -271,7 +271,7 @@ const SplashScreen = ({ navigation }) => {
   const generateTitle = async (notes) => {
     try {
       const response = await axios.post(
-        "http://172.20.10.7:3006/generate-title",
+        "http://192.168.0.181:3006/generate-title",
         { notes: notes },
         {
           headers: {

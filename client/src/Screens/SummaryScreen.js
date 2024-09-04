@@ -54,38 +54,16 @@ const SummaryScreen = ({ navigation }) => {
       <View>
         {!summary || summary.length === 0 ? (
           <>
-            <Text style={tw`mt-4 text-3xl text-left font-extrabold`}>
-              Get started
-            </Text>
-            {/* -----------------------------------------------------------OLD UI-------------------------------------------------------------------------------*/}
-            {/* <View
-                  style={tw` mt-5 bg-white p-5 gap-y-5 items-center justify-center rounded-xl`}
-                >
-                  <FontAwesome5 name="file-pdf" size={36} color="black" />
-
-                  <TouchableOpacity
-                    // onPress={pickDocument}
-                    style={tw`bg-blue-500 p-3 flex flex-row justify-center items-center gap-x-2 rounded-xl`}
-                  >
-                    <AntDesign name="upload" size={24} color="white" />
-
-                    <Text style={tw`text-white `}>Upload Notes</Text>
-                  </TouchableOpacity>
-
-                  <Text style={tw`text-black `}>
-                    Compatible with pdf, .docx, .pptx
-                  </Text> 
-                </View>*/}
-            {/* -----------------------------------------------------------OLD UI-------------------------------------------------------------------------------*/}
-            <View style={tw`flex flex-col items-center justify-center`}>
-              <TouchableOpacity
-                style={tw` rounded-2xl bg-black items-center  gap-3 justify-center flex flex-row p-5`}
-              >
-                <Text style={tw` text-md font-semibold text-white`}>
-                  Upload Study Material
-                </Text>
-                <AntDesign name="upload" size={24} color="white" />
-              </TouchableOpacity>
+            <View
+              style={tw` mt-30  flex flex-col gap-5 items-center justify-center`}
+            >
+              <Image
+                source={require("../../assets/NoNotes.png")}
+                style={tw`w-[120px] h-[120px]`}
+              />
+              <Text style={tw`mt-4 text-2xl text-center font-bold`}>
+                Oops Notes Not Found! Get Started On The Homepage!
+              </Text>
             </View>
           </>
         ) : (

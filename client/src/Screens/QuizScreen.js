@@ -1,5 +1,6 @@
 import {
   Alert,
+  Image,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -58,30 +59,20 @@ const QuizScreen = ({ navigation }) => {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(currentQuestionIndex - 1);
     } else {
-      navigation.navigate("Flash Cards");
+      // navigation.navigate("Flash Cards");
     }
   };
 
   if (!quiz || quiz.length === 0) {
     return (
-      <View style={tw`flex  flex-col gap-y-8 `}>
-        <Text style={tw`text-xl font-semibold`}>Get started</Text>
-        <View
-          style={tw` mt-5 bg-white p-5 gap-y-5 items-center justify-center rounded-xl`}
-        >
-          <FontAwesome5 name="file-pdf" size={36} color="black" />
-
-          <TouchableOpacity
-            // onPress={pickDocument}
-            style={tw`bg-blue-500 p-3 flex flex-row justify-center items-center gap-x-2 rounded-xl`}
-          >
-            <AntDesign name="upload" size={24} color="white" />
-
-            <Text style={tw`text-white `}>Upload Notes</Text>
-          </TouchableOpacity>
-
-          <Text style={tw`text-black `}>Compatible with pdf, .docx, .pptx</Text>
-        </View>
+      <View style={tw` mt-30  flex flex-col gap-5 items-center justify-center`}>
+        <Image
+          source={require("../../assets/NoNotes.png")}
+          style={tw`w-[120px] h-[120px]`}
+        />
+        <Text style={tw`mt-4 text-2xl text-center font-bold`}>
+          Oops Notes Not Found! Get Started On The Homepage!
+        </Text>
       </View>
     );
   }
@@ -101,7 +92,7 @@ const QuizScreen = ({ navigation }) => {
       {/*View wraps  (1)PROGRESS BAR, (2)HEADING OF QUESTION AND (3)SELECT OPTIONS*/}
       <View style={tw``}>
         {/* For progress bar */}
-        <View style={tw`flex-row `}>
+        <View style={tw`flex-row top-5 mb-6 `}>
           <View style={tw`flex-1 `}>
             <Progress.Bar
               progress={progress}

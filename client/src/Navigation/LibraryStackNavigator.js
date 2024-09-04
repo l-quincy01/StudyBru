@@ -24,6 +24,7 @@ function LibraryStackNavigator() {
       <Stack.Screen name="Library" component={NotesScreen} />
       <Stack.Screen name="AllResourcesScreen" component={AllResourcesScreen} />
       <Stack.Screen name="CoPilot" component={CoPilotScreen} />
+      <Stack.Screen name="EndScreen" component={EndScreen} />
     </Stack.Navigator>
   );
 }

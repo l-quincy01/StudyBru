@@ -38,7 +38,7 @@ function AppNavigator() {
           }}
           component={HomeStackNavigator}
         />
-        <Tab.Screen
+        {/* <Tab.Screen
           name="AddNotes"
           options={{
             tabBarLabel: ({ color }) => (
@@ -49,7 +49,7 @@ function AppNavigator() {
             ),
           }}
           component={AddNotes}
-        />
+        /> */}
         <Tab.Screen
           name="Notes"
           options={{
