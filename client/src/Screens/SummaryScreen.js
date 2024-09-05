@@ -29,28 +29,7 @@ const SummaryScreen = ({ navigation }) => {
   const copy = `\`${summary}\``;
 
   return (
-    <View style={tw`flex  flex-col gap-y-8 `}>
-      {/* Summary Heading */}
-      {/* <Text style={tw`text-xl font-semibold`}> Notes Summary</Text>
-
-          {/* Buttons }
-
-          <View style={tw`flex flex-row gap-x-3`}>
-            <Pressable
-              onPress={() => navigation.navigate("Flashcards")}
-              style={tw` p-2 border border-2 rounded-full`}
-            >
-              <Entypo name="documents" size={16} color="black" />
-            </Pressable>
-
-            <Pressable
-              onPress={() => navigation.navigate("Quiz")}
-              style={tw` p-2 border border-2 rounded-full`}
-            >
-              <MaterialCommunityIcons name="brain" size={16} color="black" />
-            </Pressable>
-          </View> */}
-
+    <View style={tw`flex  flex-col gap-y-8 mb-4 `}>
       <View>
         {!summary || summary.length === 0 ? (
           <>

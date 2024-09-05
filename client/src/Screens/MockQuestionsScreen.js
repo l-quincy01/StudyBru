@@ -24,7 +24,10 @@ import HomeComponent from "../Components/HomeComponent";
 import {
   AntDesign,
   Entypo,
+  FontAwesome,
   Ionicons,
+  MaterialCommunityIcons,
+  Octicons,
   SimpleLineIcons,
 } from "@expo/vector-icons";
 import { Modal } from "../Components/Modal";
@@ -36,7 +39,9 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { MockQuestionsContext } from "../config/MockQuestionsContext";
 
 const MockQuestionsScreen = ({ navigation }) => {
-  const [userAnswer, setUserAnswer] = useState("");
+  const [userAnswer, setUserAnswer] = useState([]);
+  const [showAnswers, setShowAnswers] = useState(false);
+  const [showThatAnswer, setShowThatAnswer] = useState(null); // Store index of the answer to show
   const { questions } = useContext(MockQuestionsContext);
 
   if (!questions || questions.length === 0) {
@@ -89,31 +94,97 @@ const MockQuestionsScreen = ({ navigation }) => {
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <ScrollView style={tw`flex-1 p-5 `}>
             {questions.map((item, index) => (
-              <View style={tw`flex flex-col gap-y-5 mb-5`}>
-                <Text style={tw`font-semibold text-lg`}>{item.question}</Text>
-                <TextInput
-                  placeholderTextColor="#909090"
-                  style={{ ...styles.input, height: 60 }}
-                  placeholder="Enter Your Answer"
-                  blurOnSubmit={false}
-                  scrollEnabled={true}
-                  onChange={({ nativeEvent }) =>
-                    setUserAnswer(nativeEvent.text)
-                  }
-                  multiline={true}
-                  value={userAnswer}
-                  onContentSizeChange={({ nativeEvent }) => {
-                    //   console.log(nativeEvent.contentSize.height);
-                  }}
-                />
+              <View key={index} style={tw`flex flex-col gap-y-2 mb-5`}>
+                <View>
+                  <Text style={tw`font-semibold text-lg`}>{item.question}</Text>
+
+                  <View style={tw`items-center flex flex-row justify-end`}>
+                    {showThatAnswer === index ? (
+                      <TouchableOpacity
+                        onPress={() => setShowThatAnswer(null)} // Set index of question to show answer
+                        style={tw`rounded-full bg-gray-100 p-1`}
+                      >
+                        <MaterialCommunityIcons
+                          name="lightbulb-off-outline"
+                          size={14}
+                          color="black"
+                        />
+                      </TouchableOpacity>
+                    ) : (
+                      <TouchableOpacity
+                        onPress={() => setShowThatAnswer(index)} // Set index of question to show answer
+                        style={tw`rounded-full bg-gray-100 p-1`}
+                      >
+                        <FontAwesome
+                          name="lightbulb-o"
+                          size={14}
+                          color="black"
+                        />
+                      </TouchableOpacity>
+                    )}
+                  </View>
+                </View>
+
+                {showAnswers || showThatAnswer === index ? (
+                  <View style={tw`p-3 border border-gray-200 rounded-xl`}>
+                    <Text style={tw`font-medium text-gray-500 text-md`}>
+                      {item.answer}
+                    </Text>
+                  </View>
+                ) : (
+                  <TextInput
+                    placeholderTextColor="#909090"
+                    style={{ ...styles.input, height: 60 }}
+                    placeholder="Enter Your Answer"
+                    blurOnSubmit={false}
+                    scrollEnabled={true}
+                    onChange={({ nativeEvent }) => {
+                      const updatedAnswers = [...userAnswer];
+                      updatedAnswers[index] = nativeEvent.text;
+                      setUserAnswer(updatedAnswers);
+                    }}
+                    multiline={true}
+                    value={userAnswer[index] || ""}
+                  />
+                )}
               </View>
             ))}
+            {showAnswers ? (
+              <TouchableOpacity
+                style={tw`mt-5 rounded-2xl bg-black items-center gap-3 justify-center flex flex-row p-5`}
+                onPress={() => setShowAnswers(false)}
+              >
+                <Text style={tw`text-md font-semibold text-white`}>
+                  Hide Answers
+                </Text>
+              </TouchableOpacity>
+            ) : (
+              <>
+                <TouchableOpacity
+                  style={tw`mt-5 rounded-2xl bg-gray-500 items-center gap-3 justify-center flex flex-row p-5`}
+                  disabled={true}
+                >
+                  <Text style={tw`text-md font-semibold text-white`}>
+                    Mark My Answers
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={tw`mt-5 rounded-2xl bg-black items-center gap-3 justify-center flex flex-row p-5`}
+                  onPress={() => setShowAnswers(true)}
+                >
+                  <Text style={tw`text-md font-semibold text-white`}>
+                    Show All Answers
+                  </Text>
+                </TouchableOpacity>
+              </>
+            )}
           </ScrollView>
         </TouchableWithoutFeedback>
       </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 };
+
 const styles = StyleSheet.create({
   input: {
     backgroundColor: "#F5F5F5",
