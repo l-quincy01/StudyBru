@@ -26,6 +26,8 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { QuizContext } from "../config/QuizContext";
 import { FlashCardsContext } from "../config/FlashCardsContext";
 import { SummaryContext } from "../config/SummaryContext";
+import { TermsContext } from "../config/TermsContext";
+import { MockQuestionsContext } from "../config/MockQuestionsContext";
 
 function removeTripleBackticks(text) {
   return text.replace(/```/g, "");
@@ -40,6 +42,33 @@ function parseFlashCards(inputString) {
     const backMatch = block.match(/back: "(.*?)"/);
     if (frontMatch && backMatch) {
       result.push({ front: frontMatch[1], back: backMatch[1] });
+    }
+  });
+  return result;
+}
+
+function parseTerms(inputString) {
+  inputString = inputString.replace(/\n/g, "").replace(/\s+/g, " ");
+  const termsBlocks = inputString.match(/\{[^}]+\}/g);
+  const result = [];
+  termsBlocks.forEach((block) => {
+    const termMatch = block.match(/term: "(.*?)"/);
+    const definitionMatch = block.match(/definition: "(.*?)"/);
+    if (termMatch && definitionMatch) {
+      result.push({ term: termMatch[1], definition: definitionMatch[1] });
+    }
+  });
+  return result;
+}
+function parseQuestions(inputString) {
+  inputString = inputString.replace(/\n/g, "").replace(/\s+/g, " ");
+  const questionsBlock = inputString.match(/\{[^}]+\}/g);
+  const result = [];
+  questionsBlock.forEach((block) => {
+    const questionMatch = block.match(/question: "(.*?)"/);
+    const answerMatch = block.match(/answer: "(.*?)"/);
+    if (questionMatch && answerMatch) {
+      result.push({ question: questionMatch[1], answer: answerMatch[1] });
     }
   });
   return result;
@@ -69,6 +98,8 @@ const AddedNotesScreen = ({ navigation, route }) => {
   const { quiz, setQuiz } = useContext(QuizContext);
   const { summary, setSummary } = useContext(SummaryContext);
   const { flashCards, setFlashCards } = useContext(FlashCardsContext);
+  const { terms, setTerms } = useContext(TermsContext);
+  const { questions, setQuestions } = useContext(MockQuestionsContext);
   const cleanText = (text) => {
     return text.replace(/\s+/g, " ");
   };
@@ -96,6 +127,8 @@ const AddedNotesScreen = ({ navigation, route }) => {
       await generateQuiz(parsedText);
       await generateFlashCards(parsedText);
       await generateSummaries(parsedText);
+      await generateQuestions(parsedText);
+      await generateTerms(parsedText);
     } catch (error) {
       console.error("Error processing PDF:", error);
     }
@@ -151,7 +184,38 @@ const AddedNotesScreen = ({ navigation, route }) => {
       console.error("Error generating summary:", error);
     }
   };
-
+  const generateTerms = async (notes) => {
+    try {
+      const response = await axios.post(
+        "http://172.20.10.7:3007/generate-terms",
+        { notes: notes },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setTerms(parseTerms(response.data.terms));
+    } catch (error) {
+      console.error("Error generating terms:", error);
+    }
+  };
+  const generateQuestions = async (notes) => {
+    try {
+      const response = await axios.post(
+        "http://172.20.10.7:3007/generate-questions",
+        { notes: notes },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setQuestions(parseQuestions(response.data.questions));
+    } catch (error) {
+      console.error("Error generating questions:", error);
+    }
+  };
   const handleSetActiveNote = async (note) => {
     try {
       setLoading(true); // Show loading spinner

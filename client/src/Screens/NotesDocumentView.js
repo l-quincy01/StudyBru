@@ -24,7 +24,7 @@ const NotesDocumentView = ({ navigation, route }) => {
 
       <WebView
         onLoad={() => console.log("WebView loaded with:", uri)}
-        source={{ uri: `http://192.168.0.181:4001${uri}` }}
+        source={{ uri: `http://172.20.10.7:4001${uri}` }}
         style={{ flex: 1 }}
       />
     </View>

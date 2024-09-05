@@ -4,12 +4,10 @@ import React, { createContext, useState } from "react";
 export const MockQuestionsContext = createContext();
 
 export const MockQuestionsProvider = ({ children }) => {
-  const [mockQuestionsContext, setMockQuestionsContext] = useState([]);
+  const [questions, setQuestions] = useState([]);
 
   return (
-    <MockQuestionsContext.Provider
-      value={{ mockQuestionsContext, setMockQuestionsContext }}
-    >
+    <MockQuestionsContext.Provider value={{ questions, setQuestions }}>
       {children}
     </MockQuestionsContext.Provider>
   );

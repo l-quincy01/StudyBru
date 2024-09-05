@@ -4,10 +4,10 @@ import React, { createContext, useState } from "react";
 export const TermsContext = createContext();
 
 export const TermsProvider = ({ children }) => {
-  const [termsContext, setTermsContext] = useState([]);
+  const [terms, setTerms] = useState([]);
 
   return (
-    <TermsContext.Provider value={{ termsContext, setTermsContext }}>
+    <TermsContext.Provider value={{ terms, setTerms }}>
       {children}
     </TermsContext.Provider>
   );

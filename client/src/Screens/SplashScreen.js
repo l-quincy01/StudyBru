@@ -24,6 +24,8 @@ import {
 import { Modal } from "../Components/Modal";
 import { TextInput } from "react-native-paper";
 import HomeComponentMainModal from "../Components/HomeComponentMainModal";
+import { TermsContext } from "../config/TermsContext";
+import { MockQuestionsContext } from "../config/MockQuestionsContext";
 
 function removeTripleBackticks(text) {
   return text.replace(/```/g, "");
@@ -38,6 +40,32 @@ function parseFlashCards(inputString) {
     const backMatch = block.match(/back: "(.*?)"/);
     if (frontMatch && backMatch) {
       result.push({ front: frontMatch[1], back: backMatch[1] });
+    }
+  });
+  return result;
+}
+function parseTerms(inputString) {
+  inputString = inputString.replace(/\n/g, "").replace(/\s+/g, " ");
+  const termsBlocks = inputString.match(/\{[^}]+\}/g);
+  const result = [];
+  termsBlocks.forEach((block) => {
+    const termMatch = block.match(/term: "(.*?)"/);
+    const definitionMatch = block.match(/definition: "(.*?)"/);
+    if (termMatch && definitionMatch) {
+      result.push({ term: termMatch[1], definition: definitionMatch[1] });
+    }
+  });
+  return result;
+}
+function parseQuestions(inputString) {
+  inputString = inputString.replace(/\n/g, "").replace(/\s+/g, " ");
+  const questionsBlock = inputString.match(/\{[^}]+\}/g);
+  const result = [];
+  questionsBlock.forEach((block) => {
+    const questionMatch = block.match(/question: "(.*?)"/);
+    const answerMatch = block.match(/answer: "(.*?)"/);
+    if (questionMatch && answerMatch) {
+      result.push({ question: questionMatch[1], answer: answerMatch[1] });
     }
   });
   return result;
@@ -63,6 +91,9 @@ const SplashScreen = ({ navigation }) => {
   const { quiz, setQuiz } = useContext(QuizContext);
   const { summary, setSummary } = useContext(SummaryContext);
   const { flashCards, setFlashCards } = useContext(FlashCardsContext);
+  const { terms, setTerms } = useContext(TermsContext);
+  const { questions, setQuestions } = useContext(MockQuestionsContext);
+
   const [loading, setLoading] = useState(false);
   const [notes, setNotes] = useState("");
   const [notesTitle, setNotesTitle] = useState("");
@@ -106,7 +137,7 @@ const SplashScreen = ({ navigation }) => {
 
     try {
       const uploadResponse = await axios.post(
-        "http://192.168.0.181:4001/uploadNotesFile",
+        "http://172.20.10.7:4001/uploadNotesFile",
         formData,
         {
           headers: {
@@ -122,7 +153,7 @@ const SplashScreen = ({ navigation }) => {
       }
 
       const uploadTitleResponse = await axios.post(
-        "http://192.168.0.181:4001/uploadNoteDetails",
+        "http://172.20.10.7:4001/uploadNoteDetails",
         {
           fileId,
           title: notesTitle,
@@ -156,11 +187,11 @@ const SplashScreen = ({ navigation }) => {
   const getParseEndpoint = (mimeType) => {
     switch (mimeType) {
       case "application/pdf":
-        return "http://192.168.0.181:3001/parse-pdf";
+        return "http://172.20.10.7:3001/parse-pdf";
       case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
-        return "http://192.168.0.181:3001/parse-docx";
+        return "http://172.20.10.7:3001/parse-docx";
       case "application/vnd.openxmlformats-officedocument.presentationml.presentation":
-        return "http://192.168.0.181:3001/parse-pptx";
+        return "http://172.20.10.7:3001/parse-pptx";
       default:
         throw new Error("Unsupported file type");
     }
@@ -175,10 +206,10 @@ const SplashScreen = ({ navigation }) => {
   // }, []);
 
   useEffect(() => {
-    if ((quiz, flashCards, summary)) {
+    if ((quiz, flashCards, summary, terms, questions)) {
       setNotes("");
     }
-  }, [quiz, flashCards, summary]);
+  }, [quiz, flashCards, summary, terms, questions]);
 
   useEffect(() => {
     if (notes) {
@@ -187,6 +218,8 @@ const SplashScreen = ({ navigation }) => {
       generateFlashCards(notes);
       generateSummaries(notes);
       generateTitle(notes);
+      generateQuestions(notes);
+      generateTerms(notes);
     }
   }, [notes]);
   useEffect(() => {
@@ -194,10 +227,16 @@ const SplashScreen = ({ navigation }) => {
   }, [isModalOpen]);
 
   useEffect(() => {
-    if (quiz.length > 0 && flashCards.length > 0 && summary.length > 0) {
+    if (
+      quiz.length > 0 &&
+      flashCards.length > 0 &&
+      summary.length > 0 &&
+      terms.length > 0 &&
+      questions.length > 0
+    ) {
       setLoading(false);
     }
-  }, [quiz, flashCards, summary]);
+  }, [quiz, flashCards, summary, terms, questions]);
 
   useEffect(() => {
     if (notesTitle) {
@@ -220,7 +259,7 @@ const SplashScreen = ({ navigation }) => {
   const generateQuiz = async (notes) => {
     try {
       const response = await axios.post(
-        "http://192.168.0.181:3000/generate-quiz",
+        "http://172.20.10.7:3000/generate-quiz",
         { notes: notes },
         {
           headers: {
@@ -237,7 +276,7 @@ const SplashScreen = ({ navigation }) => {
   const generateFlashCards = async (notes) => {
     try {
       const response = await axios.post(
-        "http://192.168.0.181:3003/generate-flashCards",
+        "http://172.20.10.7:3003/generate-flashCards",
         { notes: notes },
         {
           headers: {
@@ -254,7 +293,7 @@ const SplashScreen = ({ navigation }) => {
   const generateSummaries = async (notes) => {
     try {
       const response = await axios.post(
-        "http://192.168.0.181:3004/generate-summary",
+        "http://172.20.10.7:3004/generate-summary",
         { notes: notes },
         {
           headers: {
@@ -271,7 +310,7 @@ const SplashScreen = ({ navigation }) => {
   const generateTitle = async (notes) => {
     try {
       const response = await axios.post(
-        "http://192.168.0.181:3006/generate-title",
+        "http://172.20.10.7:3006/generate-title",
         { notes: notes },
         {
           headers: {
@@ -282,6 +321,38 @@ const SplashScreen = ({ navigation }) => {
       setNotesTitle(response.data.title);
     } catch (error) {
       console.error("Error generating title:", error);
+    }
+  };
+  const generateTerms = async (notes) => {
+    try {
+      const response = await axios.post(
+        "http://172.20.10.7:3007/generate-terms",
+        { notes: notes },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setTerms(parseTerms(response.data.terms));
+    } catch (error) {
+      console.error("Error generating terms:", error);
+    }
+  };
+  const generateQuestions = async (notes) => {
+    try {
+      const response = await axios.post(
+        "http://172.20.10.7:3007/generate-questions",
+        { notes: notes },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setQuestions(parseQuestions(response.data.questions));
+    } catch (error) {
+      console.error("Error generating questions:", error);
     }
   };
 
@@ -402,7 +473,11 @@ const SplashScreen = ({ navigation }) => {
           {/*Body view */}
 
           <ScrollView style={tw`flex-1 px-5 bg-gray-100`}>
-            {quiz.length > 0 && flashCards.length > 0 && summary.length > 0 ? (
+            {quiz.length > 0 &&
+            flashCards.length > 0 &&
+            summary.length > 0 &&
+            terms.length > 0 &&
+            questions.length > 0 ? (
               <>
                 <HomeComponent
                   nav={navigation}
@@ -424,17 +499,21 @@ const SplashScreen = ({ navigation }) => {
             )}
           </ScrollView>
 
-          {quiz.length > 0 && flashCards.length > 0 && summary.length > 0 && (
-            <>
-              <HomeComponentMainModal
-                docPicker={pickDocument}
-                subjectTitle={subjectTitle}
-                setsTitle={setsTitle}
-                onSubjectTitleChange={setSubjectTitle}
-                onSetsTitleChange={setSetsTitle}
-              />
-            </>
-          )}
+          {quiz.length > 0 &&
+            flashCards.length > 0 &&
+            summary.length > 0 &&
+            terms.length > 0 &&
+            questions.length > 0 && (
+              <>
+                <HomeComponentMainModal
+                  docPicker={pickDocument}
+                  subjectTitle={subjectTitle}
+                  setsTitle={setsTitle}
+                  onSubjectTitleChange={setSubjectTitle}
+                  onSetsTitleChange={setSetsTitle}
+                />
+              </>
+            )}
         </>
       )}
     </View>
