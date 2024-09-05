@@ -69,54 +69,6 @@ const MockQuestionsScreen = ({ navigation }) => {
                   //   console.log(nativeEvent.contentSize.height);
                 }}
               />
-              <Text style={tw`font-semibold text-lg`}>
-                Complier make use of various parsing techniques list 4
-              </Text>
-              <TextInput
-                placeholderTextColor="#909090"
-                style={{ ...styles.input, height: 60 }}
-                placeholder="Enter Your Answer"
-                blurOnSubmit={false}
-                scrollEnabled={true}
-                onChange={({ nativeEvent }) => setMessage(nativeEvent.text)}
-                multiline={true}
-                value={message}
-                onContentSizeChange={({ nativeEvent }) => {
-                  //   console.log(nativeEvent.contentSize.height);
-                }}
-              />
-              <Text style={tw`font-semibold text-lg`}>
-                Complier make use of various parsing techniques list 4
-              </Text>
-              <TextInput
-                placeholderTextColor="#909090"
-                style={{ ...styles.input, height: 60 }}
-                placeholder="Enter Your Answer"
-                blurOnSubmit={false}
-                scrollEnabled={true}
-                onChange={({ nativeEvent }) => setMessage(nativeEvent.text)}
-                multiline={true}
-                value={message}
-                onContentSizeChange={({ nativeEvent }) => {
-                  //   console.log(nativeEvent.contentSize.height);
-                }}
-              />
-              <Text style={tw`font-semibold text-lg`}>
-                Complier make use of various parsing techniques list 4
-              </Text>
-              <TextInput
-                placeholderTextColor="#909090"
-                style={{ ...styles.input, height: 60 }}
-                placeholder="Enter Your Answer"
-                blurOnSubmit={false}
-                scrollEnabled={true}
-                onChange={({ nativeEvent }) => setMessage(nativeEvent.text)}
-                multiline={true}
-                value={message}
-                onContentSizeChange={({ nativeEvent }) => {
-                  //   console.log(nativeEvent.contentSize.height);
-                }}
-              />
             </View>
           </ScrollView>
         </TouchableWithoutFeedback>

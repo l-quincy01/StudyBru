@@ -154,7 +154,7 @@ const AllResourcesScreen = ({ navigation }) => {
               Terms
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => {
               setSummaryIsActive(false);
               setFlashcardsIsActive(false);
@@ -173,7 +173,7 @@ const AllResourcesScreen = ({ navigation }) => {
             >
               Questions
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           {/* </View> */}
         </ScrollView>
       </View>
@@ -183,7 +183,7 @@ const AllResourcesScreen = ({ navigation }) => {
         {flashcardsIsActive && <Flashcards />}
         {quizIsActive && <QuizScreen />}
         {termsIsActive && <TermsScreen />}
-        {mockQuestionsIsActive && <MockQuestionsScreen />}
+        {/* {mockQuestionsIsActive && <MockQuestionsScreen />} */}
       </ScrollView>
     </SafeAreaView>
   );
