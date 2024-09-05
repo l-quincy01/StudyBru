@@ -426,20 +426,6 @@ const SplashScreen = ({ navigation }) => {
 
           {quiz.length > 0 && flashCards.length > 0 && summary.length > 0 && (
             <>
-              {/* <TouchableOpacity
-                onPress={() => setIsModalOpen(true)}
-                style={tw`absolute bottom-5 left-75 p-3 bg-black rounded-full`}
-              >
-                <Entypo name="plus" size={30} color="white" />
-              </TouchableOpacity>
-              <CustomModal
-                setIsModalOpen={setIsModalOpen}
-                docPicker={pickDocument}
-                subjectTitle={subjectTitle}
-                setsTitle={setsTitle}
-                onSubjectTitleChange={handleSubjectTitleChange}
-                onSetsTitleChange={handleSetsTitleChange}
-              /> */}
               <HomeComponentMainModal
                 docPicker={pickDocument}
                 subjectTitle={subjectTitle}

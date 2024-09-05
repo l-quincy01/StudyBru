@@ -41,7 +41,7 @@ const NotesScreen = ({ navigation }) => {
       description: "Long Practice Questions.",
       icon: "question-mark",
       iconType: "MaterialIcons",
-      screen: "AllResourcesScreen",
+      screen: "Mock Questions",
       iconColour: "blue",
       iconBgColour: "blue",
     },
@@ -106,7 +106,7 @@ const NotesScreen = ({ navigation }) => {
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         numColumns={2}
-        contentContainerStyle={tw`px-5 gap-y-8 mt-5 bg-gray-100`}
+        contentContainerStyle={tw`px-5 py-8 gap-y-4 mt-5 bg-gray-100`}
       />
     </View>
   );

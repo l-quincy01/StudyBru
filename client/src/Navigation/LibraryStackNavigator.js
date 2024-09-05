@@ -10,6 +10,7 @@ import SummaryScreen from "../Screens/SummaryScreen";
 import LibraryTopBarNavigator from "./LibraryTopBarNavigator";
 import AllResourcesScreen from "../Screens/AllResourcesScreen";
 import CoPilotScreen from "../Screens/CoPilotScreen";
+import MockQuestionsScreen from "../Screens/MockQuestionsScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,7 @@ function LibraryStackNavigator() {
     >
       <Stack.Screen name="Library" component={NotesScreen} />
       <Stack.Screen name="AllResourcesScreen" component={AllResourcesScreen} />
+      <Stack.Screen name="Mock Questions" component={MockQuestionsScreen} />
       {/* <Stack.Screen name="CoPilot" component={CoPilotScreen} /> */}
       <Stack.Screen name="EndScreen" component={EndScreen} />
     </Stack.Navigator>
