@@ -8,36 +8,36 @@
 
 <div style="display:flex;" >
 
-<img src="/assets/screenshots/30 .PNG" width="20%" >
-<img src="/assets/screenshots/29 .PNG" width="20%" >
-<img src="/assets/screenshots/28 .PNG" width="20%" >
-<img src="/assets/screenshots/27 .PNG" width="20%" >
-<img src="/assets/screenshots/26 .PNG" width="20%" >
-<img src="/assets/screenshots/25 .PNG" width="20%" >
-<img src="/assets/screenshots/24 .PNG" width="20%" >
-<img src="/assets/screenshots/23 .PNG" width="20%" >
-<img src="/assets/screenshots/22 .PNG" width="20%" >
-<img src="/assets/screenshots/21 .PNG" width="20%" >
-<img src="/assets/screenshots/20 .PNG" width="20%" >
-<img src="/assets/screenshots/19 .PNG" width="20%" >
-<img src="/assets/screenshots/18 .PNG" width="20%" >
-<img src="/assets/screenshots/17 .PNG" width="20%" >
-<img src="/assets/screenshots/16 .PNG" width="20%" >
-<img src="/assets/screenshots/15 .PNG" width="20%" >
-<img src="/assets/screenshots/14 .PNG" width="20%" >
-<img src="/assets/screenshots/13 .PNG" width="20%" >
-<img src="/assets/screenshots/12 .PNG" width="20%" >
-<img src="/assets/screenshots/11 .PNG" width="20%" >
-<img src="/assets/screenshots/10 .PNG" width="20%" >
-<img src="/assets/screenshots/9 .PNG" width="20%" >
-<img src="/assets/screenshots/8 .PNG" width="20%" >
-<img src="/assets/screenshots/7 .PNG" width="20%" >
-<img src="/assets/screenshots/6 .PNG" width="20%" >
-<img src="/assets/screenshots/5 .PNG" width="20%" >
-<img src="/assets/screenshots/4 .PNG" width="20%" >
-<img src="/assets/screenshots/3 .PNG" width="20%" >
-<img src="/assets/screenshots/2 .PNG" width="20%" >
-<img src="/assets/screenshots/1 .PNG" width="20%" >
+<img src="/assets/screenshots/30 -portrait.png" width="20%" >
+<img src="/assets/screenshots/29 -portrait.png" width="20%" >
+<img src="/assets/screenshots/28 -portrait.png" width="20%" >
+<img src="/assets/screenshots/27 -portrait.png" width="20%" >
+<img src="/assets/screenshots/26 -portrait.png" width="20%" >
+<img src="/assets/screenshots/25 -portrait.png" width="20%" >
+<img src="/assets/screenshots/24 -portrait.png" width="20%" >
+<img src="/assets/screenshots/23 -portrait.png" width="20%" >
+<img src="/assets/screenshots/22 -portrait.png" width="20%" >
+<img src="/assets/screenshots/21 -portrait.png" width="20%" >
+<img src="/assets/screenshots/20 -portrait.png" width="20%" >
+<img src="/assets/screenshots/19 -portrait.png" width="20%" >
+<img src="/assets/screenshots/18 -portrait.png" width="20%" >
+<img src="/assets/screenshots/17 -portrait.png" width="20%" >
+<img src="/assets/screenshots/16 -portrait.png" width="20%" >
+<img src="/assets/screenshots/15 -portrait.png" width="20%" >
+<img src="/assets/screenshots/14 -portrait.png" width="20%" >
+<img src="/assets/screenshots/13 -portrait.png" width="20%" >
+<img src="/assets/screenshots/12 -portrait.png" width="20%" >
+<img src="/assets/screenshots/11 -portrait.png" width="20%" >
+<img src="/assets/screenshots/10 -portrait.png" width="20%" >
+<img src="/assets/screenshots/9 -portrait.png" width="20%" >
+<img src="/assets/screenshots/8 -portrait.png" width="20%" >
+<img src="/assets/screenshots/7 -portrait.png" width="20%" >
+<img src="/assets/screenshots/6 -portrait.png" width="20%" >
+<img src="/assets/screenshots/5 -portrait.png" width="20%" >
+<img src="/assets/screenshots/4 -portrait.png" width="20%" >
+<img src="/assets/screenshots/3 -portrait.png" width="20%" >
+<img src="/assets/screenshots/2 -portrait.png" width="20%" >
+<img src="/assets/screenshots/1 -portrait.png" width="20%" >
 
 </div>
 
