@@ -12,7 +12,7 @@ const generateQuizQuestions = async (notes) => {
   const messages = [
     {
       role: "system",
-      content: `You are a helpful assistant that generates quiz questions and answers.YOUR RESPONSE SHOULD BE STRICTLY IN THIS FORMATONLY
+      content: `You are a helpful assistant that generates quiz questions and answers. YOUR RESPONSE SHOULD BE STRICTLY IN THIS FORMAT ONLY
         { question: "What is a variable in programming?",
     options: ["A storage location", "A function", "A loop", "A class"],
     correctAnswer: "A storage location",},`,

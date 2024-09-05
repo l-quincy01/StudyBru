@@ -12,11 +12,11 @@ const generateSummary = async (notes) => {
   const messages = [
     {
       role: "system",
-      content: `You are a helpful assistant that generates study notes summaries. YOUR RESPONSE SHOULD BE STRICTLY IN MARKDOWN LIKE FORMAT  WITHOUT ANY BACKTICKS`,
+      content: `Your a helpful assistant for the following notes \n\n${notes}\n\n `,
     },
     {
       role: "user",
-      content: `Generate a SUMMARY based on the following notes: \n\n${notes}\n\n YOUR RESPONSE SHOULD BE STRICTLY IN  MARKDOWN LIKE FORMAT WITHOUT ANY BACKTICKS`,
+      content: ``,
     },
   ];
 

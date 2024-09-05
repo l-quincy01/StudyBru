@@ -41,16 +41,16 @@ app.post("/generate-summary", async (req, res) => {
     res.status(500).send(error.message);
   }
 });
-app.post("/generate-title", async (req, res) => {
-  const { notes } = req.body;
-  try {
-    const title = await generateTitle(notes);
-    res.json({ title });
-    console.log(title);
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-});
+// app.post("/generate-title", async (req, res) => {
+//   const { notes } = req.body;
+//   try {
+//     const title = await generateTitle(notes);
+//     res.json({ title });
+//     console.log(title);
+//   } catch (error) {
+//     res.status(500).send(error.message);
+//   }
+// });
 
 app.listen(3004, () => {
   console.log("Server is running on port 3004");
