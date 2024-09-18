@@ -9,7 +9,6 @@
 <div style="display:flex;" >
 
 <img src="/assets/screenshots/30 -portrait.png" width="20%" >
-
 <img src="/assets/screenshots/26 -portrait.png" width="20%" >
 <img src="/assets/screenshots/25 -portrait.png" width="20%" >
 <img src="/assets/screenshots/24 -portrait.png" width="20%" >
