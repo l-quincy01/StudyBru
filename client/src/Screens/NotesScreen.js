@@ -106,7 +106,7 @@ const NotesScreen = ({ navigation }) => {
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         numColumns={2}
-        contentContainerStyle={tw`px-5 py-8 gap-y-4 mt-5 bg-gray-100`}
+        contentContainerStyle={tw`px-5 py-8 gap-y-4  bg-gray-100`}
       />
     </View>
   );

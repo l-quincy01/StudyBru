@@ -39,14 +39,37 @@ const generateQuestions = async (notes) => {
     {
       role: "system",
       content: `You are a helpful assistant that generates mock questions and answers. YOUR RESPONSE SHOULD BE STRICTLY IN THIS FORMAT ONLY:
-        { question: "I.E The question here",
-    answer: "I.E The answer here here" }, `,
+        { question: "I.E The question here", answer: "I.E The answer here here",  markAllocation: 5  }, `,
     },
     {
       role: "user",
       content: `Generate a questions and answers for the following notes: \n\n${notes}\n\n YOUR RESPONSE SHOULD BE STRICTLY IN THIS FORMAT ONLY:
-        { question: "I.E The question here",
-    answer: "I.E The answer here here" },`,
+        { question: "I.E The question here", answer: "I.E The answer here here",  markAllocation: 5  },`,
+    },
+  ];
+
+  const response = await openai.chat.completions.create({
+    model: "gpt-4o",
+    messages: messages,
+    max_tokens: 3500,
+    n: 1,
+    temperature: 0.7,
+  });
+
+  return response.choices[0].message.content;
+};
+
+const markQuestions = async (notes) => {
+  const messages = [
+    {
+      role: "system",
+      content: `You are a helpful assistant that generates mock questions and answers. YOUR RESPONSE SHOULD BE STRICTLY IN THIS FORMAT ONLY:
+        { question: "I.E The question here", answer: "I.E The answer here here",  markAllocation: 5  }, `,
+    },
+    {
+      role: "user",
+      content: `Generate a questions and answers for the following notes: \n\n${notes}\n\n YOUR RESPONSE SHOULD BE STRICTLY IN THIS FORMAT ONLY:
+        { question: "I.E The question here", answer: "I.E The answer here here",  markAllocation: 5  },`,
     },
   ];
 

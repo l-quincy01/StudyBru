@@ -21,9 +21,6 @@ function HomeStackNavigator() {
       <Stack.Screen name="Profile" component={ProfileScreen} />
       <Stack.Screen name="AddedNotes" component={AddedNotesScreen} />
       <Stack.Screen name="NotesDocumentView" component={NotesDocumentView} />
-      {/* <Stack.Screen name="demo" component={demo} /> */}
-
-      {/* <Stack.Screen name="Summaries" component={MagicNotes} /> */}
     </Stack.Navigator>
   );
 }

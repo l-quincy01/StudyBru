@@ -38,18 +38,7 @@ function AppNavigator() {
           }}
           component={HomeStackNavigator}
         />
-        {/* <Tab.Screen
-          name="AddNotes"
-          options={{
-            tabBarLabel: ({ color }) => (
-              <Text style={{ color: color }}> Add Notes</Text>
-            ),
-            tabBarIcon: ({ color, size }) => (
-              <AntDesign name="pluscircleo" size={24} color={color} />
-            ),
-          }}
-          component={AddNotes}
-        /> */}
+
         <Tab.Screen
           name="Notes"
           options={{
@@ -62,33 +51,9 @@ function AppNavigator() {
           }}
           component={LibraryStackNavigator}
         />
-        {/* <Tab.Screen
-          name="Library"
-          options={{
-            tabBarLabel: ({ color }) => (
-              <Text style={{ color: color }}> Quiz</Text>
-            ),
-            tabBarIcon: ({ color, size }) => (
-              <AntDesign name="folderopen" size={24} color="black" />
-            ),
-          }}
-          component={QuizStack}
-        /> */}
       </Tab.Navigator>
     </NavigationContainer>
   );
 }
 
 export default AppNavigator;
-/**
- *   <Stack.Navigator
-        screenOptions={{
-          headerShown: true,
-          contentStyle: { backgroundColor: "white" },
-        }}
-      >
-        <Stack.Screen name="Splash" component={SplashScreen} />
-        <Stack.Screen name="Questions" component={QuestionsScreen} />
-        <Stack.Screen name="End" component={EndScreen} />
-      </Stack.Navigator>
- */
