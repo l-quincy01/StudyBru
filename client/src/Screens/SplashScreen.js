@@ -66,7 +66,11 @@ function parseQuestions(inputString) {
     const answerMatch = block.match(/answer: "(.*?)"/);
     const markAllocationMatch = block.match(/markAllocation: "(.*?)"/);
     if (questionMatch && answerMatch) {
-      result.push({ question: questionMatch[1], answer: answerMatch[1], markAllocation: markAllocationMatch[1] });
+      result.push({
+        question: questionMatch[1],
+        answer: answerMatch[1],
+        markAllocation: markAllocationMatch[1],
+      });
     }
   });
   return result;
@@ -121,8 +125,6 @@ const SplashScreen = ({ navigation }) => {
       const parsedText = cleanText(parseResponse.data.text);
 
       setNotes(parsedText);
-
-      console.log("NOTEESSSS SUCCESSFULLY SETTTTT-------", parsedText);
     } catch (error) {
       console.error("Error processing file:", error);
     }
