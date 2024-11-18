@@ -36,76 +36,17 @@ import { parseQuiz } from "../Parsers/parseQuiz";
 //services
 import { documentUploadService } from "../Services/documentUploadService";
 import { fileUploadService } from "../Services/fileUploadService";
+import { pickDocument } from "../Services/pickDocument";
+
+import { generateFlashCardsService } from "../Services/generateFlashCardsService";
+import { generateQuizService } from "../Services/generateQuizService";
+import { generateSummariesService } from "../Services/generateSummariesService";
+import { generateTermsService } from "../Services/generateTermsService";
+import { generateTitleService } from "../Services/generateTitleService";
 
 //utils
 import { cleanText } from "../Utilities/cleanText";
 import { removeTriplebackticks } from "../Utilities/removeTriplebackticks";
-
-// function removeTripleBackticks(text) {
-//   return text.replace(/```/g, "");
-// }
-
-//parsing quiz and flashcards into an array of objects
-// function parseFlashCards(inputString) {
-//   inputString = inputString.replace(/\n/g, "").replace(/\s+/g, " ");
-//   const flashCardBlocks = inputString.match(/\{[^}]+\}/g);
-//   const result = [];
-//   flashCardBlocks.forEach((block) => {
-//     const frontMatch = block.match(/front: "(.*?)"/);
-//     const backMatch = block.match(/back: "(.*?)"/);
-//     if (frontMatch && backMatch) {
-//       result.push({ front: frontMatch[1], back: backMatch[1] });
-//     }
-//   });
-//   return result;
-// }
-// function parseTerms(inputString) {
-//   inputString = inputString.replace(/\n/g, "").replace(/\s+/g, " ");
-//   const termsBlocks = inputString.match(/\{[^}]+\}/g);
-//   const result = [];
-//   termsBlocks.forEach((block) => {
-//     const termMatch = block.match(/term: "(.*?)"/);
-//     const definitionMatch = block.match(/definition: "(.*?)"/);
-//     if (termMatch && definitionMatch) {
-//       result.push({ term: termMatch[1], definition: definitionMatch[1] });
-//     }
-//   });
-//   return result;
-// }
-// function parseQuestions(inputString) {
-//   inputString = inputString.replace(/\n/g, "").replace(/\s+/g, " ");
-//   const questionsBlock = inputString.match(/\{[^}]+\}/g);
-//   const result = [];
-//   questionsBlock.forEach((block) => {
-//     const questionMatch = block.match(/question: "(.*?)"/);
-//     const answerMatch = block.match(/answer: "(.*?)"/);
-//     const markAllocationMatch = block.match(/markAllocation: "(.*?)"/);
-//     if (questionMatch && answerMatch) {
-//       result.push({
-//         question: questionMatch[1],
-//         answer: answerMatch[1],
-//         markAllocation: markAllocationMatch[1],
-//       });
-//     }
-//   });
-//   return result;
-// }
-
-// function parseQuiz(inputString) {
-//   inputString = inputString.replace(/\n/g, "").replace(/\s+/g, " ");
-//   const questionBlocks = inputString.match(/\{[^}]+\}/g);
-//   const result = [];
-//   questionBlocks.forEach((block) => {
-//     const question = block.match(/question: "(.*?)"/)[1];
-//     const options = block
-//       .match(/options: \[(.*?)\]/)[1]
-//       .split('", "')
-//       .map((option) => option.replace(/^"|"$/g, ""));
-//     const correctAnswer = block.match(/correctAnswer: "(.*?)"/)[1];
-//     result.push({ question, options, correctAnswer });
-//   });
-//   return result;
-// }
 
 const SplashScreen = ({ navigation }) => {
   const { quiz, setQuiz } = useContext(QuizContext);
@@ -122,86 +63,6 @@ const SplashScreen = ({ navigation }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // const uploadDocument = async (file) => {
-  //   const formData = new FormData();
-  //   formData.append("file", {
-  //     uri: file.assets[0].uri,
-  //     type: file.assets[0].mimeType,
-  //     name: file.assets[0].name,
-  //   });
-
-  //   try {
-  //     const parseEndpoint = getParseEndpoint(file.assets[0].mimeType);
-  //     const parseResponse = await axios.post(parseEndpoint, formData, {
-  //       headers: {
-  //         "Content-Type": "multipart/form-data",
-  //       },
-  //     });
-  //     const parsedText = cleanText(parseResponse.data.text);
-
-  //     setNotes(parsedText);
-  //   } catch (error) {
-  //     console.error("Error processing file:", error);
-  //   }
-  // };
-
-  // const uploadFile = async (file) => {
-  //   const formData = new FormData();
-  //   formData.append("file", {
-  //     uri: file.assets[0].uri,
-  //     type: file.assets[0].mimeType,
-  //     name: file.assets[0].name,
-  //   });
-
-  //   try {
-  //     const uploadResponse = await axios.post(
-  //       "http://172.20.10.7:4001/uploadNotesFile",
-  //       formData,
-  //       {
-  //         headers: {
-  //           "Content-Type": "multipart/form-data",
-  //         },
-  //       }
-  //     );
-
-  //     const { fileId } = uploadResponse.data;
-
-  //     if (fileId) {
-  //       console.log("Heres the file ID", fileId);
-  //     }
-
-  //     const uploadTitleResponse = await axios.post(
-  //       "http://172.20.10.7:4001/uploadNoteDetails",
-  //       {
-  //         fileId,
-  //         title: notesTitle,
-  //         subjectTitle: subjectTitle,
-  //         setsTitle: setsTitle,
-  //       },
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     );
-
-  //     console.log("File uploaded successfully:", uploadResponse.data);
-  //     console.log("Title uploaded successfully:", uploadTitleResponse.data);
-  //   } catch (uploadError) {
-  //     console.error(
-  //       "Error uploading file:",
-  //       uploadError,
-  //       notesTitle,
-  //       subjectTitle,
-  //       setsTitle
-  //     );
-  //   }
-  // };
-
-  // const cleanText = (text) => {
-  //   return text.replace(/\s+/g, " ");
-  // };
-
   //pass as a prop
   const getParseEndpoint = (mimeType) => {
     switch (mimeType) {
@@ -216,14 +77,6 @@ const SplashScreen = ({ navigation }) => {
     }
   };
 
-  // const handleSetsTitleChange = useCallback((text) => {
-  //   setSetsTitle(text);
-  // }, []);
-
-  // const handleSubjectTitleChange = useCallback((text) => {
-  //   setSubjectTitle(text);
-  // }, []);
-
   useEffect(() => {
     if ((quiz, flashCards, summary, terms, questions)) {
       setNotes("");
@@ -233,12 +86,17 @@ const SplashScreen = ({ navigation }) => {
   useEffect(() => {
     if (notes) {
       setLoading(true);
-      generateQuiz(notes);
-      generateFlashCards(notes);
-      generateSummaries(notes);
-      generateTitle(notes);
-      generateQuestions(notes);
-      generateTerms(notes);
+      // generateQuiz(notes);
+      // generateFlashCards(notes);
+      // generateSummaries(notes);
+      // generateTitle(notes);
+      // generateQuestions(notes);
+      // generateTerms(notes);
+      generateFlashCardsService(notes, parseFlashCards, setFlashCards);
+      generateQuizService(notes, setQuiz, parseQuiz);
+      generateSummariesService(notes, setSummary, removeTriplebackticks);
+      generateTermsService(notes, setTerms, parseTerms);
+      generateTitleService(notes, setNotesTitle);
     }
   }, [notes]);
   useEffect(() => {
@@ -292,39 +150,39 @@ const SplashScreen = ({ navigation }) => {
     }
   };
 
-  const generateFlashCards = async (notes) => {
-    try {
-      const response = await axios.post(
-        "http://172.20.10.7:3003/generate-flashCards",
-        { notes: notes },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      setFlashCards(parseFlashCards(response.data.flashCards));
-    } catch (error) {
-      console.error("Error generating flashcards:", error);
-    }
-  };
+  // const generateFlashCards = async (notes) => {
+  //   try {
+  //     const response = await axios.post(
+  //       "http://172.20.10.7:3003/generate-flashCards",
+  //       { notes: notes },
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
+  //     setFlashCards(parseFlashCards(response.data.flashCards));
+  //   } catch (error) {
+  //     console.error("Error generating flashcards:", error);
+  //   }
+  // };
 
-  const generateSummaries = async (notes) => {
-    try {
-      const response = await axios.post(
-        "http://172.20.10.7:3004/generate-summary",
-        { notes: notes },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      setSummary(removeTriplebackticks(response.data.summary));
-    } catch (error) {
-      console.error("Error generating summary:", error);
-    }
-  };
+  // const generateSummaries = async (notes) => {
+  //   try {
+  //     const response = await axios.post(
+  //       "http://172.20.10.7:3004/generate-summary",
+  //       { notes: notes },
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
+  //     setSummary(removeTriplebackticks(response.data.summary));
+  //   } catch (error) {
+  //     console.error("Error generating summary:", error);
+  //   }
+  // };
 
   const generateTitle = async (notes) => {
     try {
@@ -342,6 +200,7 @@ const SplashScreen = ({ navigation }) => {
       console.error("Error generating title:", error);
     }
   };
+
   const generateTerms = async (notes) => {
     try {
       const response = await axios.post(
@@ -358,6 +217,7 @@ const SplashScreen = ({ navigation }) => {
       console.error("Error generating terms:", error);
     }
   };
+
   const generateQuestions = async (notes) => {
     try {
       const response = await axios.post(

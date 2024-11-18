@@ -1,6 +1,6 @@
 import * as DocumentPicker from "expo-document-picker";
 
-const pickDocument = async () => {
+const pickDocument = async (setSelectedFile) => {
   console.log("Document picker opened");
   let result = await DocumentPicker.getDocumentAsync({});
   if (result.assets[0].uri) {
