@@ -4,7 +4,9 @@
  * @returns
  */
 
-const uploadDocument = async (file, getParseEndpoint) => {
+import axios from "axios";
+
+const documentUploadService = async (file, getParseEndpoint, cleanText) => {
   const formData = new FormData();
   formData.append("file", {
     uri: file.assets[0].uri,
@@ -27,4 +29,4 @@ const uploadDocument = async (file, getParseEndpoint) => {
   }
 };
 
-export default uploadDocument;
+export default documentUploadService;

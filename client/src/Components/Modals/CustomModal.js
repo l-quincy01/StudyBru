@@ -1,18 +1,6 @@
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
-import { TextInput } from "react-native-paper";
-import tw from "twrnc";
-import {
-  AntDesign,
-  Entypo,
-  Ionicons,
-  MaterialCommunityIcons,
-  MaterialIcons,
-} from "@expo/vector-icons";
-import { Modal } from "./Modals/Modal";
+import { Modal } from "../Components/Modals/Modal";
 
 const CustomModal = ({
-  isModalOpen,
   setIsModalOpen,
   docPicker,
   subjectTitle,
@@ -23,12 +11,12 @@ const CustomModal = ({
   const [isSetsTitleValid, setIsSetsTitleValid] = useState(false);
   const [isSubjectTitleValid, setIsSubjectTitleValid] = useState(false);
 
-  const handleSetsTitleChange = (text) => {
+  const handleSetsTitleInputChange = (text) => {
     onSetsTitleChange(text);
     setIsSetsTitleValid(text.length >= 3);
   };
 
-  const handleSubjectTitleChange = (text) => {
+  const handleSubjectTitleInputChange = (text) => {
     onSubjectTitleChange(text);
     setIsSubjectTitleValid(text.length >= 3);
   };
@@ -50,35 +38,35 @@ const CustomModal = ({
               </Text>
             ) : (
               <Text style={tw`text-md font-semibold text-red-500`}>
-                Atleast 3 Characters
+                At least 3 Characters
               </Text>
             )}
             <TextInput
               placeholder="Title Of Set. i.e Maths"
               value={setsTitle}
-              onChangeText={handleSetsTitleChange}
+              onChangeText={handleSetsTitleInputChange}
               mode="outlined"
             />
           </View>
           <View style={tw`flex flex-col gap-y-1`}>
             {isSubjectTitleValid ? (
               <Text style={tw`text-md font-semibold text-gray-500`}>
-                Title of Set
+                Title of Subject
               </Text>
             ) : (
               <Text style={tw`text-md font-semibold text-red-500`}>
-                Atleast 3 Characters
+                At least 3 Characters
               </Text>
             )}
             <TextInput
               placeholder="Title Of Subject. i.e Calculus"
               value={subjectTitle}
-              onChangeText={handleSubjectTitleChange}
+              onChangeText={handleSubjectTitleInputChange}
               mode="outlined"
             />
           </View>
           <Text style={tw`text-gray-500 text-md font-light `}>
-            * Title of your notes will be automaticall generated
+            * Title of your notes will be automatically generated
           </Text>
           <TouchableOpacity
             style={[
@@ -98,36 +86,4 @@ const CustomModal = ({
     </Modal>
   );
 };
-
-const HomeComponentMainModal = ({
-  docPicker,
-  subjectTitle,
-  setsTitle,
-  onSubjectTitleChange,
-  onSetsTitleChange,
-}) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  return (
-    <>
-      <TouchableOpacity
-        onPress={() => setIsModalOpen(true)}
-        style={tw`absolute bottom-5 left-75 p-3 bg-black rounded-full`}
-      >
-        <Entypo name="plus" size={30} color="white" />
-      </TouchableOpacity>
-
-      <CustomModal
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
-        docPicker={docPicker}
-        subjectTitle={subjectTitle}
-        setsTitle={setsTitle}
-        onSubjectTitleChange={onSubjectTitleChange}
-        onSetsTitleChange={onSetsTitleChange}
-      />
-    </>
-  );
-};
-
-export default HomeComponentMainModal;
+export default CustomModal;

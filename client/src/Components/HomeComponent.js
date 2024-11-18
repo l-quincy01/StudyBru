@@ -3,7 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import tw from "twrnc";
 import { AntDesign, Entypo, Ionicons } from "@expo/vector-icons";
 import axios from "axios";
-import { Modal } from "./Modal";
+import { Modal } from "./Modals/Modal";
 import { TextInput } from "react-native-paper";
 
 const CustomModal = ({

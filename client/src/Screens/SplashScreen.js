@@ -21,76 +21,91 @@ import {
   Ionicons,
   SimpleLineIcons,
 } from "@expo/vector-icons";
-import { Modal } from "../Components/Modal";
+
 import { TextInput } from "react-native-paper";
 import HomeComponentMainModal from "../Components/HomeComponentMainModal";
 import { TermsContext } from "../config/TermsContext";
 import { MockQuestionsContext } from "../config/MockQuestionsContext";
 
-function removeTripleBackticks(text) {
-  return text.replace(/```/g, "");
-}
-//parsing quiz and flashcards into an array of objects
-function parseFlashCards(inputString) {
-  inputString = inputString.replace(/\n/g, "").replace(/\s+/g, " ");
-  const flashCardBlocks = inputString.match(/\{[^}]+\}/g);
-  const result = [];
-  flashCardBlocks.forEach((block) => {
-    const frontMatch = block.match(/front: "(.*?)"/);
-    const backMatch = block.match(/back: "(.*?)"/);
-    if (frontMatch && backMatch) {
-      result.push({ front: frontMatch[1], back: backMatch[1] });
-    }
-  });
-  return result;
-}
-function parseTerms(inputString) {
-  inputString = inputString.replace(/\n/g, "").replace(/\s+/g, " ");
-  const termsBlocks = inputString.match(/\{[^}]+\}/g);
-  const result = [];
-  termsBlocks.forEach((block) => {
-    const termMatch = block.match(/term: "(.*?)"/);
-    const definitionMatch = block.match(/definition: "(.*?)"/);
-    if (termMatch && definitionMatch) {
-      result.push({ term: termMatch[1], definition: definitionMatch[1] });
-    }
-  });
-  return result;
-}
-function parseQuestions(inputString) {
-  inputString = inputString.replace(/\n/g, "").replace(/\s+/g, " ");
-  const questionsBlock = inputString.match(/\{[^}]+\}/g);
-  const result = [];
-  questionsBlock.forEach((block) => {
-    const questionMatch = block.match(/question: "(.*?)"/);
-    const answerMatch = block.match(/answer: "(.*?)"/);
-    const markAllocationMatch = block.match(/markAllocation: "(.*?)"/);
-    if (questionMatch && answerMatch) {
-      result.push({
-        question: questionMatch[1],
-        answer: answerMatch[1],
-        markAllocation: markAllocationMatch[1],
-      });
-    }
-  });
-  return result;
-}
+//parsers
+import { parseFlashCards } from "../Parsers/parseFlashCards";
+import { parseTerms } from "../Parsers/parseTerms";
+import { parseQuestions } from "../Parsers/parseQuestions";
+import { parseQuiz } from "../Parsers/parseQuiz";
 
-function parseQuiz(inputString) {
-  inputString = inputString.replace(/\n/g, "").replace(/\s+/g, " ");
-  const questionBlocks = inputString.match(/\{[^}]+\}/g);
-  const result = [];
-  questionBlocks.forEach((block) => {
-    const question = block.match(/question: "(.*?)"/)[1];
-    const options = block
-      .match(/options: \[(.*?)\]/)[1]
-      .split('", "')
-      .map((option) => option.replace(/^"|"$/g, ""));
-    const correctAnswer = block.match(/correctAnswer: "(.*?)"/)[1];
-    result.push({ question, options, correctAnswer });
-  });
-  return result;
-}
+//services
+import { documentUploadService } from "../Services/documentUploadService";
+import { fileUploadService } from "../Services/fileUploadService";
+
+//utils
+import { cleanText } from "../Utilities/cleanText";
+import { removeTriplebackticks } from "../Utilities/removeTriplebackticks";
+
+// function removeTripleBackticks(text) {
+//   return text.replace(/```/g, "");
+// }
+
+//parsing quiz and flashcards into an array of objects
+// function parseFlashCards(inputString) {
+//   inputString = inputString.replace(/\n/g, "").replace(/\s+/g, " ");
+//   const flashCardBlocks = inputString.match(/\{[^}]+\}/g);
+//   const result = [];
+//   flashCardBlocks.forEach((block) => {
+//     const frontMatch = block.match(/front: "(.*?)"/);
+//     const backMatch = block.match(/back: "(.*?)"/);
+//     if (frontMatch && backMatch) {
+//       result.push({ front: frontMatch[1], back: backMatch[1] });
+//     }
+//   });
+//   return result;
+// }
+// function parseTerms(inputString) {
+//   inputString = inputString.replace(/\n/g, "").replace(/\s+/g, " ");
+//   const termsBlocks = inputString.match(/\{[^}]+\}/g);
+//   const result = [];
+//   termsBlocks.forEach((block) => {
+//     const termMatch = block.match(/term: "(.*?)"/);
+//     const definitionMatch = block.match(/definition: "(.*?)"/);
+//     if (termMatch && definitionMatch) {
+//       result.push({ term: termMatch[1], definition: definitionMatch[1] });
+//     }
+//   });
+//   return result;
+// }
+// function parseQuestions(inputString) {
+//   inputString = inputString.replace(/\n/g, "").replace(/\s+/g, " ");
+//   const questionsBlock = inputString.match(/\{[^}]+\}/g);
+//   const result = [];
+//   questionsBlock.forEach((block) => {
+//     const questionMatch = block.match(/question: "(.*?)"/);
+//     const answerMatch = block.match(/answer: "(.*?)"/);
+//     const markAllocationMatch = block.match(/markAllocation: "(.*?)"/);
+//     if (questionMatch && answerMatch) {
+//       result.push({
+//         question: questionMatch[1],
+//         answer: answerMatch[1],
+//         markAllocation: markAllocationMatch[1],
+//       });
+//     }
+//   });
+//   return result;
+// }
+
+// function parseQuiz(inputString) {
+//   inputString = inputString.replace(/\n/g, "").replace(/\s+/g, " ");
+//   const questionBlocks = inputString.match(/\{[^}]+\}/g);
+//   const result = [];
+//   questionBlocks.forEach((block) => {
+//     const question = block.match(/question: "(.*?)"/)[1];
+//     const options = block
+//       .match(/options: \[(.*?)\]/)[1]
+//       .split('", "')
+//       .map((option) => option.replace(/^"|"$/g, ""));
+//     const correctAnswer = block.match(/correctAnswer: "(.*?)"/)[1];
+//     result.push({ question, options, correctAnswer });
+//   });
+//   return result;
+// }
 
 const SplashScreen = ({ navigation }) => {
   const { quiz, setQuiz } = useContext(QuizContext);
@@ -107,86 +122,87 @@ const SplashScreen = ({ navigation }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const uploadDocument = async (file) => {
-    const formData = new FormData();
-    formData.append("file", {
-      uri: file.assets[0].uri,
-      type: file.assets[0].mimeType,
-      name: file.assets[0].name,
-    });
+  // const uploadDocument = async (file) => {
+  //   const formData = new FormData();
+  //   formData.append("file", {
+  //     uri: file.assets[0].uri,
+  //     type: file.assets[0].mimeType,
+  //     name: file.assets[0].name,
+  //   });
 
-    try {
-      const parseEndpoint = getParseEndpoint(file.assets[0].mimeType);
-      const parseResponse = await axios.post(parseEndpoint, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      const parsedText = cleanText(parseResponse.data.text);
+  //   try {
+  //     const parseEndpoint = getParseEndpoint(file.assets[0].mimeType);
+  //     const parseResponse = await axios.post(parseEndpoint, formData, {
+  //       headers: {
+  //         "Content-Type": "multipart/form-data",
+  //       },
+  //     });
+  //     const parsedText = cleanText(parseResponse.data.text);
 
-      setNotes(parsedText);
-    } catch (error) {
-      console.error("Error processing file:", error);
-    }
-  };
+  //     setNotes(parsedText);
+  //   } catch (error) {
+  //     console.error("Error processing file:", error);
+  //   }
+  // };
 
-  const uploadFile = async (file) => {
-    const formData = new FormData();
-    formData.append("file", {
-      uri: file.assets[0].uri,
-      type: file.assets[0].mimeType,
-      name: file.assets[0].name,
-    });
+  // const uploadFile = async (file) => {
+  //   const formData = new FormData();
+  //   formData.append("file", {
+  //     uri: file.assets[0].uri,
+  //     type: file.assets[0].mimeType,
+  //     name: file.assets[0].name,
+  //   });
 
-    try {
-      const uploadResponse = await axios.post(
-        "http://172.20.10.7:4001/uploadNotesFile",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+  //   try {
+  //     const uploadResponse = await axios.post(
+  //       "http://172.20.10.7:4001/uploadNotesFile",
+  //       formData,
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //       }
+  //     );
 
-      const { fileId } = uploadResponse.data;
+  //     const { fileId } = uploadResponse.data;
 
-      if (fileId) {
-        console.log("Heres the file ID", fileId);
-      }
+  //     if (fileId) {
+  //       console.log("Heres the file ID", fileId);
+  //     }
 
-      const uploadTitleResponse = await axios.post(
-        "http://172.20.10.7:4001/uploadNoteDetails",
-        {
-          fileId,
-          title: notesTitle,
-          subjectTitle: subjectTitle,
-          setsTitle: setsTitle, // Pass the selected setsTitle
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+  //     const uploadTitleResponse = await axios.post(
+  //       "http://172.20.10.7:4001/uploadNoteDetails",
+  //       {
+  //         fileId,
+  //         title: notesTitle,
+  //         subjectTitle: subjectTitle,
+  //         setsTitle: setsTitle,
+  //       },
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
 
-      console.log("File uploaded successfully:", uploadResponse.data);
-      console.log("Title uploaded successfully:", uploadTitleResponse.data);
-    } catch (uploadError) {
-      console.error(
-        "Error uploading file:",
-        uploadError,
-        notesTitle,
-        subjectTitle,
-        setsTitle
-      );
-    }
-  };
+  //     console.log("File uploaded successfully:", uploadResponse.data);
+  //     console.log("Title uploaded successfully:", uploadTitleResponse.data);
+  //   } catch (uploadError) {
+  //     console.error(
+  //       "Error uploading file:",
+  //       uploadError,
+  //       notesTitle,
+  //       subjectTitle,
+  //       setsTitle
+  //     );
+  //   }
+  // };
 
-  const cleanText = (text) => {
-    return text.replace(/\s+/g, " ");
-  };
+  // const cleanText = (text) => {
+  //   return text.replace(/\s+/g, " ");
+  // };
 
+  //pass as a prop
   const getParseEndpoint = (mimeType) => {
     switch (mimeType) {
       case "application/pdf":
@@ -243,7 +259,7 @@ const SplashScreen = ({ navigation }) => {
 
   useEffect(() => {
     if (notesTitle) {
-      uploadFile(selectedFile);
+      fileUploadService(selectedFile, notesTitle, subjectTitle, setsTitle);
     }
   }, [notesTitle]);
 
@@ -253,7 +269,7 @@ const SplashScreen = ({ navigation }) => {
     if (result.assets[0].uri) {
       console.log("Document picked successfully");
       setSelectedFile(result);
-      await uploadDocument(result);
+      await documentUploadService(result, getParseEndpoint, cleanText);
     } else {
       console.log("Document picker cancelled or failed");
     }
@@ -304,7 +320,7 @@ const SplashScreen = ({ navigation }) => {
           },
         }
       );
-      setSummary(removeTripleBackticks(response.data.summary));
+      setSummary(removeTriplebackticks(response.data.summary));
     } catch (error) {
       console.error("Error generating summary:", error);
     }
@@ -357,93 +373,6 @@ const SplashScreen = ({ navigation }) => {
     } catch (error) {
       console.error("Error generating questions:", error);
     }
-  };
-
-  const CustomModal = ({
-    setIsModalOpen,
-    docPicker,
-    subjectTitle,
-    setsTitle,
-    onSubjectTitleChange,
-    onSetsTitleChange,
-  }) => {
-    const [isSetsTitleValid, setIsSetsTitleValid] = useState(false);
-    const [isSubjectTitleValid, setIsSubjectTitleValid] = useState(false);
-
-    const handleSetsTitleInputChange = (text) => {
-      onSetsTitleChange(text);
-      setIsSetsTitleValid(text.length >= 3);
-    };
-
-    const handleSubjectTitleInputChange = (text) => {
-      onSubjectTitleChange(text);
-      setIsSubjectTitleValid(text.length >= 3);
-    };
-
-    return (
-      <Modal isOpen={isModalOpen} withInput>
-        <View style={tw`bg-white w-full p-4 rounded-xl flex-col gap-y-6`}>
-          <View style={tw`flex flex-row justify-between`}>
-            <Text style={tw`text-lg font-semibold`}>Create New Note Set</Text>
-            <TouchableOpacity onPress={() => setIsModalOpen(false)}>
-              <AntDesign name="close" size={24} color="black" />
-            </TouchableOpacity>
-          </View>
-          <View style={tw`flex flex-col gap-y-4`}>
-            <View style={tw`flex flex-col gap-y-1`}>
-              {isSetsTitleValid ? (
-                <Text style={tw`text-md font-semibold text-gray-500`}>
-                  Title of Set
-                </Text>
-              ) : (
-                <Text style={tw`text-md font-semibold text-red-500`}>
-                  At least 3 Characters
-                </Text>
-              )}
-              <TextInput
-                placeholder="Title Of Set. i.e Maths"
-                value={setsTitle}
-                onChangeText={handleSetsTitleInputChange}
-                mode="outlined"
-              />
-            </View>
-            <View style={tw`flex flex-col gap-y-1`}>
-              {isSubjectTitleValid ? (
-                <Text style={tw`text-md font-semibold text-gray-500`}>
-                  Title of Subject
-                </Text>
-              ) : (
-                <Text style={tw`text-md font-semibold text-red-500`}>
-                  At least 3 Characters
-                </Text>
-              )}
-              <TextInput
-                placeholder="Title Of Subject. i.e Calculus"
-                value={subjectTitle}
-                onChangeText={handleSubjectTitleInputChange}
-                mode="outlined"
-              />
-            </View>
-            <Text style={tw`text-gray-500 text-md font-light `}>
-              * Title of your notes will be automatically generated
-            </Text>
-            <TouchableOpacity
-              style={[
-                tw`rounded-2xl items-center gap-3 justify-center flex flex-row p-5`,
-                isSetsTitleValid && isSubjectTitleValid
-                  ? tw`bg-black`
-                  : tw`bg-gray-400`,
-              ]}
-              onPress={docPicker}
-              disabled={!isSetsTitleValid || !isSubjectTitleValid}
-            >
-              <Text style={tw`text-white`}>Select document to finish</Text>
-              <Ionicons name="cloud-upload-outline" size={24} color="white" />
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
-    );
   };
 
   return (

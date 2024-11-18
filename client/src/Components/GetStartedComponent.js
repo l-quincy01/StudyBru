@@ -8,7 +8,7 @@ import {
   MaterialCommunityIcons,
   MaterialIcons,
 } from "@expo/vector-icons";
-import { Modal } from "./Modal";
+import { Modal } from "./Modals/Modal";
 
 const CustomModal = ({
   isModalOpen,
