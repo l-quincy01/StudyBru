@@ -1,8 +1,17 @@
-import { StyleSheet, Text, View } from "react-native";
+import {
+  Platform,
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import React, { useState } from "react";
 import { ThemedView } from "@/src/components/ThemedView";
 import { ThemedText } from "@/src/components/ThemedText";
 import { useAuth } from "@/src/context/AuthContext";
+import Layout from "@/src/components/Layout/Layout";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
@@ -27,16 +36,31 @@ export default function LoginScreen() {
   };
 
   return (
-    <ThemedView style={styles.container}>
-      <ThemedText>Login!</ThemedText>
-    </ThemedView>
+    <Layout>
+      <ThemedView className=" flex flex-col gap-y-5 ">
+        <ThemedText type="title">
+          <Text className=" text-4xl font-bold">Get Started </Text>
+        </ThemedText>
+        <ThemedView className=" flex flex-col gap-y-1 ">
+          <ThemedText>Email</ThemedText>
+          <TextInput
+            className="p-3 "
+            onChangeText={(text: string) => setEmail(text)}
+            value={email}
+          />
+        </ThemedView>
+      </ThemedView>
+    </Layout>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
     flex: 1,
-    justifyContent: "center",
+    padding: 16,
+  },
+  safeArea: {
+    flex: 1,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
 });
